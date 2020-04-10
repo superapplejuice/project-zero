@@ -1,0 +1,25 @@
+# import * from './generated/prisma.graphql'
+
+# item inputs
+input createItemInput {
+  name: String!
+  description: String!
+  price: Int!
+}
+
+input fetchItemsInput {
+  where: ItemWhereInput
+  orderBy: ItemOrderByInput
+  skip: Int
+  first: Int
+}
+
+# queries
+type Query {
+  fetchItems(data: fetchItemsInput): [Item]!
+}
+
+# mutations
+type Mutation {
+  createItem(data: createItemInput): Item!
+}

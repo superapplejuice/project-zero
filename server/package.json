@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Jan Mathew",
+  "scripts": {
+    "prisma": "prisma deploy --env-file .env",
+    "dev": "nodemon",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "graphql-cli": "^3.0.14",
+    "graphql-yoga": "^1.18.3",
+    "nodemon": "^2.0.3",
+    "prisma-binding": "^2.3.16"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.2",
+    "@graphql-codegen/typescript": "1.13.2",
+    "@graphql-codegen/typescript-resolvers": "1.13.2",
+    "@types/node": "^13.11.1",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3"
+  }
+}
