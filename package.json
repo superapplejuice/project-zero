@@ -4,6 +4,10 @@
   "main": "index.ts",
   "license": "MIT",
   "author": "Jan Mathew",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/superapplejuice/project-zero.git"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -17,7 +21,7 @@
   },
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.tsx --fix",
-    "commit": "npx git-cz",
+    "commit": "git-cz",
     "prisma": "yarn --cwd server prisma",
     "resolvers": "yarn --cwd server codegen",
     "types": "yarn --cwd client codegen",
@@ -30,7 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "commitizen": "^4.0.4",
-    "cz-emoji": "^1.2.1",
+    "cz-conventional-changelog": "3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
@@ -44,7 +48,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "cz-emoji"
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
