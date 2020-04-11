@@ -19,28 +19,4 @@ export const Menu = styled.div`
   }
 `
 
-export const Search = styled.form`
-  input {
-    border: 1px solid ${p => p.theme.colors.black};
-    border-radius: ${p => p.theme.styles.borderRadius};
-    padding: 8px 16px;
-    width: 256px;
-    font-size: 1rem;
-    transition: ${p => p.theme.styles.transition};
-
-    :hover {
-      background: ${p => p.theme.colors.gray};
-      border: 1px solid ${p => p.theme.colors.orange};
-
-      ::placeholder {
-        color: ${p => p.theme.colors.orange};
-      }
-    }
-
-    :focus {
-      background: ${p => p.theme.colors.black};
-      border: 1px solid ${p => p.theme.colors.orange};
-      color: white;
-    }
-  }
-`
+export const Search = styled.form``
