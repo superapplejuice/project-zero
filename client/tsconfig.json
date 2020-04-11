@@ -23,7 +23,6 @@
     "paths": {
       "pages": ["pages/*"],
       "components/*": ["src/components/*"],
-      "core/*": ["src/components/core/*"],
       "lib/*": ["src/lib/*"],
       "mutations/*": ["src/resolvers/mutations/*"],
       "queries/*": ["src/resolvers/queries/*"],
