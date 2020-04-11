@@ -5,6 +5,10 @@ input createItemInput {
   name: String!
   description: String!
   price: Int!
+  image_1: String!
+  image_2: String
+  image_3: String
+  image_4: String
 }
 
 input fetchItemsInput {

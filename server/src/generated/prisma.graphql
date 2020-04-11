@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/jan-mathew-calaunan-22ea6d/zero/dev
-# timestamp: Fri Apr 10 2020 17:19:48 GMT+0800 (Singapore Standard Time)
+# timestamp: Sat Apr 11 2020 18:50:29 GMT+0800 (Singapore Standard Time)
 
 type AggregateItem {
   count: Int!
@@ -21,6 +21,10 @@ type Item implements Node {
   name: String!
   description: String!
   price: Int!
+  image_1: String!
+  image_2: String
+  image_3: String
+  image_4: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -40,6 +44,10 @@ input ItemCreateInput {
   name: String!
   description: String!
   price: Int!
+  image_1: String!
+  image_2: String
+  image_3: String
+  image_4: String
 }
 
 """An edge in a connection."""
@@ -60,6 +68,14 @@ enum ItemOrderByInput {
   description_DESC
   price_ASC
   price_DESC
+  image_1_ASC
+  image_1_DESC
+  image_2_ASC
+  image_2_DESC
+  image_3_ASC
+  image_3_DESC
+  image_4_ASC
+  image_4_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -71,6 +87,10 @@ type ItemPreviousValues {
   name: String!
   description: String!
   price: Int!
+  image_1: String!
+  image_2: String
+  image_3: String
+  image_4: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -116,12 +136,20 @@ input ItemUpdateInput {
   name: String
   description: String
   price: Int
+  image_1: String
+  image_2: String
+  image_3: String
+  image_4: String
 }
 
 input ItemUpdateManyMutationInput {
   name: String
   description: String
   price: Int
+  image_1: String
+  image_2: String
+  image_3: String
+  image_4: String
 }
 
 input ItemWhereInput {
@@ -275,6 +303,166 @@ input ItemWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
+  image_1: String
+
+  """All values that are not equal to given value."""
+  image_1_not: String
+
+  """All values that are contained in given list."""
+  image_1_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_1_not_in: [String!]
+
+  """All values less than the given value."""
+  image_1_lt: String
+
+  """All values less than or equal the given value."""
+  image_1_lte: String
+
+  """All values greater than the given value."""
+  image_1_gt: String
+
+  """All values greater than or equal the given value."""
+  image_1_gte: String
+
+  """All values containing the given string."""
+  image_1_contains: String
+
+  """All values not containing the given string."""
+  image_1_not_contains: String
+
+  """All values starting with the given string."""
+  image_1_starts_with: String
+
+  """All values not starting with the given string."""
+  image_1_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_1_ends_with: String
+
+  """All values not ending with the given string."""
+  image_1_not_ends_with: String
+  image_2: String
+
+  """All values that are not equal to given value."""
+  image_2_not: String
+
+  """All values that are contained in given list."""
+  image_2_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_2_not_in: [String!]
+
+  """All values less than the given value."""
+  image_2_lt: String
+
+  """All values less than or equal the given value."""
+  image_2_lte: String
+
+  """All values greater than the given value."""
+  image_2_gt: String
+
+  """All values greater than or equal the given value."""
+  image_2_gte: String
+
+  """All values containing the given string."""
+  image_2_contains: String
+
+  """All values not containing the given string."""
+  image_2_not_contains: String
+
+  """All values starting with the given string."""
+  image_2_starts_with: String
+
+  """All values not starting with the given string."""
+  image_2_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_2_ends_with: String
+
+  """All values not ending with the given string."""
+  image_2_not_ends_with: String
+  image_3: String
+
+  """All values that are not equal to given value."""
+  image_3_not: String
+
+  """All values that are contained in given list."""
+  image_3_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_3_not_in: [String!]
+
+  """All values less than the given value."""
+  image_3_lt: String
+
+  """All values less than or equal the given value."""
+  image_3_lte: String
+
+  """All values greater than the given value."""
+  image_3_gt: String
+
+  """All values greater than or equal the given value."""
+  image_3_gte: String
+
+  """All values containing the given string."""
+  image_3_contains: String
+
+  """All values not containing the given string."""
+  image_3_not_contains: String
+
+  """All values starting with the given string."""
+  image_3_starts_with: String
+
+  """All values not starting with the given string."""
+  image_3_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_3_ends_with: String
+
+  """All values not ending with the given string."""
+  image_3_not_ends_with: String
+  image_4: String
+
+  """All values that are not equal to given value."""
+  image_4_not: String
+
+  """All values that are contained in given list."""
+  image_4_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_4_not_in: [String!]
+
+  """All values less than the given value."""
+  image_4_lt: String
+
+  """All values less than or equal the given value."""
+  image_4_lte: String
+
+  """All values greater than the given value."""
+  image_4_gt: String
+
+  """All values greater than or equal the given value."""
+  image_4_gte: String
+
+  """All values containing the given string."""
+  image_4_contains: String
+
+  """All values not containing the given string."""
+  image_4_not_contains: String
+
+  """All values starting with the given string."""
+  image_4_starts_with: String
+
+  """All values not starting with the given string."""
+  image_4_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_4_ends_with: String
+
+  """All values not ending with the given string."""
+  image_4_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""

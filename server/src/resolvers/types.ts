@@ -23,6 +23,10 @@ export type CreateItemInput = {
   name: Scalars['String']
   description: Scalars['String']
   price: Scalars['Int']
+  image_1: Scalars['String']
+  image_2?: Maybe<Scalars['String']>
+  image_3?: Maybe<Scalars['String']>
+  image_4?: Maybe<Scalars['String']>
 }
 
 export type FetchItemsInput = {
@@ -37,6 +41,10 @@ export type Item = Node & {
   name: Scalars['String']
   description: Scalars['String']
   price: Scalars['Int']
+  image_1: Scalars['String']
+  image_2?: Maybe<Scalars['String']>
+  image_3?: Maybe<Scalars['String']>
+  image_4?: Maybe<Scalars['String']>
   createdAt: Scalars['DateTime']
   updatedAt: Scalars['DateTime']
 }
@@ -50,6 +58,14 @@ export enum ItemOrderByInput {
   DescriptionDesc = 'description_DESC',
   PriceAsc = 'price_ASC',
   PriceDesc = 'price_DESC',
+  Image_1Asc = 'image_1_ASC',
+  Image_1Desc = 'image_1_DESC',
+  Image_2Asc = 'image_2_ASC',
+  Image_2Desc = 'image_2_DESC',
+  Image_3Asc = 'image_3_ASC',
+  Image_3Desc = 'image_3_DESC',
+  Image_4Asc = 'image_4_ASC',
+  Image_4Desc = 'image_4_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
@@ -159,6 +175,114 @@ export type ItemWhereInput = {
   price_gt?: Maybe<Scalars['Int']>
   /** All values greater than or equal the given value. */
   price_gte?: Maybe<Scalars['Int']>
+  image_1?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  image_1_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  image_1_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  image_1_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  image_1_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  image_1_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  image_1_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  image_1_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  image_1_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  image_1_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  image_1_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  image_1_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  image_1_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  image_1_not_ends_with?: Maybe<Scalars['String']>
+  image_2?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  image_2_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  image_2_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  image_2_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  image_2_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  image_2_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  image_2_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  image_2_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  image_2_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  image_2_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  image_2_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  image_2_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  image_2_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  image_2_not_ends_with?: Maybe<Scalars['String']>
+  image_3?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  image_3_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  image_3_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  image_3_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  image_3_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  image_3_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  image_3_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  image_3_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  image_3_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  image_3_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  image_3_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  image_3_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  image_3_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  image_3_not_ends_with?: Maybe<Scalars['String']>
+  image_4?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  image_4_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  image_4_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  image_4_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  image_4_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  image_4_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  image_4_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  image_4_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  image_4_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  image_4_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  image_4_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  image_4_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  image_4_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  image_4_not_ends_with?: Maybe<Scalars['String']>
   createdAt?: Maybe<Scalars['DateTime']>
   /** All values that are not equal to given value. */
   createdAt_not?: Maybe<Scalars['DateTime']>
@@ -376,6 +500,10 @@ export type ItemResolvers<
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   price?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  image_1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  image_2?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  image_3?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  image_4?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   __isTypeOf?: isTypeOfResolverFn<ParentType>

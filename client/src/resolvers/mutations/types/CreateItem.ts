@@ -23,4 +23,8 @@ export interface CreateItemVariables {
   name: string
   description: string
   price: number
+  image_1: string
+  image_2?: string | null
+  image_3?: string | null
+  image_4?: string | null
 }
