@@ -18,6 +18,7 @@
     "next-with-apollo": "^5.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-dropzone": "^10.2.2",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
