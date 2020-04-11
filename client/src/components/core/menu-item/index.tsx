@@ -10,7 +10,9 @@ type Props = {
 
 const MenuItem = ({ href, title }: Props) => (
   <Styles.Container>
-    <Link href={href}>{title}</Link>
+    <Link href={href}>
+      <a>{title}</a>
+    </Link>
   </Styles.Container>
 )
 
