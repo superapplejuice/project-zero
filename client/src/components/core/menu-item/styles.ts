@@ -1,14 +1,16 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  cursor: pointer;
-
   a {
-    margin: 0;
-    padding: 0;
-    transition: 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
+    border-radius: ${p => p.theme.styles.borderRadius};
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: ${p => p.theme.styles.transition};
+
     :hover {
-      color: ${p => p.theme.orange};
+      background: ${p => p.theme.colors.gray};
+      color: ${p => p.theme.colors.orange};
     }
   }
 `

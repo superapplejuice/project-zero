@@ -7,9 +7,9 @@ const NavigationBar = () => (
   <Styles.Container>
     <Styles.Menu>
       <MenuItem href="/" title="ZERO" />
-      <form className="search">
+      <Styles.Search>
         <input type="text" placeholder="Search" />
-      </form>
+      </Styles.Search>
     </Styles.Menu>
     <Styles.Menu>
       <MenuItem href="/register" title="Register" />
