@@ -23,6 +23,17 @@ const _BaseStyles = css`
   }
 `
 
+export const Container = styled.div<Pick<InputProps, 'highlight'>>`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  :hover {
+    color: ${p =>
+      p.highlight === 'blue' ? p.theme.colors.blue : p.theme.colors.orange};
+  }
+`
+
 export const Input = styled.input<InputProps>`
   ${_BaseStyles};
 
@@ -49,4 +60,10 @@ export const Input = styled.input<InputProps>`
         border: 1px solid ${p => p.theme.colors.blue};
       }
     `}
+`
+
+export const Label = styled.label`
+  margin-left: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
 `

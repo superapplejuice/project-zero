@@ -5,6 +5,7 @@ export type InputProps = {
   highlight?: 'blue'
   placeholder?: string
   value: string | number | string[]
-  type: 'text' | 'email' | 'password' | 'number' | 'radio'
+  type: 'text' | 'email' | 'password' | 'number'
+  label?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }

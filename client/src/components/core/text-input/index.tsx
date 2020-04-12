@@ -11,15 +11,19 @@ const TextInput = ({
   placeholder = 'Search',
   value,
   type,
+  label,
 }: InputProps) => (
-  <Styles.Input
-    highlight={highlight}
-    variant={variant}
-    onChange={onChange}
-    placeholder={placeholder}
-    value={value}
-    type={type}
-  />
+  <Styles.Container highlight={highlight}>
+    <Styles.Label>{label}</Styles.Label>
+    <Styles.Input
+      highlight={highlight}
+      variant={variant}
+      onChange={onChange}
+      placeholder={placeholder}
+      value={value}
+      type={type}
+    />
+  </Styles.Container>
 )
 
 export default TextInput
