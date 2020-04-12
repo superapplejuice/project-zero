@@ -6,20 +6,21 @@ import { accept, maxSize } from './constants'
 
 import * as Styles from './styles'
 
-const Dropzone = () => {
+const Dropzone = ({ setUploads }: { setUploads: React.Dispatch<any> }) => {
+  const [images, setImages] = useState<Upload[]>([])
   const [errors, setErrors] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [images, setImages] = useState<Upload[]>([])
 
   const onDrop = useCallback(files => {
     if (files.length < 5) {
-      setImages(
-        files.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
+      const uploads = files.map(file =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
       )
+
+      setImages(uploads)
+      setUploads(uploads)
 
       setErrorMessage('')
       return setErrors(false)
@@ -60,7 +61,7 @@ const Dropzone = () => {
       </Styles.UploadContainer>
       {images.length > 0 && (
         <Styles.Message>
-          To upload different images, upload them again.
+          To upload a different set of images, upload them again.
         </Styles.Message>
       )}
       {errors && (
@@ -68,10 +69,7 @@ const Dropzone = () => {
       )}
       <Styles.ImagesContainer>
         {images?.map(image => (
-          <img
-            key={`${image.name} ${image.lastModified}`}
-            src={image.preview}
-          />
+          <img key={image.preview} src={image.preview} />
         ))}
       </Styles.ImagesContainer>
     </Styles.Container>
