@@ -7,11 +7,13 @@ import * as Styles from './styles'
 const TextInput = ({
   highlight,
   variant,
-  onChange,
-  placeholder = 'Search',
+  placeholder,
   value,
   type,
   label,
+  name,
+  onChange,
+  onBlur,
 }: InputProps) => (
   <Styles.Container highlight={highlight}>
     <Styles.Label>{label}</Styles.Label>
@@ -22,6 +24,8 @@ const TextInput = ({
       placeholder={placeholder}
       value={value}
       type={type}
+      onBlur={onBlur}
+      name={name}
     />
   </Styles.Container>
 )

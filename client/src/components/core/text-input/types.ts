@@ -7,5 +7,7 @@ export type InputProps = {
   value: string | number | string[]
   type: 'text' | 'email' | 'password' | 'number'
   label?: string
+  name?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
