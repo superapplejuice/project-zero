@@ -24,8 +24,7 @@
       "pages": ["pages/*"],
       "components/*": ["src/components/*"],
       "lib/*": ["src/lib/*"],
-      "mutations/*": ["src/resolvers/mutations/*"],
-      "queries/*": ["src/resolvers/queries/*"],
+      "resolvers/*": ["src/resolvers/*"],
     }
   },
   "exclude": [

@@ -34,7 +34,7 @@ const CREATE_ITEM = gql`
 `
 
 const useCreateItem = (
-  options: MutationHookOptions<CreateItem, CreateItemVariables>
+  options?: MutationHookOptions<CreateItem, CreateItemVariables>
 ) => useMutation<CreateItem, CreateItemVariables>(CREATE_ITEM, options)
 
 export default useCreateItem

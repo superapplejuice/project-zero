@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { MenuItem, TextInput } from 'components/core'
+
 import * as Styles from './styles'
 
 const NavigationBar = () => {
@@ -24,6 +25,7 @@ const NavigationBar = () => {
             variant="navigation"
             value={value}
             type="text"
+            placeholder="Search"
           />
         </Styles.Search>
       </Styles.Menu>
