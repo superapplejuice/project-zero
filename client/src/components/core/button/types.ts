@@ -3,6 +3,7 @@ import React from 'react'
 export type ButtonProps = {
   children: React.ReactNode
   color?: 'blue'
-  onClick: (event: React.MouseEvent) => void
+  onClick: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent) => void
   disabled?: boolean
+  type: 'submit' | 'button' | 'reset'
 }
