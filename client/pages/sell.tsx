@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Upload } from 'components/dropzone/types'
 
 import Dropzone from 'components/dropzone'
+import { Button } from 'components/core'
 
 const Sell = () => {
   const [uploads, setUploads] = useState<Upload[]>(null)
@@ -38,9 +39,13 @@ const Sell = () => {
     <div>
       <div>Sell your item!</div>
       <Dropzone setUploads={setUploads} />
-      <button onClick={handleUpload} disabled={submitting || !uploads}>
+      <Button
+        onClick={handleUpload}
+        disabled={submitting || !uploads}
+        color="blue"
+      >
         {submitting ? 'Submitting...' : 'Submit'}
-      </button>
+      </Button>
     </div>
   )
 }
