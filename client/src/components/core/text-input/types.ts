@@ -10,4 +10,5 @@ export type InputProps = {
   name?: string
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
+  children?: React.ReactNode
 }

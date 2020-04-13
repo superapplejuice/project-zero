@@ -54,7 +54,7 @@ export const ImagesContainer = styled.div`
     background-size: cover;
     background-position: center;
     max-height: 300px;
-    max-width: 300px;
+    max-width: 200px;
     margin-left: 24px;
     transition: ${p => p.theme.styles.transition};
 

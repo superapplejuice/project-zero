@@ -14,6 +14,7 @@ const TextInput = ({
   name,
   onChange,
   onBlur,
+  children,
 }: InputProps) => (
   <Styles.Container highlight={highlight}>
     <Styles.Label>{label}</Styles.Label>
@@ -27,6 +28,7 @@ const TextInput = ({
       onBlur={onBlur}
       name={name}
     />
+    {children}
   </Styles.Container>
 )
 

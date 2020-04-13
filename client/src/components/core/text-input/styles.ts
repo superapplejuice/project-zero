@@ -6,6 +6,7 @@ export const Container = styled.div<Pick<InputProps, 'highlight'>>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 
   > input {
     :focus {
