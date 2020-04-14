@@ -16,11 +16,13 @@ export const Header = styled.h1`
 
 export const Form = styled.form`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
 
   > div {
-    margin-bottom: 32px;
+    margin-right: 32px;
   }
 `
 
@@ -48,6 +50,7 @@ export const Warning = styled.p`
   padding: 0;
   position: absolute;
   right: 0;
+  top: 2px;
   font-size: 0.6rem;
   color: red;
 `

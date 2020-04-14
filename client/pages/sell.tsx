@@ -7,7 +7,7 @@ import { CreateItemVariables } from 'resolvers/mutations/types'
 import { useCreateItem } from 'resolvers/mutations'
 
 import Dropzone from 'components/dropzone'
-import { Button, TextInput } from 'components/core'
+import { Button, Inputs } from 'components/core'
 
 import * as Styles from 'components/styles/sell'
 
@@ -100,7 +100,7 @@ const Sell = () => {
       <Styles.Form onSubmit={handleSubmit}>
         <Styles.FieldGroup>
           <Styles.FieldHeader>Basic Information</Styles.FieldHeader>
-          <TextInput
+          <Inputs.TextInput
             onChange={handleChange}
             onBlur={handleBlur}
             name="name"
@@ -113,8 +113,8 @@ const Sell = () => {
             {touched.name && errors.name && (
               <Styles.Warning>{errors.name}</Styles.Warning>
             )}
-          </TextInput>
-          <TextInput
+          </Inputs.TextInput>
+          <Inputs.TextArea
             onChange={handleChange}
             onBlur={handleBlur}
             name="description"
@@ -127,8 +127,8 @@ const Sell = () => {
             {touched.description && errors.description && (
               <Styles.Warning>{errors.description}</Styles.Warning>
             )}
-          </TextInput>
-          <TextInput
+          </Inputs.TextArea>
+          <Inputs.TextInput
             onChange={handleChange}
             onBlur={handleBlur}
             name="price"
@@ -141,7 +141,15 @@ const Sell = () => {
             {touched.price && errors.price && (
               <Styles.Warning>{errors.price}</Styles.Warning>
             )}
-          </TextInput>
+          </Inputs.TextInput>
+          <Button
+            onClick={handleSubmit}
+            disabled={isSubmitting || !uploads || loading || !errors}
+            color="blue"
+            type="submit"
+          >
+            {isSubmitting ? 'Submitting...' : 'Submit'}
+          </Button>
         </Styles.FieldGroup>
         <Styles.FieldGroup>
           <Styles.FieldHeader>
@@ -149,14 +157,6 @@ const Sell = () => {
           </Styles.FieldHeader>
           <Dropzone setUploads={setUploads} />
         </Styles.FieldGroup>
-        <Button
-          onClick={handleSubmit}
-          disabled={isSubmitting || !uploads || loading || !errors}
-          color="blue"
-          type="submit"
-        >
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </Button>
       </Styles.Form>
     </Styles.Container>
   )

@@ -32,4 +32,32 @@ const TextInput = ({
   </Styles.Container>
 )
 
-export default TextInput
+const TextArea = ({
+  highlight,
+  variant,
+  placeholder,
+  value,
+  type,
+  label,
+  name,
+  onChange,
+  onBlur,
+  children,
+}: InputProps) => (
+  <Styles.Container highlight={highlight}>
+    <Styles.Label>{label}</Styles.Label>
+    <Styles.TextArea
+      highlight={highlight}
+      variant={variant}
+      onChange={onChange}
+      placeholder={placeholder}
+      value={value}
+      type={type}
+      onBlur={onBlur}
+      name={name}
+    />
+    {children}
+  </Styles.Container>
+)
+
+export default { TextInput, TextArea }

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+const width = '500px'
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@ export const UploadContainer = styled.div<{ isActive: boolean }>`
   border: 1px solid ${p => p.theme.colors.black};
   border-radius: ${p => p.theme.styles.borderRadius};
   padding: 16px 0;
-  width: 600px;
+  width: ${width};
   cursor: pointer;
   outline: none;
   text-align: center;
@@ -45,22 +47,20 @@ export const Message = styled.p<{ errors?: boolean }>`
 
 export const ImagesContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 16px;
+  width: ${width};
 
   img {
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};
     background-size: cover;
     background-position: center;
-    max-height: 300px;
     max-width: 200px;
-    margin-left: 24px;
+    margin: 16px;
     transition: ${p => p.theme.styles.transition};
-
-    :first-of-type {
-      margin: 0;
-    }
 
     :hover {
       border: 1px solid ${p => p.theme.colors.blue};

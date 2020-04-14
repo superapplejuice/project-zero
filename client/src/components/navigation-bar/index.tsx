@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { MenuItem, TextInput } from 'components/core'
+import { MenuItem, Inputs } from 'components/core'
 
 import * as Styles from './styles'
 
@@ -20,7 +20,7 @@ const NavigationBar = () => {
       <Styles.Menu>
         <MenuItem href="/" title="ZERO" />
         <Styles.Search onSubmit={handleSubmit}>
-          <TextInput
+          <Inputs.TextInput
             onChange={handleChange}
             variant="navigation"
             value={value}

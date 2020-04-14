@@ -35,9 +35,11 @@ export const GlobalStyle = createGlobalStyle`
     color: ${p => p.theme.colors.black};
   }
 
-  input {
+  input,
+  textarea {
     font-family: 'Fira Sans', sans-serif;
     outline: none;
+    resize: none;
   }
 `
 

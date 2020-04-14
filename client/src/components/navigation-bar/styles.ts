@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
+  justify-content: space-evenly;
   border-bottom: 1px solid ${p => p.theme.colors.gray};
   height: 64px;
   margin-bottom: 16px;
@@ -10,8 +11,8 @@ export const Container = styled.div`
 
 export const Menu = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  width: 100%;
+  justify-content: space-around;
+  width: 500px;
 
   > div,
   form {

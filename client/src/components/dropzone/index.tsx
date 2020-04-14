@@ -57,7 +57,7 @@ const Dropzone = ({ setUploads }: { setUploads: React.Dispatch<any> }) => {
         <input {...getInputProps()} />
         {isDragActive
           ? 'Drag your images here!'
-          : 'Click here, or drag and drop up to 4 images to upload'}
+          : 'Click here, or drag up to 4 images here'}
       </Styles.UploadContainer>
       {images.length > 0 && (
         <Styles.Message>

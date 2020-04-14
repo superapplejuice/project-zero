@@ -8,14 +8,13 @@ export const Container = styled.div<Pick<InputProps, 'highlight'>>`
   justify-content: flex-start;
   position: relative;
 
-  > input {
+  > input,
+  textarea {
     :focus {
       background: ${p => p.theme.colors.gray};
       border: 1px solid
         ${p =>
           p.highlight === 'blue' ? p.theme.colors.blue : p.theme.colors.orange};
-      color: ${p =>
-        p.highlight === 'blue' ? p.theme.colors.blue : p.theme.colors.orange};
     }
   }
 
@@ -23,7 +22,8 @@ export const Container = styled.div<Pick<InputProps, 'highlight'>>`
     color: ${p =>
       p.highlight === 'blue' ? p.theme.colors.blue : p.theme.colors.orange};
 
-    > input {
+    > input,
+    textarea {
       background: ${p => p.theme.colors.gray};
       border: 1px solid
         ${p =>
@@ -42,7 +42,7 @@ const _BaseStyles = css`
   border-radius: ${p => p.theme.styles.borderRadius};
   transition: ${p => p.theme.styles.transition};
   padding: 8px 16px;
-  width: 512px;
+  width: 300px;
   font-size: 1rem;
 `
 
@@ -53,9 +53,13 @@ export const Input = styled.input<InputProps>`
     p.variant === 'navigation' &&
     css`
       padding: 8px 16px;
-      width: 256px;
-      font-size: 1rem;
     `};
+`
+
+export const TextArea = styled.textarea<InputProps>`
+  ${_BaseStyles};
+
+  height: 200px;
 `
 
 export const Label = styled.label`

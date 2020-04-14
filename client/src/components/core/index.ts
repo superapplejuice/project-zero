@@ -1,5 +1,5 @@
 import MenuItem from './menu-item'
-import TextInput from './text-input'
+import Inputs from './inputs'
 import Button from './button'
 
-export { MenuItem, TextInput, Button }
+export { MenuItem, Inputs, Button }
