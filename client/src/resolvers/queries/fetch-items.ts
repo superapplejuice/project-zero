@@ -9,6 +9,12 @@ const FETCH_ITEMS = gql`
       id
       name
       description
+      price
+      createdAt
+      image_1
+      image_2
+      image_3
+      image_4
     }
   }
 `
