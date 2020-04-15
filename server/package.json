@@ -7,6 +7,7 @@
   "scripts": {
     "prisma": "prisma deploy --env-file .env",
     "dev": "nodemon",
+    "schema": "graphql get-schema -p prisma",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {

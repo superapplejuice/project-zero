@@ -21,6 +21,7 @@ input fetchItemsInput {
 # queries
 type Query {
   fetchItems(data: fetchItemsInput): [Item]!
+  fetchItem(id: ID!): Item!
 }
 
 # mutations

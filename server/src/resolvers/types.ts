@@ -331,10 +331,15 @@ export type Node = {
 
 export type Query = {
   fetchItems: Array<Maybe<Item>>
+  fetchItem: Item
 }
 
 export type QueryFetchItemsArgs = {
   data?: Maybe<FetchItemsInput>
+}
+
+export type QueryFetchItemArgs = {
+  id: Scalars['ID']
 }
 
 export type User = Node & {
@@ -538,6 +543,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryFetchItemsArgs, never>
+  >
+  fetchItem?: Resolver<
+    ResolversTypes['Item'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryFetchItemArgs, 'id'>
   >
 }
 
