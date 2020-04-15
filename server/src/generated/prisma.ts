@@ -218,10 +218,7 @@ type Item implements Node {
   name: String!
   description: String!
   price: Int!
-  image_1: String!
-  image_2: String
-  image_3: String
-  image_4: String
+  images: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -236,15 +233,16 @@ type ItemConnection {
   aggregate: AggregateItem!
 }
 
+input ItemCreateimagesInput {
+  set: [String!]
+}
+
 input ItemCreateInput {
   id: ID
   name: String!
   description: String!
   price: Int!
-  image_1: String!
-  image_2: String
-  image_3: String
-  image_4: String
+  images: ItemCreateimagesInput
 }
 
 """An edge in a connection."""
@@ -265,14 +263,6 @@ enum ItemOrderByInput {
   description_DESC
   price_ASC
   price_DESC
-  image_1_ASC
-  image_1_DESC
-  image_2_ASC
-  image_2_DESC
-  image_3_ASC
-  image_3_DESC
-  image_4_ASC
-  image_4_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -284,10 +274,7 @@ type ItemPreviousValues {
   name: String!
   description: String!
   price: Int!
-  image_1: String!
-  image_2: String
-  image_3: String
-  image_4: String
+  images: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -329,24 +316,22 @@ input ItemSubscriptionWhereInput {
   node: ItemWhereInput
 }
 
+input ItemUpdateimagesInput {
+  set: [String!]
+}
+
 input ItemUpdateInput {
   name: String
   description: String
   price: Int
-  image_1: String
-  image_2: String
-  image_3: String
-  image_4: String
+  images: ItemUpdateimagesInput
 }
 
 input ItemUpdateManyMutationInput {
   name: String
   description: String
   price: Int
-  image_1: String
-  image_2: String
-  image_3: String
-  image_4: String
+  images: ItemUpdateimagesInput
 }
 
 input ItemWhereInput {
@@ -500,166 +485,6 @@ input ItemWhereInput {
 
   """All values greater than or equal the given value."""
   price_gte: Int
-  image_1: String
-
-  """All values that are not equal to given value."""
-  image_1_not: String
-
-  """All values that are contained in given list."""
-  image_1_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_1_not_in: [String!]
-
-  """All values less than the given value."""
-  image_1_lt: String
-
-  """All values less than or equal the given value."""
-  image_1_lte: String
-
-  """All values greater than the given value."""
-  image_1_gt: String
-
-  """All values greater than or equal the given value."""
-  image_1_gte: String
-
-  """All values containing the given string."""
-  image_1_contains: String
-
-  """All values not containing the given string."""
-  image_1_not_contains: String
-
-  """All values starting with the given string."""
-  image_1_starts_with: String
-
-  """All values not starting with the given string."""
-  image_1_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_1_ends_with: String
-
-  """All values not ending with the given string."""
-  image_1_not_ends_with: String
-  image_2: String
-
-  """All values that are not equal to given value."""
-  image_2_not: String
-
-  """All values that are contained in given list."""
-  image_2_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_2_not_in: [String!]
-
-  """All values less than the given value."""
-  image_2_lt: String
-
-  """All values less than or equal the given value."""
-  image_2_lte: String
-
-  """All values greater than the given value."""
-  image_2_gt: String
-
-  """All values greater than or equal the given value."""
-  image_2_gte: String
-
-  """All values containing the given string."""
-  image_2_contains: String
-
-  """All values not containing the given string."""
-  image_2_not_contains: String
-
-  """All values starting with the given string."""
-  image_2_starts_with: String
-
-  """All values not starting with the given string."""
-  image_2_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_2_ends_with: String
-
-  """All values not ending with the given string."""
-  image_2_not_ends_with: String
-  image_3: String
-
-  """All values that are not equal to given value."""
-  image_3_not: String
-
-  """All values that are contained in given list."""
-  image_3_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_3_not_in: [String!]
-
-  """All values less than the given value."""
-  image_3_lt: String
-
-  """All values less than or equal the given value."""
-  image_3_lte: String
-
-  """All values greater than the given value."""
-  image_3_gt: String
-
-  """All values greater than or equal the given value."""
-  image_3_gte: String
-
-  """All values containing the given string."""
-  image_3_contains: String
-
-  """All values not containing the given string."""
-  image_3_not_contains: String
-
-  """All values starting with the given string."""
-  image_3_starts_with: String
-
-  """All values not starting with the given string."""
-  image_3_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_3_ends_with: String
-
-  """All values not ending with the given string."""
-  image_3_not_ends_with: String
-  image_4: String
-
-  """All values that are not equal to given value."""
-  image_4_not: String
-
-  """All values that are contained in given list."""
-  image_4_in: [String!]
-
-  """All values that are not contained in given list."""
-  image_4_not_in: [String!]
-
-  """All values less than the given value."""
-  image_4_lt: String
-
-  """All values less than or equal the given value."""
-  image_4_lte: String
-
-  """All values greater than the given value."""
-  image_4_gt: String
-
-  """All values greater than or equal the given value."""
-  image_4_gte: String
-
-  """All values containing the given string."""
-  image_4_contains: String
-
-  """All values not containing the given string."""
-  image_4_not_contains: String
-
-  """All values starting with the given string."""
-  image_4_starts_with: String
-
-  """All values not starting with the given string."""
-  image_4_not_starts_with: String
-
-  """All values ending with the given string."""
-  image_4_ends_with: String
-
-  """All values not ending with the given string."""
-  image_4_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -1099,14 +924,6 @@ export type ItemOrderByInput =
   | 'description_DESC'
   | 'price_ASC'
   | 'price_DESC'
-  | 'image_1_ASC'
-  | 'image_1_DESC'
-  | 'image_2_ASC'
-  | 'image_2_DESC'
-  | 'image_3_ASC'
-  | 'image_3_DESC'
-  | 'image_4_ASC'
-  | 'image_4_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'updatedAt_ASC'
@@ -1126,15 +943,16 @@ export type UserOrderByInput =
   | 'createdAt_ASC'
   | 'createdAt_DESC'
 
+export interface ItemCreateimagesInput {
+  set?: String[] | String | null
+}
+
 export interface ItemCreateInput {
   id?: ID_Input | null
   name: String
   description: String
   price: Int
-  image_1: String
-  image_2?: String | null
-  image_3?: String | null
-  image_4?: String | null
+  images?: ItemCreateimagesInput | null
 }
 
 export interface ItemSubscriptionWhereInput {
@@ -1148,24 +966,22 @@ export interface ItemSubscriptionWhereInput {
   node?: ItemWhereInput | null
 }
 
+export interface ItemUpdateimagesInput {
+  set?: String[] | String | null
+}
+
 export interface ItemUpdateInput {
   name?: String | null
   description?: String | null
   price?: Int | null
-  image_1?: String | null
-  image_2?: String | null
-  image_3?: String | null
-  image_4?: String | null
+  images?: ItemUpdateimagesInput | null
 }
 
 export interface ItemUpdateManyMutationInput {
   name?: String | null
   description?: String | null
   price?: Int | null
-  image_1?: String | null
-  image_2?: String | null
-  image_3?: String | null
-  image_4?: String | null
+  images?: ItemUpdateimagesInput | null
 }
 
 export interface ItemWhereInput {
@@ -1222,62 +1038,6 @@ export interface ItemWhereInput {
   price_lte?: Int | null
   price_gt?: Int | null
   price_gte?: Int | null
-  image_1?: String | null
-  image_1_not?: String | null
-  image_1_in?: String[] | String | null
-  image_1_not_in?: String[] | String | null
-  image_1_lt?: String | null
-  image_1_lte?: String | null
-  image_1_gt?: String | null
-  image_1_gte?: String | null
-  image_1_contains?: String | null
-  image_1_not_contains?: String | null
-  image_1_starts_with?: String | null
-  image_1_not_starts_with?: String | null
-  image_1_ends_with?: String | null
-  image_1_not_ends_with?: String | null
-  image_2?: String | null
-  image_2_not?: String | null
-  image_2_in?: String[] | String | null
-  image_2_not_in?: String[] | String | null
-  image_2_lt?: String | null
-  image_2_lte?: String | null
-  image_2_gt?: String | null
-  image_2_gte?: String | null
-  image_2_contains?: String | null
-  image_2_not_contains?: String | null
-  image_2_starts_with?: String | null
-  image_2_not_starts_with?: String | null
-  image_2_ends_with?: String | null
-  image_2_not_ends_with?: String | null
-  image_3?: String | null
-  image_3_not?: String | null
-  image_3_in?: String[] | String | null
-  image_3_not_in?: String[] | String | null
-  image_3_lt?: String | null
-  image_3_lte?: String | null
-  image_3_gt?: String | null
-  image_3_gte?: String | null
-  image_3_contains?: String | null
-  image_3_not_contains?: String | null
-  image_3_starts_with?: String | null
-  image_3_not_starts_with?: String | null
-  image_3_ends_with?: String | null
-  image_3_not_ends_with?: String | null
-  image_4?: String | null
-  image_4_not?: String | null
-  image_4_in?: String[] | String | null
-  image_4_not_in?: String[] | String | null
-  image_4_lt?: String | null
-  image_4_lte?: String | null
-  image_4_gt?: String | null
-  image_4_gte?: String | null
-  image_4_contains?: String | null
-  image_4_not_contains?: String | null
-  image_4_starts_with?: String | null
-  image_4_not_starts_with?: String | null
-  image_4_ends_with?: String | null
-  image_4_not_ends_with?: String | null
   createdAt?: DateTime | null
   createdAt_not?: DateTime | null
   createdAt_in?: DateTime[] | DateTime | null
@@ -1431,10 +1191,7 @@ export interface Item extends Node {
   name: String
   description: String
   price: Int
-  image_1: String
-  image_2?: String | null
-  image_3?: String | null
-  image_4?: String | null
+  images: Array<String>
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1463,10 +1220,7 @@ export interface ItemPreviousValues {
   name: String
   description: String
   price: Int
-  image_1: String
-  image_2?: String | null
-  image_3?: String | null
-  image_4?: String | null
+  images: Array<String>
   createdAt: DateTime
   updatedAt: DateTime
 }

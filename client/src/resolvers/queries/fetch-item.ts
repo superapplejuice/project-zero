@@ -11,10 +11,7 @@ const FETCH_ITEM = gql`
       description
       price
       createdAt
-      image_1
-      image_2
-      image_3
-      image_4
+      images
     }
   }
 `

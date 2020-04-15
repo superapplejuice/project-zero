@@ -11,10 +11,7 @@ type Item {
   name: String!
   description: String!
   price: Int!
-  image_1: String!
-  image_2: String
-  image_3: String
-  image_4: String
+  images: [String!]! @scalarList(strategy: RELATION)
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

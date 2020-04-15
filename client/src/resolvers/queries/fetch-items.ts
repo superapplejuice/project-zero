@@ -10,8 +10,8 @@ const FETCH_ITEMS = gql`
       name
       description
       price
+      images
       createdAt
-      image_1
     }
   }
 `

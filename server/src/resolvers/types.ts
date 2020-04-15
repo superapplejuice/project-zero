@@ -17,23 +17,38 @@ export type Scalars = {
   Int: number
   Float: number
   DateTime: any
+  /**
+   * The `Long` scalar type represents non-fractional signed whole numeric values.
+   * Long can represent values between -(2^63) and 2^63 - 1.
+   */
+  Long: any
+}
+
+export type AggregateItem = {
+  count: Scalars['Int']
+}
+
+export type AggregateUser = {
+  count: Scalars['Int']
+}
+
+export type BatchPayload = {
+  /** The number of nodes that have been affected by the Batch operation. */
+  count: Scalars['Long']
 }
 
 export type CreateItemInput = {
-  name: Scalars['String']
   description: Scalars['String']
+  images: Array<Scalars['String']>
+  name: Scalars['String']
   price: Scalars['Int']
-  image_1: Scalars['String']
-  image_2?: Maybe<Scalars['String']>
-  image_3?: Maybe<Scalars['String']>
-  image_4?: Maybe<Scalars['String']>
 }
 
 export type FetchItemsInput = {
-  where?: Maybe<ItemWhereInput>
+  first?: Maybe<Scalars['Int']>
   orderBy?: Maybe<ItemOrderByInput>
   skip?: Maybe<Scalars['Int']>
-  first?: Maybe<Scalars['Int']>
+  where?: Maybe<ItemWhereInput>
 }
 
 export type Item = Node & {
@@ -41,12 +56,38 @@ export type Item = Node & {
   name: Scalars['String']
   description: Scalars['String']
   price: Scalars['Int']
-  image_1: Scalars['String']
-  image_2?: Maybe<Scalars['String']>
-  image_3?: Maybe<Scalars['String']>
-  image_4?: Maybe<Scalars['String']>
+  images: Array<Scalars['String']>
   createdAt: Scalars['DateTime']
   updatedAt: Scalars['DateTime']
+}
+
+/** A connection to a list of items. */
+export type ItemConnection = {
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo
+  /** A list of edges. */
+  edges: Array<Maybe<ItemEdge>>
+  aggregate: AggregateItem
+}
+
+export type ItemCreateimagesInput = {
+  set?: Maybe<Array<Scalars['String']>>
+}
+
+export type ItemCreateInput = {
+  id?: Maybe<Scalars['ID']>
+  name: Scalars['String']
+  description: Scalars['String']
+  price: Scalars['Int']
+  images?: Maybe<ItemCreateimagesInput>
+}
+
+/** An edge in a connection. */
+export type ItemEdge = {
+  /** The item at the end of the edge. */
+  node: Item
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']
 }
 
 export enum ItemOrderByInput {
@@ -58,18 +99,28 @@ export enum ItemOrderByInput {
   DescriptionDesc = 'description_DESC',
   PriceAsc = 'price_ASC',
   PriceDesc = 'price_DESC',
-  Image_1Asc = 'image_1_ASC',
-  Image_1Desc = 'image_1_DESC',
-  Image_2Asc = 'image_2_ASC',
-  Image_2Desc = 'image_2_DESC',
-  Image_3Asc = 'image_3_ASC',
-  Image_3Desc = 'image_3_DESC',
-  Image_4Asc = 'image_4_ASC',
-  Image_4Desc = 'image_4_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC',
+}
+
+export type ItemUpdateimagesInput = {
+  set?: Maybe<Array<Scalars['String']>>
+}
+
+export type ItemUpdateInput = {
+  name?: Maybe<Scalars['String']>
+  description?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
+  images?: Maybe<ItemUpdateimagesInput>
+}
+
+export type ItemUpdateManyMutationInput = {
+  name?: Maybe<Scalars['String']>
+  description?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
+  images?: Maybe<ItemUpdateimagesInput>
 }
 
 export type ItemWhereInput = {
@@ -175,114 +226,6 @@ export type ItemWhereInput = {
   price_gt?: Maybe<Scalars['Int']>
   /** All values greater than or equal the given value. */
   price_gte?: Maybe<Scalars['Int']>
-  image_1?: Maybe<Scalars['String']>
-  /** All values that are not equal to given value. */
-  image_1_not?: Maybe<Scalars['String']>
-  /** All values that are contained in given list. */
-  image_1_in?: Maybe<Array<Scalars['String']>>
-  /** All values that are not contained in given list. */
-  image_1_not_in?: Maybe<Array<Scalars['String']>>
-  /** All values less than the given value. */
-  image_1_lt?: Maybe<Scalars['String']>
-  /** All values less than or equal the given value. */
-  image_1_lte?: Maybe<Scalars['String']>
-  /** All values greater than the given value. */
-  image_1_gt?: Maybe<Scalars['String']>
-  /** All values greater than or equal the given value. */
-  image_1_gte?: Maybe<Scalars['String']>
-  /** All values containing the given string. */
-  image_1_contains?: Maybe<Scalars['String']>
-  /** All values not containing the given string. */
-  image_1_not_contains?: Maybe<Scalars['String']>
-  /** All values starting with the given string. */
-  image_1_starts_with?: Maybe<Scalars['String']>
-  /** All values not starting with the given string. */
-  image_1_not_starts_with?: Maybe<Scalars['String']>
-  /** All values ending with the given string. */
-  image_1_ends_with?: Maybe<Scalars['String']>
-  /** All values not ending with the given string. */
-  image_1_not_ends_with?: Maybe<Scalars['String']>
-  image_2?: Maybe<Scalars['String']>
-  /** All values that are not equal to given value. */
-  image_2_not?: Maybe<Scalars['String']>
-  /** All values that are contained in given list. */
-  image_2_in?: Maybe<Array<Scalars['String']>>
-  /** All values that are not contained in given list. */
-  image_2_not_in?: Maybe<Array<Scalars['String']>>
-  /** All values less than the given value. */
-  image_2_lt?: Maybe<Scalars['String']>
-  /** All values less than or equal the given value. */
-  image_2_lte?: Maybe<Scalars['String']>
-  /** All values greater than the given value. */
-  image_2_gt?: Maybe<Scalars['String']>
-  /** All values greater than or equal the given value. */
-  image_2_gte?: Maybe<Scalars['String']>
-  /** All values containing the given string. */
-  image_2_contains?: Maybe<Scalars['String']>
-  /** All values not containing the given string. */
-  image_2_not_contains?: Maybe<Scalars['String']>
-  /** All values starting with the given string. */
-  image_2_starts_with?: Maybe<Scalars['String']>
-  /** All values not starting with the given string. */
-  image_2_not_starts_with?: Maybe<Scalars['String']>
-  /** All values ending with the given string. */
-  image_2_ends_with?: Maybe<Scalars['String']>
-  /** All values not ending with the given string. */
-  image_2_not_ends_with?: Maybe<Scalars['String']>
-  image_3?: Maybe<Scalars['String']>
-  /** All values that are not equal to given value. */
-  image_3_not?: Maybe<Scalars['String']>
-  /** All values that are contained in given list. */
-  image_3_in?: Maybe<Array<Scalars['String']>>
-  /** All values that are not contained in given list. */
-  image_3_not_in?: Maybe<Array<Scalars['String']>>
-  /** All values less than the given value. */
-  image_3_lt?: Maybe<Scalars['String']>
-  /** All values less than or equal the given value. */
-  image_3_lte?: Maybe<Scalars['String']>
-  /** All values greater than the given value. */
-  image_3_gt?: Maybe<Scalars['String']>
-  /** All values greater than or equal the given value. */
-  image_3_gte?: Maybe<Scalars['String']>
-  /** All values containing the given string. */
-  image_3_contains?: Maybe<Scalars['String']>
-  /** All values not containing the given string. */
-  image_3_not_contains?: Maybe<Scalars['String']>
-  /** All values starting with the given string. */
-  image_3_starts_with?: Maybe<Scalars['String']>
-  /** All values not starting with the given string. */
-  image_3_not_starts_with?: Maybe<Scalars['String']>
-  /** All values ending with the given string. */
-  image_3_ends_with?: Maybe<Scalars['String']>
-  /** All values not ending with the given string. */
-  image_3_not_ends_with?: Maybe<Scalars['String']>
-  image_4?: Maybe<Scalars['String']>
-  /** All values that are not equal to given value. */
-  image_4_not?: Maybe<Scalars['String']>
-  /** All values that are contained in given list. */
-  image_4_in?: Maybe<Array<Scalars['String']>>
-  /** All values that are not contained in given list. */
-  image_4_not_in?: Maybe<Array<Scalars['String']>>
-  /** All values less than the given value. */
-  image_4_lt?: Maybe<Scalars['String']>
-  /** All values less than or equal the given value. */
-  image_4_lte?: Maybe<Scalars['String']>
-  /** All values greater than the given value. */
-  image_4_gt?: Maybe<Scalars['String']>
-  /** All values greater than or equal the given value. */
-  image_4_gte?: Maybe<Scalars['String']>
-  /** All values containing the given string. */
-  image_4_contains?: Maybe<Scalars['String']>
-  /** All values not containing the given string. */
-  image_4_not_contains?: Maybe<Scalars['String']>
-  /** All values starting with the given string. */
-  image_4_starts_with?: Maybe<Scalars['String']>
-  /** All values not starting with the given string. */
-  image_4_not_starts_with?: Maybe<Scalars['String']>
-  /** All values ending with the given string. */
-  image_4_ends_with?: Maybe<Scalars['String']>
-  /** All values not ending with the given string. */
-  image_4_not_ends_with?: Maybe<Scalars['String']>
   createdAt?: Maybe<Scalars['DateTime']>
   /** All values that are not equal to given value. */
   createdAt_not?: Maybe<Scalars['DateTime']>
@@ -315,12 +258,79 @@ export type ItemWhereInput = {
   updatedAt_gte?: Maybe<Scalars['DateTime']>
 }
 
+export type ItemWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>
+}
+
 export type Mutation = {
   createItem: Item
+  createUser: User
+  deleteItem?: Maybe<Item>
+  deleteManyItems: BatchPayload
+  deleteManyUsers: BatchPayload
+  deleteUser?: Maybe<User>
+  updateItem?: Maybe<Item>
+  updateManyItems: BatchPayload
+  updateManyUsers: BatchPayload
+  updateUser?: Maybe<User>
+  upsertItem: Item
+  upsertUser: User
 }
 
 export type MutationCreateItemArgs = {
   data?: Maybe<CreateItemInput>
+}
+
+export type MutationCreateUserArgs = {
+  data: UserCreateInput
+}
+
+export type MutationDeleteItemArgs = {
+  where: ItemWhereUniqueInput
+}
+
+export type MutationDeleteManyItemsArgs = {
+  where?: Maybe<ItemWhereInput>
+}
+
+export type MutationDeleteManyUsersArgs = {
+  where?: Maybe<UserWhereInput>
+}
+
+export type MutationDeleteUserArgs = {
+  where: UserWhereUniqueInput
+}
+
+export type MutationUpdateItemArgs = {
+  data: ItemUpdateInput
+  where: ItemWhereUniqueInput
+}
+
+export type MutationUpdateManyItemsArgs = {
+  data: ItemUpdateManyMutationInput
+  where?: Maybe<ItemWhereInput>
+}
+
+export type MutationUpdateManyUsersArgs = {
+  data: UserUpdateManyMutationInput
+  where?: Maybe<UserWhereInput>
+}
+
+export type MutationUpdateUserArgs = {
+  data: UserUpdateInput
+  where: UserWhereUniqueInput
+}
+
+export type MutationUpsertItemArgs = {
+  where: ItemWhereUniqueInput
+  create: ItemCreateInput
+  update: ItemUpdateInput
+}
+
+export type MutationUpsertUserArgs = {
+  where: UserWhereUniqueInput
+  create: UserCreateInput
+  update: UserUpdateInput
 }
 
 /** An object with an ID */
@@ -329,17 +339,89 @@ export type Node = {
   id: Scalars['ID']
 }
 
+/** Information about pagination in a connection. */
+export type PageInfo = {
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']>
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']>
+}
+
 export type Query = {
-  fetchItems: Array<Maybe<Item>>
   fetchItem: Item
+  fetchItems: Array<Maybe<Item>>
+  item?: Maybe<Item>
+  items: Array<Maybe<Item>>
+  itemsConnection: ItemConnection
+  /** Fetches an object given its ID */
+  node?: Maybe<Node>
+  user?: Maybe<User>
+  users: Array<Maybe<User>>
+  usersConnection: UserConnection
+}
+
+export type QueryFetchItemArgs = {
+  id: Scalars['ID']
 }
 
 export type QueryFetchItemsArgs = {
   data?: Maybe<FetchItemsInput>
 }
 
-export type QueryFetchItemArgs = {
+export type QueryItemArgs = {
+  where: ItemWhereUniqueInput
+}
+
+export type QueryItemsArgs = {
+  where?: Maybe<ItemWhereInput>
+  orderBy?: Maybe<ItemOrderByInput>
+  skip?: Maybe<Scalars['Int']>
+  after?: Maybe<Scalars['String']>
+  before?: Maybe<Scalars['String']>
+  first?: Maybe<Scalars['Int']>
+  last?: Maybe<Scalars['Int']>
+}
+
+export type QueryItemsConnectionArgs = {
+  where?: Maybe<ItemWhereInput>
+  orderBy?: Maybe<ItemOrderByInput>
+  skip?: Maybe<Scalars['Int']>
+  after?: Maybe<Scalars['String']>
+  before?: Maybe<Scalars['String']>
+  first?: Maybe<Scalars['Int']>
+  last?: Maybe<Scalars['Int']>
+}
+
+export type QueryNodeArgs = {
   id: Scalars['ID']
+}
+
+export type QueryUserArgs = {
+  where: UserWhereUniqueInput
+}
+
+export type QueryUsersArgs = {
+  where?: Maybe<UserWhereInput>
+  orderBy?: Maybe<UserOrderByInput>
+  skip?: Maybe<Scalars['Int']>
+  after?: Maybe<Scalars['String']>
+  before?: Maybe<Scalars['String']>
+  first?: Maybe<Scalars['Int']>
+  last?: Maybe<Scalars['Int']>
+}
+
+export type QueryUsersConnectionArgs = {
+  where?: Maybe<UserWhereInput>
+  orderBy?: Maybe<UserOrderByInput>
+  skip?: Maybe<Scalars['Int']>
+  after?: Maybe<Scalars['String']>
+  before?: Maybe<Scalars['String']>
+  first?: Maybe<Scalars['Int']>
+  last?: Maybe<Scalars['Int']>
 }
 
 export type User = Node & {
@@ -348,6 +430,193 @@ export type User = Node & {
   email: Scalars['String']
   password: Scalars['String']
   createdAt: Scalars['DateTime']
+}
+
+/** A connection to a list of items. */
+export type UserConnection = {
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo
+  /** A list of edges. */
+  edges: Array<Maybe<UserEdge>>
+  aggregate: AggregateUser
+}
+
+export type UserCreateInput = {
+  id?: Maybe<Scalars['ID']>
+  username: Scalars['String']
+  email: Scalars['String']
+  password: Scalars['String']
+}
+
+/** An edge in a connection. */
+export type UserEdge = {
+  /** The item at the end of the edge. */
+  node: User
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']
+}
+
+export enum UserOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  UsernameAsc = 'username_ASC',
+  UsernameDesc = 'username_DESC',
+  EmailAsc = 'email_ASC',
+  EmailDesc = 'email_DESC',
+  PasswordAsc = 'password_ASC',
+  PasswordDesc = 'password_DESC',
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+}
+
+export type UserUpdateInput = {
+  username?: Maybe<Scalars['String']>
+  email?: Maybe<Scalars['String']>
+  password?: Maybe<Scalars['String']>
+}
+
+export type UserUpdateManyMutationInput = {
+  username?: Maybe<Scalars['String']>
+  email?: Maybe<Scalars['String']>
+  password?: Maybe<Scalars['String']>
+}
+
+export type UserWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<UserWhereInput>>
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<UserWhereInput>>
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<UserWhereInput>>
+  id?: Maybe<Scalars['ID']>
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>
+  username?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  username_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  username_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  username_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  username_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  username_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  username_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  username_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  username_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  username_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  username_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  username_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  username_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  username_not_ends_with?: Maybe<Scalars['String']>
+  email?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  email_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  email_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  email_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  email_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  email_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  email_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  email_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  email_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  email_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  email_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  email_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  email_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  email_not_ends_with?: Maybe<Scalars['String']>
+  password?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  password_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  password_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  password_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  password_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  password_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  password_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  password_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  password_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  password_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  password_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  password_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  password_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  password_not_ends_with?: Maybe<Scalars['String']>
+  createdAt?: Maybe<Scalars['DateTime']>
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>
+}
+
+export type UserWhereUniqueInput = {
+  id?: Maybe<Scalars['ID']>
+  username?: Maybe<Scalars['String']>
+  email?: Maybe<Scalars['String']>
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -459,37 +728,103 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
-  fetchItemsInput: FetchItemsInput
-  ItemWhereInput: ItemWhereInput
   ID: ResolverTypeWrapper<Scalars['ID']>
+  Item: ResolverTypeWrapper<Item>
+  Node: ResolversTypes['Item'] | ResolversTypes['User']
   String: ResolverTypeWrapper<Scalars['String']>
   Int: ResolverTypeWrapper<Scalars['Int']>
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>
+  fetchItemsInput: FetchItemsInput
   ItemOrderByInput: ItemOrderByInput
-  Item: ResolverTypeWrapper<Item>
-  Node: ResolversTypes['Item'] | ResolversTypes['User']
+  ItemWhereInput: ItemWhereInput
+  ItemWhereUniqueInput: ItemWhereUniqueInput
+  ItemConnection: ResolverTypeWrapper<ItemConnection>
+  PageInfo: ResolverTypeWrapper<PageInfo>
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  ItemEdge: ResolverTypeWrapper<ItemEdge>
+  AggregateItem: ResolverTypeWrapper<AggregateItem>
+  UserWhereUniqueInput: UserWhereUniqueInput
+  User: ResolverTypeWrapper<User>
+  UserWhereInput: UserWhereInput
+  UserOrderByInput: UserOrderByInput
+  UserConnection: ResolverTypeWrapper<UserConnection>
+  UserEdge: ResolverTypeWrapper<UserEdge>
+  AggregateUser: ResolverTypeWrapper<AggregateUser>
   Mutation: ResolverTypeWrapper<{}>
   createItemInput: CreateItemInput
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>
-  User: ResolverTypeWrapper<User>
+  UserCreateInput: UserCreateInput
+  BatchPayload: ResolverTypeWrapper<BatchPayload>
+  Long: ResolverTypeWrapper<Scalars['Long']>
+  ItemUpdateInput: ItemUpdateInput
+  ItemUpdateimagesInput: ItemUpdateimagesInput
+  ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
+  UserUpdateManyMutationInput: UserUpdateManyMutationInput
+  UserUpdateInput: UserUpdateInput
+  ItemCreateInput: ItemCreateInput
+  ItemCreateimagesInput: ItemCreateimagesInput
 }
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {}
-  fetchItemsInput: FetchItemsInput
-  ItemWhereInput: ItemWhereInput
   ID: Scalars['ID']
+  Item: Item
+  Node: ResolversParentTypes['Item'] | ResolversParentTypes['User']
   String: Scalars['String']
   Int: Scalars['Int']
   DateTime: Scalars['DateTime']
+  fetchItemsInput: FetchItemsInput
   ItemOrderByInput: ItemOrderByInput
-  Item: Item
-  Node: ResolversParentTypes['Item'] | ResolversParentTypes['User']
+  ItemWhereInput: ItemWhereInput
+  ItemWhereUniqueInput: ItemWhereUniqueInput
+  ItemConnection: ItemConnection
+  PageInfo: PageInfo
+  Boolean: Scalars['Boolean']
+  ItemEdge: ItemEdge
+  AggregateItem: AggregateItem
+  UserWhereUniqueInput: UserWhereUniqueInput
+  User: User
+  UserWhereInput: UserWhereInput
+  UserOrderByInput: UserOrderByInput
+  UserConnection: UserConnection
+  UserEdge: UserEdge
+  AggregateUser: AggregateUser
   Mutation: {}
   createItemInput: CreateItemInput
-  Boolean: Scalars['Boolean']
-  User: User
+  UserCreateInput: UserCreateInput
+  BatchPayload: BatchPayload
+  Long: Scalars['Long']
+  ItemUpdateInput: ItemUpdateInput
+  ItemUpdateimagesInput: ItemUpdateimagesInput
+  ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
+  UserUpdateManyMutationInput: UserUpdateManyMutationInput
+  UserUpdateInput: UserUpdateInput
+  ItemCreateInput: ItemCreateInput
+  ItemCreateimagesInput: ItemCreateimagesInput
+}
+
+export type AggregateItemResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['AggregateItem'] = ResolversParentTypes['AggregateItem']
+> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type AggregateUserResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['AggregateUser'] = ResolversParentTypes['AggregateUser']
+> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type BatchPayloadResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['BatchPayload'] = ResolversParentTypes['BatchPayload']
+> = {
+  count?: Resolver<ResolversTypes['Long'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 
 export interface DateTimeScalarConfig
@@ -505,13 +840,38 @@ export type ItemResolvers<
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   price?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  image_1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  image_2?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  image_3?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  image_4?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  images?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type ItemConnectionResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['ItemConnection'] = ResolversParentTypes['ItemConnection']
+> = {
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>
+  edges?: Resolver<
+    Array<Maybe<ResolversTypes['ItemEdge']>>,
+    ParentType,
+    ContextType
+  >
+  aggregate?: Resolver<ResolversTypes['AggregateItem'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type ItemEdgeResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['ItemEdge'] = ResolversParentTypes['ItemEdge']
+> = {
+  node?: Resolver<ResolversTypes['Item'], ParentType, ContextType>
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export interface LongScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['Long'], any> {
+  name: 'Long'
 }
 
 export type MutationResolvers<
@@ -524,6 +884,72 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationCreateItemArgs, never>
   >
+  createUser?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateUserArgs, 'data'>
+  >
+  deleteItem?: Resolver<
+    Maybe<ResolversTypes['Item']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteItemArgs, 'where'>
+  >
+  deleteManyItems?: Resolver<
+    ResolversTypes['BatchPayload'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteManyItemsArgs, never>
+  >
+  deleteManyUsers?: Resolver<
+    ResolversTypes['BatchPayload'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteManyUsersArgs, never>
+  >
+  deleteUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteUserArgs, 'where'>
+  >
+  updateItem?: Resolver<
+    Maybe<ResolversTypes['Item']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateItemArgs, 'data' | 'where'>
+  >
+  updateManyItems?: Resolver<
+    ResolversTypes['BatchPayload'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateManyItemsArgs, 'data'>
+  >
+  updateManyUsers?: Resolver<
+    ResolversTypes['BatchPayload'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateManyUsersArgs, 'data'>
+  >
+  updateUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateUserArgs, 'data' | 'where'>
+  >
+  upsertItem?: Resolver<
+    ResolversTypes['Item'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpsertItemArgs, 'where' | 'create' | 'update'>
+  >
+  upsertUser?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpsertUserArgs, 'where' | 'create' | 'update'>
+  >
 }
 
 export type NodeResolvers<
@@ -534,21 +960,78 @@ export type NodeResolvers<
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
 }
 
+export type PageInfoResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']
+> = {
+  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  startCursor?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >
+  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
 export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
+  fetchItem?: Resolver<
+    ResolversTypes['Item'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryFetchItemArgs, 'id'>
+  >
   fetchItems?: Resolver<
     Array<Maybe<ResolversTypes['Item']>>,
     ParentType,
     ContextType,
     RequireFields<QueryFetchItemsArgs, never>
   >
-  fetchItem?: Resolver<
-    ResolversTypes['Item'],
+  item?: Resolver<
+    Maybe<ResolversTypes['Item']>,
     ParentType,
     ContextType,
-    RequireFields<QueryFetchItemArgs, 'id'>
+    RequireFields<QueryItemArgs, 'where'>
+  >
+  items?: Resolver<
+    Array<Maybe<ResolversTypes['Item']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryItemsArgs, never>
+  >
+  itemsConnection?: Resolver<
+    ResolversTypes['ItemConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryItemsConnectionArgs, never>
+  >
+  node?: Resolver<
+    Maybe<ResolversTypes['Node']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryNodeArgs, 'id'>
+  >
+  user?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUserArgs, 'where'>
+  >
+  users?: Resolver<
+    Array<Maybe<ResolversTypes['User']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersArgs, never>
+  >
+  usersConnection?: Resolver<
+    ResolversTypes['UserConnection'],
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersConnectionArgs, never>
   >
 }
 
@@ -564,13 +1047,45 @@ export type UserResolvers<
   __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 
+export type UserConnectionResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']
+> = {
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>
+  edges?: Resolver<
+    Array<Maybe<ResolversTypes['UserEdge']>>,
+    ParentType,
+    ContextType
+  >
+  aggregate?: Resolver<ResolversTypes['AggregateUser'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type UserEdgeResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']
+> = {
+  node?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
 export type Resolvers<ContextType = Context> = {
+  AggregateItem?: AggregateItemResolvers<ContextType>
+  AggregateUser?: AggregateUserResolvers<ContextType>
+  BatchPayload?: BatchPayloadResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Item?: ItemResolvers<ContextType>
+  ItemConnection?: ItemConnectionResolvers<ContextType>
+  ItemEdge?: ItemEdgeResolvers<ContextType>
+  Long?: GraphQLScalarType
   Mutation?: MutationResolvers<ContextType>
   Node?: NodeResolvers
+  PageInfo?: PageInfoResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
   User?: UserResolvers<ContextType>
+  UserConnection?: UserConnectionResolvers<ContextType>
+  UserEdge?: UserEdgeResolvers<ContextType>
 }
 
 /**
