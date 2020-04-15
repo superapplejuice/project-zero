@@ -1,9 +1,6 @@
 import styled, { css } from 'styled-components'
 
-const _boxShadow = css`
-  box-shadow: 8px 8px 16px 0 ${p => p.theme.colors.gray},
-    -8px -8px 16px 0 ${p => p.theme.colors.gray};
-`
+import { BoxShadow } from 'components/styles/global'
 
 export const Container = styled.a`
   cursor: pointer;
@@ -19,7 +16,7 @@ export const Container = styled.a`
 
   :hover {
     border: 1px solid ${p => p.theme.colors.yellow};
-    ${_boxShadow};
+    ${BoxShadow};
   }
 `
 

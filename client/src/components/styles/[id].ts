@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { BoxShadow } from 'components/styles/global'
+
 export const Container = styled.div`
   padding: 32px;
   display: flex;
@@ -30,6 +32,12 @@ export const ImageContainer = styled.div`
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};
     margin: 16px;
+    transition: ${p => p.theme.styles.transition};
+
+    :hover {
+      border: 1px solid ${p => p.theme.colors.yellow};
+      ${BoxShadow};
+    }
   }
 `
 
