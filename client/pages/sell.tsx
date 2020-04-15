@@ -31,10 +31,7 @@ const Sell = () => {
       .min(1, 'Enter at least $1!')
       .max(999999999, 'Come on dude no one is buying THAT.')
       .required('Please enter a price'),
-    image_1: yup.string(),
-    image_2: yup.string(),
-    image_3: yup.string(),
-    image_4: yup.string(),
+    images: yup.array(),
   })
 
   const handleFormSubmit = async (values: CreateItemVariables) => {
@@ -53,17 +50,12 @@ const Sell = () => {
         )
         const upload = await res.json()
 
-        return upload
+        return upload.secure_url
       })
     )
 
-    values.image_1 = uploadData[0].secure_url
-    values.image_2 = uploadData[1]?.secure_url
-    values.image_3 = uploadData[2]?.secure_url
-    values.image_4 = uploadData[3]?.secure_url
-
     return await createItem({
-      variables: { ...values },
+      variables: { ...values, images: uploadData },
     })
   }
 
@@ -81,10 +73,7 @@ const Sell = () => {
       name: '',
       description: '',
       price: undefined,
-      image_1: '',
-      image_2: null,
-      image_3: null,
-      image_4: null,
+      images: [],
     },
     validationSchema,
     onSubmit: async values => {

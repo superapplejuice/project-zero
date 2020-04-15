@@ -12,6 +12,7 @@ export interface CreateItem_createItem {
   name: string
   description: string
   price: number
+  images: string[]
   createdAt: any
 }
 
@@ -23,8 +24,5 @@ export interface CreateItemVariables {
   name: string
   description: string
   price: number
-  image_1: string
-  image_2?: string | null
-  image_3?: string | null
-  image_4?: string | null
+  images: string[]
 }

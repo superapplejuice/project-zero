@@ -12,7 +12,7 @@ const ProductCard = ({ item }: { item: FetchItems_fetchItems }) => (
         <Styles.Detail className="username">@superadmin01</Styles.Detail>
         <Styles.Detail className="create-ts">2 days ago</Styles.Detail>
       </Styles.DetailsContainer>
-      <Styles.Image src={item?.image_1} />
+      <Styles.Image src={item?.images[0]} />
       <Styles.DetailsContainer>
         <Styles.Name>{item?.name}</Styles.Name>
         <Styles.Detail className="price">${item?.price}.00</Styles.Detail>

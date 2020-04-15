@@ -12,8 +12,8 @@ export interface FetchItems_fetchItems {
   name: string
   description: string
   price: number
+  images: string[]
   createdAt: any
-  image_1: string
 }
 
 export interface FetchItems {

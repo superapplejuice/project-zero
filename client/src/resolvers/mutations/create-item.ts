@@ -8,26 +8,21 @@ const CREATE_ITEM = gql`
     $name: String!
     $description: String!
     $price: Int!
-    $image_1: String!
-    $image_2: String
-    $image_3: String
-    $image_4: String
+    $images: [String!]!
   ) {
     createItem(
       data: {
         name: $name
         description: $description
         price: $price
-        image_1: $image_1
-        image_2: $image_2
-        image_3: $image_3
-        image_4: $image_4
+        images: $images
       }
     ) {
       id
       name
       description
       price
+      images
       createdAt
     }
   }

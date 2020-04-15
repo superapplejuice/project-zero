@@ -13,10 +13,7 @@ export interface FetchItem_fetchItem {
   description: string
   price: number
   createdAt: any
-  image_1: string
-  image_2: string | null
-  image_3: string | null
-  image_4: string | null
+  images: string[]
 }
 
 export interface FetchItem {
