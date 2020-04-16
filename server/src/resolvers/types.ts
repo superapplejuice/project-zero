@@ -269,6 +269,7 @@ export type Mutation = {
   deleteManyItems: BatchPayload
   deleteManyUsers: BatchPayload
   deleteUser?: Maybe<User>
+  registerUser: User
   updateItem?: Maybe<Item>
   updateManyItems: BatchPayload
   updateManyUsers: BatchPayload
@@ -299,6 +300,10 @@ export type MutationDeleteManyUsersArgs = {
 
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput
+}
+
+export type MutationRegisterUserArgs = {
+  data?: Maybe<RegisterUserInput>
 }
 
 export type MutationUpdateItemArgs = {
@@ -422,6 +427,12 @@ export type QueryUsersConnectionArgs = {
   before?: Maybe<Scalars['String']>
   first?: Maybe<Scalars['Int']>
   last?: Maybe<Scalars['Int']>
+}
+
+export type RegisterUserInput = {
+  email: Scalars['String']
+  password: Scalars['String']
+  username: Scalars['String']
 }
 
 export type User = Node & {
@@ -755,6 +766,7 @@ export type ResolversTypes = {
   UserCreateInput: UserCreateInput
   BatchPayload: ResolverTypeWrapper<BatchPayload>
   Long: ResolverTypeWrapper<Scalars['Long']>
+  registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -794,6 +806,7 @@ export type ResolversParentTypes = {
   UserCreateInput: UserCreateInput
   BatchPayload: BatchPayload
   Long: Scalars['Long']
+  registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -913,6 +926,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationDeleteUserArgs, 'where'>
+  >
+  registerUser?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationRegisterUserArgs, never>
   >
   updateItem?: Resolver<
     Maybe<ResolversTypes['Item']>,

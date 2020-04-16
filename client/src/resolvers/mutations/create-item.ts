@@ -19,11 +19,6 @@ const CREATE_ITEM = gql`
       }
     ) {
       id
-      name
-      description
-      price
-      images
-      createdAt
     }
   }
 `
