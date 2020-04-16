@@ -5,10 +5,8 @@
   "license": "MIT",
   "author": "Jan Mathew",
   "scripts": {
-    "prisma": "prisma deploy --env-file .env",
     "dev": "nodemon",
-    "schema": "graphql get-schema -p prisma",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "sh codegen.sh"
   },
   "dependencies": {
     "dotenv": "^8.2.0",

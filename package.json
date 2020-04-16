@@ -22,10 +22,9 @@
   "scripts": {
     "lint": "eslint . --ext .js,.ts,.tsx --fix",
     "commit": "git-cz",
-    "prisma": "yarn --cwd server prisma",
-    "resolvers": "yarn --cwd server codegen",
-    "types": "yarn --cwd client codegen",
-    "generate": "run-s prisma lint resolvers types",
+    "prisma": "yarn --cwd server codegen",
+    "resolvers": "yarn --cwd client codegen",
+    "codegen": "run-s prisma resolvers",
     "server": "yarn --cwd server dev",
     "client": "yarn --cwd client dev",
     "dev": "run-p server client"
