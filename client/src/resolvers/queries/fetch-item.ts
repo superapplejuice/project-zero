@@ -16,8 +16,8 @@ const FETCH_ITEM = gql`
   }
 `
 
-const useFetchItems = (
+const useFetchItem = (
   options: QueryHookOptions<FetchItem, FetchItemVariables>
 ) => useQuery<FetchItem, FetchItemVariables>(FETCH_ITEM, options)
 
-export default useFetchItems
+export default useFetchItem

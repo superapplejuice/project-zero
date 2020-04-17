@@ -7,7 +7,7 @@ import { formatTimeSince, formatCurrency } from 'lib/formatters'
 import * as Styles from './styles'
 
 const ProductCard = ({ item }: { item: FetchItems_fetchItems }) => (
-  <Link href={`/item/${item?.id}`}>
+  <Link href={'/item/[id]'} as={`/item/${item?.id}`}>
     <Styles.Container>
       <Styles.DetailsContainer>
         <Styles.Detail className="username">@superadmin01</Styles.Detail>

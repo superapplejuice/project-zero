@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import { useRouter } from 'next/router'
 
 import { Upload } from 'components/dropzone/types'
 import { CreateItemVariables } from 'resolvers/mutations/types'
@@ -12,8 +13,12 @@ import { Button, Inputs } from 'components/core'
 import * as Styles from 'components/styles/sell'
 
 const Sell = () => {
+  const router = useRouter()
   const [uploads, setUploads] = useState<Upload[]>(null)
-  const [createItem, { loading }] = useCreateItem()
+  const [createItem, { loading }] = useCreateItem({
+    refetchQueries: ['FetchItems'],
+    awaitRefetchQueries: true,
+  })
 
   const validationSchema = yup.object<CreateItemVariables>({
     name: yup
@@ -54,9 +59,13 @@ const Sell = () => {
       })
     )
 
-    return await createItem({
+    const { data } = await createItem({
       variables: { ...values, images: uploadData },
     })
+    const href = '/item/[id]'
+    const id = data?.createItem?.id
+
+    return router.push(href, href.replace('[id]', `${id}`))
   }
 
   const {
@@ -78,8 +87,7 @@ const Sell = () => {
     validationSchema,
     onSubmit: async values => {
       setSubmitting(true)
-      await handleFormSubmit(values)
-      setSubmitting(false)
+      return await handleFormSubmit(values)
     },
   })
 

@@ -9,11 +9,6 @@
 export interface CreateItem_createItem {
   __typename: 'Item'
   id: string
-  name: string
-  description: string
-  price: number
-  images: string[]
-  createdAt: any
 }
 
 export interface CreateItem {

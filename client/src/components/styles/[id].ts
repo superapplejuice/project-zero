@@ -27,7 +27,7 @@ export const ImageContainer = styled.div`
   img {
     height: 200px;
     width: 200px;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};

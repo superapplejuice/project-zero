@@ -27,6 +27,7 @@ export const DetailsContainer = styled.div`
 
 export const Image = styled.img`
   object-fit: contain;
+  object-position: center;
   margin: 0 auto;
   margin: 12px 0;
   height: 125px;

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components'
 
+import { BoxShadow } from 'components/styles/global'
+
 const width = '500px'
 
 export const Container = styled.div`
@@ -56,15 +58,16 @@ export const ImagesContainer = styled.div`
   img {
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};
-    background-size: cover;
-    background-position: center;
-    max-width: 200px;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    object-position: center;
     margin: 16px;
     transition: ${p => p.theme.styles.transition};
 
     :hover {
       border: 1px solid ${p => p.theme.colors.blue};
-      box-shadow: 8px 8px 16px 0 ${p => p.theme.colors.gray};
+      ${BoxShadow}
     }
   }
 `
