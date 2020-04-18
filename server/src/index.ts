@@ -1,15 +1,11 @@
 require('dotenv').config({ path: '.env' })
 
 import { GraphQLServer, Options } from 'graphql-yoga'
+import cookieParser from 'cookie-parser'
 
 import * as resolvers from './resolvers'
-import { Prisma } from './generated/prisma'
-
-const db = new Prisma({
-  endpoint: process.env.PRISMA_ENDPOINT,
-  secret: process.env.PRISMA_SECRET,
-  debug: false,
-})
+import db from './lib/db'
+import { attachCookie, setUser } from './middleware'
 
 const server = new GraphQLServer({
   typeDefs: 'src/schema.graphql',
@@ -17,6 +13,15 @@ const server = new GraphQLServer({
   resolverValidationOptions: { requireResolversForResolveType: false },
   context: req => ({ ...req, db }),
 })
+
+// populate req.cookies with a cookie object
+server.express.use(cookieParser())
+
+// attach cookies to req
+server.express.use(attachCookie)
+
+// set user to req
+server.express.use(setUser)
 
 const options: Options = {
   cors: { credentials: true, origin: process.env.CLIENT_ENDPOINT },
