@@ -1,9 +1,9 @@
 overwrite: true
-schema: ./src/schema.graphql
+schema: './src/schema.graphql'
 documents: null
 config:
   skipTypename: true
-  contextType: ./context#Context
+  contextType: './context#Context'
 generates:
   src/resolvers/types.ts:
     plugins:
