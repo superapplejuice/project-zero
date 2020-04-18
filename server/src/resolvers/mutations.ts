@@ -103,6 +103,14 @@ const Mutation: MutationResolvers = {
       return existingUser
     },
   },
+  logoutUser: {
+    fragment: '',
+    resolve: (_parent, _args, context, _info) => {
+      context.response.clearCookie('token')
+
+      return { message: 'Logged out successfully!', error: false }
+    },
+  },
 }
 
 export default Mutation

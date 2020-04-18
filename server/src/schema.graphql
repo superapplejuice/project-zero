@@ -27,6 +27,12 @@ input loginUserInput {
   password: String!
 }
 
+# custom types
+type Alert {
+  message: String!
+  error: Boolean!
+}
+
 # queries
 type Query {
   fetchItems(data: fetchItemsInput): [Item]!
@@ -39,4 +45,5 @@ type Mutation {
   createItem(data: createItemInput): Item!
   registerUser(data: registerUserInput): User!
   loginUser(data: loginUserInput): User!
+  logoutUser: Alert
 }

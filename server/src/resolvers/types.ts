@@ -32,6 +32,11 @@ export type AggregateUser = {
   count: Scalars['Int']
 }
 
+export type Alert = {
+  error: Scalars['Boolean']
+  message: Scalars['String']
+}
+
 export type BatchPayload = {
   /** The number of nodes that have been affected by the Batch operation. */
   count: Scalars['Long']
@@ -275,6 +280,7 @@ export type Mutation = {
   deleteManyUsers: BatchPayload
   deleteUser?: Maybe<User>
   loginUser: User
+  logoutUser?: Maybe<Alert>
   registerUser: User
   updateItem?: Maybe<Item>
   updateManyItems: BatchPayload
@@ -778,6 +784,7 @@ export type ResolversTypes = {
   BatchPayload: ResolverTypeWrapper<BatchPayload>
   Long: ResolverTypeWrapper<Scalars['Long']>
   loginUserInput: LoginUserInput
+  Alert: ResolverTypeWrapper<Alert>
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
@@ -819,6 +826,7 @@ export type ResolversParentTypes = {
   BatchPayload: BatchPayload
   Long: Scalars['Long']
   loginUserInput: LoginUserInput
+  Alert: Alert
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
@@ -842,6 +850,15 @@ export type AggregateUserResolvers<
   ParentType extends ResolversParentTypes['AggregateUser'] = ResolversParentTypes['AggregateUser']
 > = {
   count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: isTypeOfResolverFn<ParentType>
+}
+
+export type AlertResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['Alert'] = ResolversParentTypes['Alert']
+> = {
+  error?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 
@@ -946,6 +963,7 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationLoginUserArgs, never>
   >
+  logoutUser?: Resolver<Maybe<ResolversTypes['Alert']>, ParentType, ContextType>
   registerUser?: Resolver<
     ResolversTypes['User'],
     ParentType,
@@ -1112,6 +1130,7 @@ export type UserEdgeResolvers<
 export type Resolvers<ContextType = Context> = {
   AggregateItem?: AggregateItemResolvers<ContextType>
   AggregateUser?: AggregateUserResolvers<ContextType>
+  Alert?: AlertResolvers<ContextType>
   BatchPayload?: BatchPayloadResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Item?: ItemResolvers<ContextType>
