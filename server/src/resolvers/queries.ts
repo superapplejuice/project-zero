@@ -19,14 +19,14 @@ const Query: QueryResolvers = {
   fetchUser: {
     fragment: '',
     resolve: async (parent, args, context, info) => {
-      if (!context.req.userId) {
+      if (!context.request.userId) {
         return null
       }
 
       return await context.db.query.user(
         {
           where: {
-            id: context.req.userId,
+            id: context.request.userId,
           },
         },
         info

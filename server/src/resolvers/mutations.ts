@@ -98,7 +98,7 @@ const Mutation: MutationResolvers = {
       // generate JWT token
       const token = sign({ userId: existingUser.id }, process.env.APP_SECRET)
       // set token into req.cookies
-      context.res.cookie('token', token, cookieOptions)
+      context.response.cookie('token', token, cookieOptions)
 
       return existingUser
     },
