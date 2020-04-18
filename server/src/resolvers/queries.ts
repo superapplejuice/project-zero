@@ -16,6 +16,23 @@ const Query: QueryResolvers = {
         info
       ),
   },
+  fetchUser: {
+    fragment: '',
+    resolve: async (parent, args, context, info) => {
+      if (!context.req.userId) {
+        return null
+      }
+
+      return await context.db.query.user(
+        {
+          where: {
+            id: context.req.userId,
+          },
+        },
+        info
+      )
+    },
+  },
 }
 
 export default Query

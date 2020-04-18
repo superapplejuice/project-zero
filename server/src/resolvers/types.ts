@@ -262,6 +262,11 @@ export type ItemWhereUniqueInput = {
   id?: Maybe<Scalars['ID']>
 }
 
+export type LoginUserInput = {
+  email: Scalars['String']
+  password: Scalars['String']
+}
+
 export type Mutation = {
   createItem: Item
   createUser: User
@@ -269,6 +274,7 @@ export type Mutation = {
   deleteManyItems: BatchPayload
   deleteManyUsers: BatchPayload
   deleteUser?: Maybe<User>
+  loginUser: User
   registerUser: User
   updateItem?: Maybe<Item>
   updateManyItems: BatchPayload
@@ -300,6 +306,10 @@ export type MutationDeleteManyUsersArgs = {
 
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput
+}
+
+export type MutationLoginUserArgs = {
+  data?: Maybe<LoginUserInput>
 }
 
 export type MutationRegisterUserArgs = {
@@ -359,6 +369,7 @@ export type PageInfo = {
 export type Query = {
   fetchItem: Item
   fetchItems: Array<Maybe<Item>>
+  fetchUser?: Maybe<User>
   item?: Maybe<Item>
   items: Array<Maybe<Item>>
   itemsConnection: ItemConnection
@@ -748,6 +759,7 @@ export type ResolversTypes = {
   fetchItemsInput: FetchItemsInput
   ItemOrderByInput: ItemOrderByInput
   ItemWhereInput: ItemWhereInput
+  User: ResolverTypeWrapper<User>
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ResolverTypeWrapper<ItemConnection>
   PageInfo: ResolverTypeWrapper<PageInfo>
@@ -755,7 +767,6 @@ export type ResolversTypes = {
   ItemEdge: ResolverTypeWrapper<ItemEdge>
   AggregateItem: ResolverTypeWrapper<AggregateItem>
   UserWhereUniqueInput: UserWhereUniqueInput
-  User: ResolverTypeWrapper<User>
   UserWhereInput: UserWhereInput
   UserOrderByInput: UserOrderByInput
   UserConnection: ResolverTypeWrapper<UserConnection>
@@ -766,6 +777,7 @@ export type ResolversTypes = {
   UserCreateInput: UserCreateInput
   BatchPayload: ResolverTypeWrapper<BatchPayload>
   Long: ResolverTypeWrapper<Scalars['Long']>
+  loginUserInput: LoginUserInput
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
@@ -788,6 +800,7 @@ export type ResolversParentTypes = {
   fetchItemsInput: FetchItemsInput
   ItemOrderByInput: ItemOrderByInput
   ItemWhereInput: ItemWhereInput
+  User: User
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ItemConnection
   PageInfo: PageInfo
@@ -795,7 +808,6 @@ export type ResolversParentTypes = {
   ItemEdge: ItemEdge
   AggregateItem: AggregateItem
   UserWhereUniqueInput: UserWhereUniqueInput
-  User: User
   UserWhereInput: UserWhereInput
   UserOrderByInput: UserOrderByInput
   UserConnection: UserConnection
@@ -806,6 +818,7 @@ export type ResolversParentTypes = {
   UserCreateInput: UserCreateInput
   BatchPayload: BatchPayload
   Long: Scalars['Long']
+  loginUserInput: LoginUserInput
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
@@ -927,6 +940,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationDeleteUserArgs, 'where'>
   >
+  loginUser?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationLoginUserArgs, never>
+  >
   registerUser?: Resolver<
     ResolversTypes['User'],
     ParentType,
@@ -1010,6 +1029,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryFetchItemsArgs, never>
   >
+  fetchUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   item?: Resolver<
     Maybe<ResolversTypes['Item']>,
     ParentType,

@@ -22,14 +22,21 @@ input registerUserInput {
   password: String!
 }
 
+input loginUserInput {
+  email: String!
+  password: String!
+}
+
 # queries
 type Query {
   fetchItems(data: fetchItemsInput): [Item]!
   fetchItem(id: ID!): Item!
+  fetchUser: User
 }
 
 # mutations
 type Mutation {
   createItem(data: createItemInput): Item!
   registerUser(data: registerUserInput): User!
+  loginUser(data: loginUserInput): User!
 }

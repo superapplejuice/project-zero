@@ -1,12 +1,20 @@
-import { hash } from 'bcryptjs'
+import { hash, compare } from 'bcryptjs'
+import { sign } from 'jsonwebtoken'
+
+import { CookieOptions } from 'express'
 
 import { MutationResolvers } from './types'
 import { usernameRegex, passwordRegex } from '../utils/regex'
 
+const cookieOptions: CookieOptions = {
+  httpOnly: true,
+  maxAge: 1000 * 60 * 60 * 24 * 7,
+}
+
 const Mutation: MutationResolvers = {
   createItem: {
     fragment: '',
-    resolve: async (parent, { data }, context, info) => {
+    resolve: async (_parent, { data }, context, info) => {
       const { name, description, price, images } = data
 
       return await context.db.mutation.createItem(
@@ -26,7 +34,7 @@ const Mutation: MutationResolvers = {
   },
   registerUser: {
     fragment: '',
-    resolve: async (parent, { data }, context, info) => {
+    resolve: async (_parent, { data }, context, info) => {
       const { username, email, password } = data
 
       if (!username.match(usernameRegex)) {
@@ -69,6 +77,30 @@ const Mutation: MutationResolvers = {
         },
         info
       )
+    },
+  },
+  loginUser: {
+    fragment: '',
+    resolve: async (_parent, { data }, context, _info) => {
+      const { email, password } = data
+      const authError = 'Email or password is incorrect!'
+
+      const existingUser = await context.db.query.user({ where: { email } })
+      if (!existingUser) {
+        throw new Error(authError)
+      }
+
+      const correctPassword = await compare(password, existingUser.password)
+      if (!correctPassword) {
+        throw new Error(authError)
+      }
+
+      // generate JWT token
+      const token = sign({ userId: existingUser.id }, process.env.APP_SECRET)
+      // set token into req.cookies
+      context.res.cookie('token', token, cookieOptions)
+
+      return existingUser
     },
   },
 }
