@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { Upload } from 'components/dropzone/types'
 import { CreateItemVariables } from 'resolvers/mutations/types'
 import { useCreateItem } from 'resolvers/mutations'
+import { useUserContext } from 'context/user-context'
 
 import Dropzone from 'components/dropzone'
 import { Button, Inputs } from 'components/core'
@@ -13,6 +14,12 @@ import { Button, Inputs } from 'components/core'
 import * as Styles from 'components/styles/sell'
 
 const Sell = () => {
+  const user = useUserContext()
+
+  if (!user?.fetchUser) {
+    return <p>You must be logged in to view this page!</p>
+  }
+
   const router = useRouter()
   const [uploads, setUploads] = useState<Upload[]>(null)
   const [createItem, { loading }] = useCreateItem({

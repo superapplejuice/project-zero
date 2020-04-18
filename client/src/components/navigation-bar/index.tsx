@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
+
+import { useUserContext } from 'context/user-context'
 
 import { MenuItem, Inputs } from 'components/core'
-
 import * as Styles from './styles'
 
 const NavigationBar = () => {
+  const user = useUserContext()
   const [value, setValue] = useState('')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -30,11 +32,18 @@ const NavigationBar = () => {
         </Styles.Search>
       </Styles.Menu>
       <Styles.Menu>
-        <MenuItem href="/register" title="Register" />
-        <MenuItem href="/login" title="Login" />
-        <MenuItem href="/profile" title="Profile" />
-        <MenuItem href="/likes" title="Likes" />
-        <MenuItem href="/sell" title="Sell" />
+        {user?.fetchUser ? (
+          <Fragment>
+            <MenuItem href="/profile" title="Profile" />
+            <MenuItem href="/likes" title="Likes" />
+            <MenuItem href="/sell" title="Sell" />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <MenuItem href="/register" title="Register" />
+            <MenuItem href="/login" title="Login" />
+          </Fragment>
+        )}
       </Styles.Menu>
     </Styles.Container>
   )

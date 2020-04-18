@@ -25,6 +25,7 @@
       "components/*": ["src/components/*"],
       "lib/*": ["src/lib/*"],
       "resolvers/*": ["src/resolvers/*"],
+      "context/*": ["src/context/*"]
     }
   },
   "exclude": [
