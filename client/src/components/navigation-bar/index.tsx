@@ -1,13 +1,17 @@
 import React, { useState, Fragment } from 'react'
+import { useRouter } from 'next/router'
 
 import { useUserContext } from 'context/user-context'
+import { useLogout } from 'resolvers/mutations'
 
 import { MenuItem, Inputs } from 'components/core'
 import * as Styles from './styles'
 
 const NavigationBar = () => {
   const user = useUserContext()
+  const router = useRouter()
   const [value, setValue] = useState('')
+  const [logout] = useLogout()
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setValue(event.currentTarget.value)
@@ -17,10 +21,15 @@ const NavigationBar = () => {
     setValue('')
   }
 
+  const handleLogout = () => {
+    logout()
+    return router.push('/')
+  }
+
   return (
     <Styles.Container>
       <Styles.Menu>
-        <MenuItem href="/" title="ZERO" />
+        <MenuItem.LinkItem href="/" title="ZERO" />
         <Styles.Search onSubmit={handleSubmit}>
           <Inputs.TextInput
             onChange={handleChange}
@@ -34,14 +43,15 @@ const NavigationBar = () => {
       <Styles.Menu>
         {user?.fetchUser ? (
           <Fragment>
-            <MenuItem href="/profile" title="Profile" />
-            <MenuItem href="/likes" title="Likes" />
-            <MenuItem href="/sell" title="Sell" />
+            <MenuItem.LinkItem href="/profile" title="Profile" />
+            <MenuItem.LinkItem href="/likes" title="Likes" />
+            <MenuItem.LinkItem href="/sell" title="Sell" />
+            <MenuItem.ButtonItem onClick={handleLogout} title="Logout" />
           </Fragment>
         ) : (
           <Fragment>
-            <MenuItem href="/register" title="Register" />
-            <MenuItem href="/login" title="Login" />
+            <MenuItem.LinkItem href="/register" title="Register" />
+            <MenuItem.LinkItem href="/login" title="Login" />
           </Fragment>
         )}
       </Styles.Menu>

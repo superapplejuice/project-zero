@@ -35,6 +35,10 @@ export const GlobalStyle = createGlobalStyle`
     color: ${p => p.theme.colors.black};
   }
 
+  button {
+    font-family: inherit;
+  }
+
   input,
   textarea {
     font-family: 'Fira Sans', sans-serif;
