@@ -62,6 +62,7 @@ export type Item = Node & {
   description: Scalars['String']
   price: Scalars['Int']
   images: Array<Scalars['String']>
+  user: User
   createdAt: Scalars['DateTime']
   updatedAt: Scalars['DateTime']
 }
@@ -80,6 +81,20 @@ export type ItemCreateimagesInput = {
 }
 
 export type ItemCreateInput = {
+  id?: Maybe<Scalars['ID']>
+  name: Scalars['String']
+  description: Scalars['String']
+  price: Scalars['Int']
+  images?: Maybe<ItemCreateimagesInput>
+  user: UserCreateOneWithoutItemsInput
+}
+
+export type ItemCreateManyWithoutUserInput = {
+  create?: Maybe<Array<ItemCreateWithoutUserInput>>
+  connect?: Maybe<Array<ItemWhereUniqueInput>>
+}
+
+export type ItemCreateWithoutUserInput = {
   id?: Maybe<Scalars['ID']>
   name: Scalars['String']
   description: Scalars['String']
@@ -110,11 +125,154 @@ export enum ItemOrderByInput {
   UpdatedAtDesc = 'updatedAt_DESC',
 }
 
+export type ItemScalarWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: Maybe<Array<ItemScalarWhereInput>>
+  /** Logical OR on all given filters. */
+  OR?: Maybe<Array<ItemScalarWhereInput>>
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: Maybe<Array<ItemScalarWhereInput>>
+  id?: Maybe<Scalars['ID']>
+  /** All values that are not equal to given value. */
+  id_not?: Maybe<Scalars['ID']>
+  /** All values that are contained in given list. */
+  id_in?: Maybe<Array<Scalars['ID']>>
+  /** All values that are not contained in given list. */
+  id_not_in?: Maybe<Array<Scalars['ID']>>
+  /** All values less than the given value. */
+  id_lt?: Maybe<Scalars['ID']>
+  /** All values less than or equal the given value. */
+  id_lte?: Maybe<Scalars['ID']>
+  /** All values greater than the given value. */
+  id_gt?: Maybe<Scalars['ID']>
+  /** All values greater than or equal the given value. */
+  id_gte?: Maybe<Scalars['ID']>
+  /** All values containing the given string. */
+  id_contains?: Maybe<Scalars['ID']>
+  /** All values not containing the given string. */
+  id_not_contains?: Maybe<Scalars['ID']>
+  /** All values starting with the given string. */
+  id_starts_with?: Maybe<Scalars['ID']>
+  /** All values not starting with the given string. */
+  id_not_starts_with?: Maybe<Scalars['ID']>
+  /** All values ending with the given string. */
+  id_ends_with?: Maybe<Scalars['ID']>
+  /** All values not ending with the given string. */
+  id_not_ends_with?: Maybe<Scalars['ID']>
+  name?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  name_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  name_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  name_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  name_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  name_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  name_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  name_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  name_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  name_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  name_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  name_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  name_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  name_not_ends_with?: Maybe<Scalars['String']>
+  description?: Maybe<Scalars['String']>
+  /** All values that are not equal to given value. */
+  description_not?: Maybe<Scalars['String']>
+  /** All values that are contained in given list. */
+  description_in?: Maybe<Array<Scalars['String']>>
+  /** All values that are not contained in given list. */
+  description_not_in?: Maybe<Array<Scalars['String']>>
+  /** All values less than the given value. */
+  description_lt?: Maybe<Scalars['String']>
+  /** All values less than or equal the given value. */
+  description_lte?: Maybe<Scalars['String']>
+  /** All values greater than the given value. */
+  description_gt?: Maybe<Scalars['String']>
+  /** All values greater than or equal the given value. */
+  description_gte?: Maybe<Scalars['String']>
+  /** All values containing the given string. */
+  description_contains?: Maybe<Scalars['String']>
+  /** All values not containing the given string. */
+  description_not_contains?: Maybe<Scalars['String']>
+  /** All values starting with the given string. */
+  description_starts_with?: Maybe<Scalars['String']>
+  /** All values not starting with the given string. */
+  description_not_starts_with?: Maybe<Scalars['String']>
+  /** All values ending with the given string. */
+  description_ends_with?: Maybe<Scalars['String']>
+  /** All values not ending with the given string. */
+  description_not_ends_with?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
+  /** All values that are not equal to given value. */
+  price_not?: Maybe<Scalars['Int']>
+  /** All values that are contained in given list. */
+  price_in?: Maybe<Array<Scalars['Int']>>
+  /** All values that are not contained in given list. */
+  price_not_in?: Maybe<Array<Scalars['Int']>>
+  /** All values less than the given value. */
+  price_lt?: Maybe<Scalars['Int']>
+  /** All values less than or equal the given value. */
+  price_lte?: Maybe<Scalars['Int']>
+  /** All values greater than the given value. */
+  price_gt?: Maybe<Scalars['Int']>
+  /** All values greater than or equal the given value. */
+  price_gte?: Maybe<Scalars['Int']>
+  createdAt?: Maybe<Scalars['DateTime']>
+  /** All values that are not equal to given value. */
+  createdAt_not?: Maybe<Scalars['DateTime']>
+  /** All values that are contained in given list. */
+  createdAt_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values less than the given value. */
+  createdAt_lt?: Maybe<Scalars['DateTime']>
+  /** All values less than or equal the given value. */
+  createdAt_lte?: Maybe<Scalars['DateTime']>
+  /** All values greater than the given value. */
+  createdAt_gt?: Maybe<Scalars['DateTime']>
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: Maybe<Scalars['DateTime']>
+  updatedAt?: Maybe<Scalars['DateTime']>
+  /** All values that are not equal to given value. */
+  updatedAt_not?: Maybe<Scalars['DateTime']>
+  /** All values that are contained in given list. */
+  updatedAt_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: Maybe<Array<Scalars['DateTime']>>
+  /** All values less than the given value. */
+  updatedAt_lt?: Maybe<Scalars['DateTime']>
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: Maybe<Scalars['DateTime']>
+  /** All values greater than the given value. */
+  updatedAt_gt?: Maybe<Scalars['DateTime']>
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: Maybe<Scalars['DateTime']>
+}
+
 export type ItemUpdateimagesInput = {
   set?: Maybe<Array<Scalars['String']>>
 }
 
 export type ItemUpdateInput = {
+  name?: Maybe<Scalars['String']>
+  description?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
+  images?: Maybe<ItemUpdateimagesInput>
+  user?: Maybe<UserUpdateOneRequiredWithoutItemsInput>
+}
+
+export type ItemUpdateManyDataInput = {
   name?: Maybe<Scalars['String']>
   description?: Maybe<Scalars['String']>
   price?: Maybe<Scalars['Int']>
@@ -126,6 +284,41 @@ export type ItemUpdateManyMutationInput = {
   description?: Maybe<Scalars['String']>
   price?: Maybe<Scalars['Int']>
   images?: Maybe<ItemUpdateimagesInput>
+}
+
+export type ItemUpdateManyWithoutUserInput = {
+  create?: Maybe<Array<ItemCreateWithoutUserInput>>
+  connect?: Maybe<Array<ItemWhereUniqueInput>>
+  set?: Maybe<Array<ItemWhereUniqueInput>>
+  disconnect?: Maybe<Array<ItemWhereUniqueInput>>
+  delete?: Maybe<Array<ItemWhereUniqueInput>>
+  update?: Maybe<Array<ItemUpdateWithWhereUniqueWithoutUserInput>>
+  updateMany?: Maybe<Array<ItemUpdateManyWithWhereNestedInput>>
+  deleteMany?: Maybe<Array<ItemScalarWhereInput>>
+  upsert?: Maybe<Array<ItemUpsertWithWhereUniqueWithoutUserInput>>
+}
+
+export type ItemUpdateManyWithWhereNestedInput = {
+  where: ItemScalarWhereInput
+  data: ItemUpdateManyDataInput
+}
+
+export type ItemUpdateWithoutUserDataInput = {
+  name?: Maybe<Scalars['String']>
+  description?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
+  images?: Maybe<ItemUpdateimagesInput>
+}
+
+export type ItemUpdateWithWhereUniqueWithoutUserInput = {
+  where: ItemWhereUniqueInput
+  data: ItemUpdateWithoutUserDataInput
+}
+
+export type ItemUpsertWithWhereUniqueWithoutUserInput = {
+  where: ItemWhereUniqueInput
+  update: ItemUpdateWithoutUserDataInput
+  create: ItemCreateWithoutUserInput
 }
 
 export type ItemWhereInput = {
@@ -261,6 +454,7 @@ export type ItemWhereInput = {
   updatedAt_gt?: Maybe<Scalars['DateTime']>
   /** All values greater than or equal the given value. */
   updatedAt_gte?: Maybe<Scalars['DateTime']>
+  user?: Maybe<UserWhereInput>
 }
 
 export type ItemWhereUniqueInput = {
@@ -458,6 +652,17 @@ export type User = Node & {
   email: Scalars['String']
   password: Scalars['String']
   createdAt: Scalars['DateTime']
+  items?: Maybe<Array<Item>>
+}
+
+export type UserItemsArgs = {
+  where?: Maybe<ItemWhereInput>
+  orderBy?: Maybe<ItemOrderByInput>
+  skip?: Maybe<Scalars['Int']>
+  after?: Maybe<Scalars['String']>
+  before?: Maybe<Scalars['String']>
+  first?: Maybe<Scalars['Int']>
+  last?: Maybe<Scalars['Int']>
 }
 
 /** A connection to a list of items. */
@@ -470,6 +675,19 @@ export type UserConnection = {
 }
 
 export type UserCreateInput = {
+  id?: Maybe<Scalars['ID']>
+  username: Scalars['String']
+  email: Scalars['String']
+  password: Scalars['String']
+  items?: Maybe<ItemCreateManyWithoutUserInput>
+}
+
+export type UserCreateOneWithoutItemsInput = {
+  create?: Maybe<UserCreateWithoutItemsInput>
+  connect?: Maybe<UserWhereUniqueInput>
+}
+
+export type UserCreateWithoutItemsInput = {
   id?: Maybe<Scalars['ID']>
   username: Scalars['String']
   email: Scalars['String']
@@ -501,12 +719,31 @@ export type UserUpdateInput = {
   username?: Maybe<Scalars['String']>
   email?: Maybe<Scalars['String']>
   password?: Maybe<Scalars['String']>
+  items?: Maybe<ItemUpdateManyWithoutUserInput>
 }
 
 export type UserUpdateManyMutationInput = {
   username?: Maybe<Scalars['String']>
   email?: Maybe<Scalars['String']>
   password?: Maybe<Scalars['String']>
+}
+
+export type UserUpdateOneRequiredWithoutItemsInput = {
+  create?: Maybe<UserCreateWithoutItemsInput>
+  connect?: Maybe<UserWhereUniqueInput>
+  update?: Maybe<UserUpdateWithoutItemsDataInput>
+  upsert?: Maybe<UserUpsertWithoutItemsInput>
+}
+
+export type UserUpdateWithoutItemsDataInput = {
+  username?: Maybe<Scalars['String']>
+  email?: Maybe<Scalars['String']>
+  password?: Maybe<Scalars['String']>
+}
+
+export type UserUpsertWithoutItemsInput = {
+  update: UserUpdateWithoutItemsDataInput
+  create: UserCreateWithoutItemsInput
 }
 
 export type UserWhereInput = {
@@ -639,6 +876,9 @@ export type UserWhereInput = {
   createdAt_gt?: Maybe<Scalars['DateTime']>
   /** All values greater than or equal the given value. */
   createdAt_gte?: Maybe<Scalars['DateTime']>
+  items_every?: Maybe<ItemWhereInput>
+  items_some?: Maybe<ItemWhereInput>
+  items_none?: Maybe<ItemWhereInput>
 }
 
 export type UserWhereUniqueInput = {
@@ -761,11 +1001,12 @@ export type ResolversTypes = {
   Node: ResolversTypes['Item'] | ResolversTypes['User']
   String: ResolverTypeWrapper<Scalars['String']>
   Int: ResolverTypeWrapper<Scalars['Int']>
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>
-  fetchItemsInput: FetchItemsInput
-  ItemOrderByInput: ItemOrderByInput
-  ItemWhereInput: ItemWhereInput
   User: ResolverTypeWrapper<User>
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>
+  ItemWhereInput: ItemWhereInput
+  UserWhereInput: UserWhereInput
+  ItemOrderByInput: ItemOrderByInput
+  fetchItemsInput: FetchItemsInput
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ResolverTypeWrapper<ItemConnection>
   PageInfo: ResolverTypeWrapper<PageInfo>
@@ -773,7 +1014,6 @@ export type ResolversTypes = {
   ItemEdge: ResolverTypeWrapper<ItemEdge>
   AggregateItem: ResolverTypeWrapper<AggregateItem>
   UserWhereUniqueInput: UserWhereUniqueInput
-  UserWhereInput: UserWhereInput
   UserOrderByInput: UserOrderByInput
   UserConnection: ResolverTypeWrapper<UserConnection>
   UserEdge: ResolverTypeWrapper<UserEdge>
@@ -781,6 +1021,9 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>
   createItemInput: CreateItemInput
   UserCreateInput: UserCreateInput
+  ItemCreateManyWithoutUserInput: ItemCreateManyWithoutUserInput
+  ItemCreateWithoutUserInput: ItemCreateWithoutUserInput
+  ItemCreateimagesInput: ItemCreateimagesInput
   BatchPayload: ResolverTypeWrapper<BatchPayload>
   Long: ResolverTypeWrapper<Scalars['Long']>
   loginUserInput: LoginUserInput
@@ -788,11 +1031,22 @@ export type ResolversTypes = {
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
+  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
+  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
+  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
+  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
   UserUpdateManyMutationInput: UserUpdateManyMutationInput
   UserUpdateInput: UserUpdateInput
+  ItemUpdateManyWithoutUserInput: ItemUpdateManyWithoutUserInput
+  ItemUpdateWithWhereUniqueWithoutUserInput: ItemUpdateWithWhereUniqueWithoutUserInput
+  ItemUpdateWithoutUserDataInput: ItemUpdateWithoutUserDataInput
+  ItemUpdateManyWithWhereNestedInput: ItemUpdateManyWithWhereNestedInput
+  ItemScalarWhereInput: ItemScalarWhereInput
+  ItemUpdateManyDataInput: ItemUpdateManyDataInput
+  ItemUpsertWithWhereUniqueWithoutUserInput: ItemUpsertWithWhereUniqueWithoutUserInput
   ItemCreateInput: ItemCreateInput
-  ItemCreateimagesInput: ItemCreateimagesInput
+  UserCreateOneWithoutItemsInput: UserCreateOneWithoutItemsInput
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -803,11 +1057,12 @@ export type ResolversParentTypes = {
   Node: ResolversParentTypes['Item'] | ResolversParentTypes['User']
   String: Scalars['String']
   Int: Scalars['Int']
-  DateTime: Scalars['DateTime']
-  fetchItemsInput: FetchItemsInput
-  ItemOrderByInput: ItemOrderByInput
-  ItemWhereInput: ItemWhereInput
   User: User
+  DateTime: Scalars['DateTime']
+  ItemWhereInput: ItemWhereInput
+  UserWhereInput: UserWhereInput
+  ItemOrderByInput: ItemOrderByInput
+  fetchItemsInput: FetchItemsInput
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ItemConnection
   PageInfo: PageInfo
@@ -815,7 +1070,6 @@ export type ResolversParentTypes = {
   ItemEdge: ItemEdge
   AggregateItem: AggregateItem
   UserWhereUniqueInput: UserWhereUniqueInput
-  UserWhereInput: UserWhereInput
   UserOrderByInput: UserOrderByInput
   UserConnection: UserConnection
   UserEdge: UserEdge
@@ -823,6 +1077,9 @@ export type ResolversParentTypes = {
   Mutation: {}
   createItemInput: CreateItemInput
   UserCreateInput: UserCreateInput
+  ItemCreateManyWithoutUserInput: ItemCreateManyWithoutUserInput
+  ItemCreateWithoutUserInput: ItemCreateWithoutUserInput
+  ItemCreateimagesInput: ItemCreateimagesInput
   BatchPayload: BatchPayload
   Long: Scalars['Long']
   loginUserInput: LoginUserInput
@@ -830,11 +1087,22 @@ export type ResolversParentTypes = {
   registerUserInput: RegisterUserInput
   ItemUpdateInput: ItemUpdateInput
   ItemUpdateimagesInput: ItemUpdateimagesInput
+  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
+  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
+  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
+  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
   UserUpdateManyMutationInput: UserUpdateManyMutationInput
   UserUpdateInput: UserUpdateInput
+  ItemUpdateManyWithoutUserInput: ItemUpdateManyWithoutUserInput
+  ItemUpdateWithWhereUniqueWithoutUserInput: ItemUpdateWithWhereUniqueWithoutUserInput
+  ItemUpdateWithoutUserDataInput: ItemUpdateWithoutUserDataInput
+  ItemUpdateManyWithWhereNestedInput: ItemUpdateManyWithWhereNestedInput
+  ItemScalarWhereInput: ItemScalarWhereInput
+  ItemUpdateManyDataInput: ItemUpdateManyDataInput
+  ItemUpsertWithWhereUniqueWithoutUserInput: ItemUpsertWithWhereUniqueWithoutUserInput
   ItemCreateInput: ItemCreateInput
-  ItemCreateimagesInput: ItemCreateimagesInput
+  UserCreateOneWithoutItemsInput: UserCreateOneWithoutItemsInput
 }
 
 export type AggregateItemResolvers<
@@ -884,6 +1152,7 @@ export type ItemResolvers<
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   price?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   images?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   __isTypeOf?: isTypeOfResolverFn<ParentType>
@@ -1101,6 +1370,12 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  items?: Resolver<
+    Maybe<Array<ResolversTypes['Item']>>,
+    ParentType,
+    ContextType,
+    RequireFields<UserItemsArgs, never>
+  >
   __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 

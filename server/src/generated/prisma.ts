@@ -219,6 +219,7 @@ type Item implements Node {
   description: String!
   price: Int!
   images: [String!]!
+  user: User!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -238,6 +239,20 @@ input ItemCreateimagesInput {
 }
 
 input ItemCreateInput {
+  id: ID
+  name: String!
+  description: String!
+  price: Int!
+  images: ItemCreateimagesInput
+  user: UserCreateOneWithoutItemsInput!
+}
+
+input ItemCreateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  connect: [ItemWhereUniqueInput!]
+}
+
+input ItemCreateWithoutUserInput {
   id: ID
   name: String!
   description: String!
@@ -277,6 +292,203 @@ type ItemPreviousValues {
   images: [String!]!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+input ItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  price: Int
+
+  """All values that are not equal to given value."""
+  price_not: Int
+
+  """All values that are contained in given list."""
+  price_in: [Int!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Int!]
+
+  """All values less than the given value."""
+  price_lt: Int
+
+  """All values less than or equal the given value."""
+  price_lte: Int
+
+  """All values greater than the given value."""
+  price_gt: Int
+
+  """All values greater than or equal the given value."""
+  price_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
 }
 
 type ItemSubscriptionPayload {
@@ -325,6 +537,14 @@ input ItemUpdateInput {
   description: String
   price: Int
   images: ItemUpdateimagesInput
+  user: UserUpdateOneRequiredWithoutItemsInput
+}
+
+input ItemUpdateManyDataInput {
+  name: String
+  description: String
+  price: Int
+  images: ItemUpdateimagesInput
 }
 
 input ItemUpdateManyMutationInput {
@@ -332,6 +552,41 @@ input ItemUpdateManyMutationInput {
   description: String
   price: Int
   images: ItemUpdateimagesInput
+}
+
+input ItemUpdateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  connect: [ItemWhereUniqueInput!]
+  set: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  delete: [ItemWhereUniqueInput!]
+  update: [ItemUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [ItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [ItemScalarWhereInput!]
+  upsert: [ItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput!
+  data: ItemUpdateManyDataInput!
+}
+
+input ItemUpdateWithoutUserDataInput {
+  name: String
+  description: String
+  price: Int
+  images: ItemUpdateimagesInput
+}
+
+input ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateWithoutUserDataInput!
+}
+
+input ItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  update: ItemUpdateWithoutUserDataInput!
+  create: ItemCreateWithoutUserInput!
 }
 
 input ItemWhereInput {
@@ -529,6 +784,7 @@ input ItemWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  user: UserWhereInput
 }
 
 input ItemWhereUniqueInput {
@@ -609,6 +865,7 @@ type User implements Node {
   email: String!
   password: String!
   createdAt: DateTime!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
 }
 
 """A connection to a list of items."""
@@ -622,6 +879,19 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
+  username: String!
+  email: String!
+  password: String!
+  items: ItemCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutItemsInput {
   id: ID
   username: String!
   email: String!
@@ -699,12 +969,31 @@ input UserUpdateInput {
   username: String
   email: String
   password: String
+  items: ItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   username: String
   email: String
   password: String
+}
+
+input UserUpdateOneRequiredWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutItemsDataInput
+  upsert: UserUpsertWithoutItemsInput
+}
+
+input UserUpdateWithoutItemsDataInput {
+  username: String
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput!
+  create: UserCreateWithoutItemsInput!
 }
 
 input UserWhereInput {
@@ -898,6 +1187,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
 }
 
 input UserWhereUniqueInput {
@@ -953,6 +1245,92 @@ export interface ItemCreateInput {
   description: String
   price: Int
   images?: ItemCreateimagesInput | null
+  user: UserCreateOneWithoutItemsInput
+}
+
+export interface ItemCreateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput | null
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput | null
+}
+
+export interface ItemCreateWithoutUserInput {
+  id?: ID_Input | null
+  name: String
+  description: String
+  price: Int
+  images?: ItemCreateimagesInput | null
+}
+
+export interface ItemScalarWhereInput {
+  AND?: ItemScalarWhereInput[] | ItemScalarWhereInput | null
+  OR?: ItemScalarWhereInput[] | ItemScalarWhereInput | null
+  NOT?: ItemScalarWhereInput[] | ItemScalarWhereInput | null
+  id?: ID_Input | null
+  id_not?: ID_Input | null
+  id_in?: ID_Output[] | ID_Output | null
+  id_not_in?: ID_Output[] | ID_Output | null
+  id_lt?: ID_Input | null
+  id_lte?: ID_Input | null
+  id_gt?: ID_Input | null
+  id_gte?: ID_Input | null
+  id_contains?: ID_Input | null
+  id_not_contains?: ID_Input | null
+  id_starts_with?: ID_Input | null
+  id_not_starts_with?: ID_Input | null
+  id_ends_with?: ID_Input | null
+  id_not_ends_with?: ID_Input | null
+  name?: String | null
+  name_not?: String | null
+  name_in?: String[] | String | null
+  name_not_in?: String[] | String | null
+  name_lt?: String | null
+  name_lte?: String | null
+  name_gt?: String | null
+  name_gte?: String | null
+  name_contains?: String | null
+  name_not_contains?: String | null
+  name_starts_with?: String | null
+  name_not_starts_with?: String | null
+  name_ends_with?: String | null
+  name_not_ends_with?: String | null
+  description?: String | null
+  description_not?: String | null
+  description_in?: String[] | String | null
+  description_not_in?: String[] | String | null
+  description_lt?: String | null
+  description_lte?: String | null
+  description_gt?: String | null
+  description_gte?: String | null
+  description_contains?: String | null
+  description_not_contains?: String | null
+  description_starts_with?: String | null
+  description_not_starts_with?: String | null
+  description_ends_with?: String | null
+  description_not_ends_with?: String | null
+  price?: Int | null
+  price_not?: Int | null
+  price_in?: Int[] | Int | null
+  price_not_in?: Int[] | Int | null
+  price_lt?: Int | null
+  price_lte?: Int | null
+  price_gt?: Int | null
+  price_gte?: Int | null
+  createdAt?: DateTime | null
+  createdAt_not?: DateTime | null
+  createdAt_in?: DateTime[] | DateTime | null
+  createdAt_not_in?: DateTime[] | DateTime | null
+  createdAt_lt?: DateTime | null
+  createdAt_lte?: DateTime | null
+  createdAt_gt?: DateTime | null
+  createdAt_gte?: DateTime | null
+  updatedAt?: DateTime | null
+  updatedAt_not?: DateTime | null
+  updatedAt_in?: DateTime[] | DateTime | null
+  updatedAt_not_in?: DateTime[] | DateTime | null
+  updatedAt_lt?: DateTime | null
+  updatedAt_lte?: DateTime | null
+  updatedAt_gt?: DateTime | null
+  updatedAt_gte?: DateTime | null
 }
 
 export interface ItemSubscriptionWhereInput {
@@ -975,6 +1353,14 @@ export interface ItemUpdateInput {
   description?: String | null
   price?: Int | null
   images?: ItemUpdateimagesInput | null
+  user?: UserUpdateOneRequiredWithoutItemsInput | null
+}
+
+export interface ItemUpdateManyDataInput {
+  name?: String | null
+  description?: String | null
+  price?: Int | null
+  images?: ItemUpdateimagesInput | null
 }
 
 export interface ItemUpdateManyMutationInput {
@@ -982,6 +1368,50 @@ export interface ItemUpdateManyMutationInput {
   description?: String | null
   price?: Int | null
   images?: ItemUpdateimagesInput | null
+}
+
+export interface ItemUpdateManyWithoutUserInput {
+  create?: ItemCreateWithoutUserInput[] | ItemCreateWithoutUserInput | null
+  connect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput | null
+  set?: ItemWhereUniqueInput[] | ItemWhereUniqueInput | null
+  disconnect?: ItemWhereUniqueInput[] | ItemWhereUniqueInput | null
+  delete?: ItemWhereUniqueInput[] | ItemWhereUniqueInput | null
+  update?:
+    | ItemUpdateWithWhereUniqueWithoutUserInput[]
+    | ItemUpdateWithWhereUniqueWithoutUserInput
+    | null
+  updateMany?:
+    | ItemUpdateManyWithWhereNestedInput[]
+    | ItemUpdateManyWithWhereNestedInput
+    | null
+  deleteMany?: ItemScalarWhereInput[] | ItemScalarWhereInput | null
+  upsert?:
+    | ItemUpsertWithWhereUniqueWithoutUserInput[]
+    | ItemUpsertWithWhereUniqueWithoutUserInput
+    | null
+}
+
+export interface ItemUpdateManyWithWhereNestedInput {
+  where: ItemScalarWhereInput
+  data: ItemUpdateManyDataInput
+}
+
+export interface ItemUpdateWithoutUserDataInput {
+  name?: String | null
+  description?: String | null
+  price?: Int | null
+  images?: ItemUpdateimagesInput | null
+}
+
+export interface ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput
+  data: ItemUpdateWithoutUserDataInput
+}
+
+export interface ItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput
+  update: ItemUpdateWithoutUserDataInput
+  create: ItemCreateWithoutUserInput
 }
 
 export interface ItemWhereInput {
@@ -1054,6 +1484,7 @@ export interface ItemWhereInput {
   updatedAt_lte?: DateTime | null
   updatedAt_gt?: DateTime | null
   updatedAt_gte?: DateTime | null
+  user?: UserWhereInput | null
 }
 
 export interface ItemWhereUniqueInput {
@@ -1061,6 +1492,19 @@ export interface ItemWhereUniqueInput {
 }
 
 export interface UserCreateInput {
+  id?: ID_Input | null
+  username: String
+  email: String
+  password: String
+  items?: ItemCreateManyWithoutUserInput | null
+}
+
+export interface UserCreateOneWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput | null
+  connect?: UserWhereUniqueInput | null
+}
+
+export interface UserCreateWithoutItemsInput {
   id?: ID_Input | null
   username: String
   email: String
@@ -1082,12 +1526,31 @@ export interface UserUpdateInput {
   username?: String | null
   email?: String | null
   password?: String | null
+  items?: ItemUpdateManyWithoutUserInput | null
 }
 
 export interface UserUpdateManyMutationInput {
   username?: String | null
   email?: String | null
   password?: String | null
+}
+
+export interface UserUpdateOneRequiredWithoutItemsInput {
+  create?: UserCreateWithoutItemsInput | null
+  connect?: UserWhereUniqueInput | null
+  update?: UserUpdateWithoutItemsDataInput | null
+  upsert?: UserUpsertWithoutItemsInput | null
+}
+
+export interface UserUpdateWithoutItemsDataInput {
+  username?: String | null
+  email?: String | null
+  password?: String | null
+}
+
+export interface UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput
+  create: UserCreateWithoutItemsInput
 }
 
 export interface UserWhereInput {
@@ -1158,6 +1621,9 @@ export interface UserWhereInput {
   createdAt_lte?: DateTime | null
   createdAt_gt?: DateTime | null
   createdAt_gte?: DateTime | null
+  items_every?: ItemWhereInput | null
+  items_some?: ItemWhereInput | null
+  items_none?: ItemWhereInput | null
 }
 
 export interface UserWhereUniqueInput {
@@ -1192,6 +1658,7 @@ export interface Item extends Node {
   description: String
   price: Int
   images: Array<String>
+  user: User
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1249,6 +1716,7 @@ export interface User extends Node {
   email: String
   password: String
   createdAt: DateTime
+  items?: Array<Item> | null
 }
 
 /*
