@@ -5,7 +5,7 @@ import { CookieOptions } from 'express'
 
 import { MutationResolvers } from './types'
 import { usernameRegex, passwordRegex } from '../utils/regex'
-import { requireAuth } from '../utils/messages'
+import { requireAuth, wrongCredentials } from '../utils/messages'
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
@@ -45,15 +45,15 @@ const Mutation: MutationResolvers = {
   updateItem: {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
-      if (!context.request.userId) {
-        throw new Error(requireAuth)
-      }
-
       const { id, name, description, price, images } = data
       const itemToUpdate = await context.db.query.item({ where: { id } })
 
       if (!itemToUpdate) {
         throw new Error('That item does not exist!')
+      }
+
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
       }
 
       if (itemToUpdate.user.id !== context.request.userId) {
@@ -83,18 +83,17 @@ const Mutation: MutationResolvers = {
 
       if (!username.match(usernameRegex)) {
         throw new Error(
-          'Username needs to be between 4 to 15 characters long, and cannot contain special characters!'
+          'Your username needs to be between 4 to 15 characters long, and cannot contain special characters!'
         )
       }
 
       if (!password.match(passwordRegex)) {
         throw new Error(
-          'Password needs to be at least 8 characters long, and contains at least one capital letter, one special character, and one number!'
+          'Your password needs to be at least 8 characters long, and contains at least one capital letter, one special character, and one number!'
         )
       }
 
       const parsedUsername = `@${username.toLowerCase()}`
-
       const existingUsername = await context.db.query.user({
         where: { username: parsedUsername },
       })
@@ -102,8 +101,9 @@ const Mutation: MutationResolvers = {
         throw new Error('Username already taken!')
       }
 
+      const parsedEmail = email.toLowerCase()
       const existingEmail = await context.db.query.user({
-        where: { email },
+        where: { email: parsedEmail },
       })
       if (existingEmail) {
         throw new Error('Email already taken!')
@@ -115,7 +115,7 @@ const Mutation: MutationResolvers = {
         {
           data: {
             username: parsedUsername,
-            email,
+            email: parsedEmail,
             password: hashedPassword,
           },
         },
@@ -127,16 +127,18 @@ const Mutation: MutationResolvers = {
     fragment: '',
     resolve: async (_parent, { data }, context, _info) => {
       const { email, password } = data
-      const authError = 'Email or password is incorrect!'
+      const parsedEmail = email.toLowerCase()
 
-      const existingUser = await context.db.query.user({ where: { email } })
+      const existingUser = await context.db.query.user({
+        where: { email: parsedEmail },
+      })
       if (!existingUser) {
-        throw new Error(authError)
+        throw new Error(wrongCredentials)
       }
 
       const correctPassword = await compare(password, existingUser.password)
       if (!correctPassword) {
-        throw new Error(authError)
+        throw new Error(wrongCredentials)
       }
 
       // generate JWT token
