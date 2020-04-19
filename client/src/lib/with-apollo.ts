@@ -8,6 +8,11 @@ export default withApollo(
     new ApolloClient({
       uri: endpoint,
       cache: new InMemoryCache().restore(initialState || {}),
-      headers,
+      request: operation => {
+        operation.setContext({
+          fetchOptions: { credentials: 'include' },
+          headers,
+        })
+      },
     })
 )
