@@ -11,7 +11,7 @@ export const Container = styled.div`
 
 export const Menu = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   width: 500px;
 
   > div,
