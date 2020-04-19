@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useRouter } from 'next/router'
@@ -8,11 +8,11 @@ import { useLogin } from 'resolvers/mutations'
 import { LoginUserVariables } from 'resolvers/mutations/types'
 import { GraphQLError } from 'graphql'
 
-import { Inputs, Button, Loader } from 'components/core'
+import { Inputs, Button } from 'components/core'
 import * as Styles from 'components/styles/login'
 
 const Login = () => {
-  const { user, loadingUser } = useUserContext()
+  const { user } = useUserContext()
   const router = useRouter()
 
   if (user) {
@@ -68,54 +68,48 @@ const Login = () => {
 
   return (
     <Styles.Container>
-      {loadingUser ? (
-        <Loader size="large" />
-      ) : (
-        <Fragment>
-          {submitErrors &&
-            submitErrors.map((error, i) => (
-              <Styles.Warning key={i}>{error.message}</Styles.Warning>
-            ))}
-          <Styles.FormGroup>
-            <Styles.Header>Login</Styles.Header>
-            <Styles.Form onSubmit={handleSubmit}>
-              <Inputs.TextInput
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                type="email"
-                name="email"
-                label="Email"
-                placeholder="Email"
-              >
-                {touched.email && errors.email && (
-                  <Styles.Warning>{errors.email}</Styles.Warning>
-                )}
-              </Inputs.TextInput>
-              <Inputs.TextInput
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                type="password"
-                name="password"
-                label="Password"
-                placeholder="Password"
-              >
-                {touched.password && errors.password && (
-                  <Styles.Warning>{errors.password}</Styles.Warning>
-                )}
-              </Inputs.TextInput>
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting || loading}
-                type="submit"
-              >
-                {isSubmitting ? 'Logging in...' : 'Login'}
-              </Button>
-            </Styles.Form>
-          </Styles.FormGroup>
-        </Fragment>
-      )}
+      {submitErrors &&
+        submitErrors.map((error, i) => (
+          <Styles.Warning key={i}>{error.message}</Styles.Warning>
+        ))}
+      <Styles.FormGroup>
+        <Styles.Header>Login</Styles.Header>
+        <Styles.Form onSubmit={handleSubmit}>
+          <Inputs.TextInput
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Email"
+          >
+            {touched.email && errors.email && (
+              <Styles.Warning>{errors.email}</Styles.Warning>
+            )}
+          </Inputs.TextInput>
+          <Inputs.TextInput
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Password"
+          >
+            {touched.password && errors.password && (
+              <Styles.Warning>{errors.password}</Styles.Warning>
+            )}
+          </Inputs.TextInput>
+          <Button
+            onClick={handleSubmit}
+            disabled={isSubmitting || loading}
+            type="submit"
+          >
+            {isSubmitting ? 'Logging in...' : 'Login'}
+          </Button>
+        </Styles.Form>
+      </Styles.FormGroup>
     </Styles.Container>
   )
 }

@@ -4,11 +4,11 @@ import { useRouter } from 'next/router'
 import { useUserContext } from 'context/user-context'
 import { useLogout } from 'resolvers/mutations'
 
-import { MenuItem, Inputs, Loader } from 'components/core'
+import { MenuItem, Inputs } from 'components/core'
 import * as Styles from './styles'
 
 const NavigationBar = () => {
-  const { user, loadingUser } = useUserContext()
+  const { user } = useUserContext()
   const router = useRouter()
   const [value, setValue] = useState('')
   const [logout] = useLogout({
@@ -44,9 +44,7 @@ const NavigationBar = () => {
         </Styles.Search>
       </Styles.Menu>
       <Styles.Menu>
-        {loadingUser ? (
-          <Loader size="small" />
-        ) : user ? (
+        {user ? (
           <Fragment>
             <MenuItem.LinkItem href="/profile" title="Profile" />
             <MenuItem.LinkItem href="/likes" title="Likes" />
