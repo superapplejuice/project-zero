@@ -9,13 +9,13 @@ import Meta from './meta'
 import { theme, GlobalStyle, GlobalContainer, PageContainer } from './styles'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { data } = useFetchUser()
+  const { data, loading } = useFetchUser()
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <GlobalContainer>
-        <UserProvider value={data}>
+        <UserProvider value={{ user: data?.fetchUser, loadingUser: loading }}>
           <Meta />
           <NavigationBar />
           <PageContainer>{children}</PageContainer>

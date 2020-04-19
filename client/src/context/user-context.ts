@@ -1,8 +1,13 @@
 import { createContext, useContext } from 'react'
 
-import { FetchUser } from 'resolvers/queries/types'
+import { FetchUser_fetchUser } from 'resolvers/queries/types'
 
-const UserContext = createContext<FetchUser>(undefined)
+type UserContext = {
+  user: FetchUser_fetchUser
+  loadingUser: boolean
+}
+
+const UserContext = createContext<UserContext>(undefined)
 
 export const useUserContext = () => useContext(UserContext)
 export const UserProvider = UserContext.Provider
