@@ -9,7 +9,7 @@ import { useCreateItem } from 'resolvers/mutations'
 import { useUserContext } from 'context/user-context'
 
 import Dropzone from 'components/dropzone'
-import { Button, Inputs } from 'components/core'
+import { Button, Inputs, ErrorMessage } from 'components/core'
 import * as Styles from 'components/styles/sell'
 
 const Sell = () => {
@@ -21,7 +21,7 @@ const Sell = () => {
 
   const router = useRouter()
   const [uploads, setUploads] = useState<Upload[]>(null)
-  const [createItem, { loading }] = useCreateItem({
+  const [createItem, { loading, error }] = useCreateItem({
     refetchQueries: ['FetchItems'],
     awaitRefetchQueries: true,
   })
@@ -103,6 +103,7 @@ const Sell = () => {
       <Styles.Form onSubmit={handleSubmit}>
         <Styles.FieldGroup>
           <Styles.FieldHeader>Basic Information</Styles.FieldHeader>
+
           <Inputs.TextInput
             onChange={handleChange}
             onBlur={handleBlur}
@@ -117,6 +118,7 @@ const Sell = () => {
               <Styles.Warning>{errors.name}</Styles.Warning>
             )}
           </Inputs.TextInput>
+
           <Inputs.TextArea
             onChange={handleChange}
             onBlur={handleBlur}
@@ -131,6 +133,7 @@ const Sell = () => {
               <Styles.Warning>{errors.description}</Styles.Warning>
             )}
           </Inputs.TextArea>
+
           <Inputs.TextInput
             onChange={handleChange}
             onBlur={handleBlur}
@@ -145,6 +148,8 @@ const Sell = () => {
               <Styles.Warning>{errors.price}</Styles.Warning>
             )}
           </Inputs.TextInput>
+
+          {error && <ErrorMessage error={error} />}
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting || !uploads || loading || !errors}
@@ -158,6 +163,7 @@ const Sell = () => {
           <Styles.FieldHeader>
             What does your item look like?
           </Styles.FieldHeader>
+
           <Dropzone setUploads={setUploads} />
         </Styles.FieldGroup>
       </Styles.Form>

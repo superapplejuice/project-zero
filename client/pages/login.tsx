@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useRouter } from 'next/router'
@@ -6,9 +6,8 @@ import { useRouter } from 'next/router'
 import { useUserContext } from 'context/user-context'
 import { useLogin } from 'resolvers/mutations'
 import { LoginUserVariables } from 'resolvers/mutations/types'
-import { GraphQLError } from 'graphql'
 
-import { Inputs, Button } from 'components/core'
+import { Inputs, Button, ErrorMessage } from 'components/core'
 import * as Styles from 'components/styles/login'
 
 const Login = () => {
@@ -19,8 +18,7 @@ const Login = () => {
     return router.push('/')
   }
 
-  const [submitErrors, setSubmitErrors] = useState<GraphQLError[]>(null)
-  const [login, { loading }] = useLogin({
+  const [login, { loading, error }] = useLogin({
     refetchQueries: ['FetchUser'],
     awaitRefetchQueries: true,
   })
@@ -34,15 +32,15 @@ const Login = () => {
   })
 
   const handleLogin = async (values: LoginUserVariables) => {
-    const { data, errors } = await login({
+    const { data } = await login({
       variables: { ...values },
     })
 
-    if (data?.loginUser && !errors) {
+    if (data?.loginUser && !error) {
       return router.push('/')
     }
 
-    return setSubmitErrors(errors)
+    return null
   }
 
   const {
@@ -68,10 +66,6 @@ const Login = () => {
 
   return (
     <Styles.Container>
-      {submitErrors &&
-        submitErrors.map((error, i) => (
-          <Styles.Warning key={i}>{error.message}</Styles.Warning>
-        ))}
       <Styles.FormGroup>
         <Styles.Header>Login</Styles.Header>
         <Styles.Form onSubmit={handleSubmit}>
@@ -88,6 +82,7 @@ const Login = () => {
               <Styles.Warning>{errors.email}</Styles.Warning>
             )}
           </Inputs.TextInput>
+
           <Inputs.TextInput
             onChange={handleChange}
             onBlur={handleBlur}
@@ -101,6 +96,8 @@ const Login = () => {
               <Styles.Warning>{errors.password}</Styles.Warning>
             )}
           </Inputs.TextInput>
+
+          {error && <ErrorMessage error={error} />}
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting || loading}

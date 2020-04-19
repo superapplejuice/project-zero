@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { ApolloError } from 'apollo-boost'
 
 export const formatCurrency = (value: number) =>
   new Intl.NumberFormat('en-SG', {
@@ -16,3 +17,6 @@ export const formatTimeSince = (postTs: string) => {
 
   return timeSince
 }
+
+export const formatError = (error: ApolloError) =>
+  error.message.replace('GraphQL error: ', '')
