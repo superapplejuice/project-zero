@@ -11,7 +11,10 @@ const NavigationBar = () => {
   const user = useUserContext()
   const router = useRouter()
   const [value, setValue] = useState('')
-  const [logout] = useLogout()
+  const [logout] = useLogout({
+    refetchQueries: ['FetchUser'],
+    awaitRefetchQueries: true,
+  })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setValue(event.currentTarget.value)
