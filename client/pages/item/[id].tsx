@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useFetchItem } from 'resolvers/queries'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
 
+import { Loader } from 'components/core'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
@@ -14,7 +15,7 @@ const Product = () => {
     variables: { id: String(id) },
   })
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Loader size="large" />
 
   return (
     <Styles.Container>

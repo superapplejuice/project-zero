@@ -9,14 +9,17 @@ import { useCreateItem } from 'resolvers/mutations'
 import { useUserContext } from 'context/user-context'
 
 import Dropzone from 'components/dropzone'
-import { Button, Inputs } from 'components/core'
-
+import { Button, Inputs, Loader } from 'components/core'
 import * as Styles from 'components/styles/sell'
 
 const Sell = () => {
-  const user = useUserContext()
+  const { user, loadingUser } = useUserContext()
 
-  if (!user?.fetchUser) {
+  if (loadingUser) {
+    return <Loader size="large" />
+  }
+
+  if (!user) {
     return <p>You must be logged in to view this page!</p>
   }
 
