@@ -5,6 +5,7 @@ import { CookieOptions } from 'express'
 
 import { MutationResolvers } from './types'
 import { usernameRegex, passwordRegex } from '../utils/regex'
+import { requireAuth } from '../utils/messages'
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
@@ -15,6 +16,10 @@ const Mutation: MutationResolvers = {
   createItem: {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
       const { name, description, price, images } = data
 
       return await context.db.mutation.createItem(
@@ -25,6 +30,11 @@ const Mutation: MutationResolvers = {
             price,
             images: {
               set: images,
+            },
+            user: {
+              connect: {
+                id: context.request.userId,
+              },
             },
           },
         },
