@@ -8,6 +8,14 @@ input createItemInput {
   images: [String!]!
 }
 
+input updateItemInput {
+  id: ID!
+  name: String
+  description: String
+  price: Int
+  images: [String]!
+}
+
 input fetchItemsInput {
   where: ItemWhereInput
   orderBy: ItemOrderByInput
@@ -43,6 +51,7 @@ type Query {
 # mutations
 type Mutation {
   createItem(data: createItemInput): Item!
+  updateItem(data: updateItemInput): Item!
   registerUser(data: registerUserInput): User!
   loginUser(data: loginUserInput): User!
   logoutUser: Alert

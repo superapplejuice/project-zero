@@ -476,7 +476,7 @@ export type Mutation = {
   loginUser: User
   logoutUser?: Maybe<Alert>
   registerUser: User
-  updateItem?: Maybe<Item>
+  updateItem: Item
   updateManyItems: BatchPayload
   updateManyUsers: BatchPayload
   updateUser?: Maybe<User>
@@ -517,8 +517,7 @@ export type MutationRegisterUserArgs = {
 }
 
 export type MutationUpdateItemArgs = {
-  data: ItemUpdateInput
-  where: ItemWhereUniqueInput
+  data?: Maybe<UpdateItemInput>
 }
 
 export type MutationUpdateManyItemsArgs = {
@@ -644,6 +643,14 @@ export type RegisterUserInput = {
   email: Scalars['String']
   password: Scalars['String']
   username: Scalars['String']
+}
+
+export type UpdateItemInput = {
+  description?: Maybe<Scalars['String']>
+  id: Scalars['ID']
+  images: Array<Maybe<Scalars['String']>>
+  name?: Maybe<Scalars['String']>
+  price?: Maybe<Scalars['Int']>
 }
 
 export type User = Node & {
@@ -1029,13 +1036,9 @@ export type ResolversTypes = {
   loginUserInput: LoginUserInput
   Alert: ResolverTypeWrapper<Alert>
   registerUserInput: RegisterUserInput
-  ItemUpdateInput: ItemUpdateInput
-  ItemUpdateimagesInput: ItemUpdateimagesInput
-  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
-  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
-  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
-  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
+  updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
+  ItemUpdateimagesInput: ItemUpdateimagesInput
   UserUpdateManyMutationInput: UserUpdateManyMutationInput
   UserUpdateInput: UserUpdateInput
   ItemUpdateManyWithoutUserInput: ItemUpdateManyWithoutUserInput
@@ -1047,6 +1050,11 @@ export type ResolversTypes = {
   ItemUpsertWithWhereUniqueWithoutUserInput: ItemUpsertWithWhereUniqueWithoutUserInput
   ItemCreateInput: ItemCreateInput
   UserCreateOneWithoutItemsInput: UserCreateOneWithoutItemsInput
+  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
+  ItemUpdateInput: ItemUpdateInput
+  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
+  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
+  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -1085,13 +1093,9 @@ export type ResolversParentTypes = {
   loginUserInput: LoginUserInput
   Alert: Alert
   registerUserInput: RegisterUserInput
-  ItemUpdateInput: ItemUpdateInput
-  ItemUpdateimagesInput: ItemUpdateimagesInput
-  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
-  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
-  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
-  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
+  updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
+  ItemUpdateimagesInput: ItemUpdateimagesInput
   UserUpdateManyMutationInput: UserUpdateManyMutationInput
   UserUpdateInput: UserUpdateInput
   ItemUpdateManyWithoutUserInput: ItemUpdateManyWithoutUserInput
@@ -1103,6 +1107,11 @@ export type ResolversParentTypes = {
   ItemUpsertWithWhereUniqueWithoutUserInput: ItemUpsertWithWhereUniqueWithoutUserInput
   ItemCreateInput: ItemCreateInput
   UserCreateOneWithoutItemsInput: UserCreateOneWithoutItemsInput
+  UserCreateWithoutItemsInput: UserCreateWithoutItemsInput
+  ItemUpdateInput: ItemUpdateInput
+  UserUpdateOneRequiredWithoutItemsInput: UserUpdateOneRequiredWithoutItemsInput
+  UserUpdateWithoutItemsDataInput: UserUpdateWithoutItemsDataInput
+  UserUpsertWithoutItemsInput: UserUpsertWithoutItemsInput
 }
 
 export type AggregateItemResolvers<
@@ -1240,10 +1249,10 @@ export type MutationResolvers<
     RequireFields<MutationRegisterUserArgs, never>
   >
   updateItem?: Resolver<
-    Maybe<ResolversTypes['Item']>,
+    ResolversTypes['Item'],
     ParentType,
     ContextType,
-    RequireFields<MutationUpdateItemArgs, 'data' | 'where'>
+    RequireFields<MutationUpdateItemArgs, never>
   >
   updateManyItems?: Resolver<
     ResolversTypes['BatchPayload'],

@@ -42,6 +42,40 @@ const Mutation: MutationResolvers = {
       )
     },
   },
+  updateItem: {
+    fragment: '',
+    resolve: async (_parent, { data }, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      const { id, name, description, price, images } = data
+      const itemToUpdate = await context.db.query.item({ where: { id } })
+
+      if (!itemToUpdate) {
+        throw new Error('That item does not exist!')
+      }
+
+      if (itemToUpdate.user.id !== context.request.userId) {
+        throw new Error('This item does not belong to you!')
+      }
+
+      return await context.db.mutation.updateItem(
+        {
+          data: {
+            name,
+            description,
+            price,
+            images: {
+              set: images,
+            },
+          },
+          where: { id },
+        },
+        info
+      )
+    },
+  },
   registerUser: {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
