@@ -6,6 +6,11 @@
 // GraphQL query operation: FetchItem
 // ====================================================
 
+export interface FetchItem_fetchItem_user {
+  __typename: 'User'
+  username: string
+}
+
 export interface FetchItem_fetchItem {
   __typename: 'Item'
   id: string
@@ -14,6 +19,7 @@ export interface FetchItem_fetchItem {
   price: number
   createdAt: any
   images: string[]
+  user: FetchItem_fetchItem_user
 }
 
 export interface FetchItem {

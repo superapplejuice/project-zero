@@ -12,6 +12,9 @@ const FETCH_ITEMS = gql`
       price
       images
       createdAt
+      user {
+        username
+      }
     }
   }
 `
