@@ -80,3 +80,8 @@ export const Price = styled.p`
 export const Created = styled.p`
   font-size: 1rem;
 `
+
+export const User = styled.p`
+  font-size: 0.8rem;
+  font-weight: bold;
+`

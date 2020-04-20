@@ -10,7 +10,9 @@ const ProductCard = ({ item }: { item: FetchItems_fetchItems }) => (
   <Link href={'/item/[id]'} as={`/item/${item?.id}`}>
     <Styles.Container>
       <Styles.DetailsContainer>
-        <Styles.Detail className="username">@superadmin01</Styles.Detail>
+        <Styles.Detail className="username">
+          {item?.user?.username}
+        </Styles.Detail>
         <Styles.Detail className="create-ts">
           {formatTimeSince(item?.createdAt)}
         </Styles.Detail>

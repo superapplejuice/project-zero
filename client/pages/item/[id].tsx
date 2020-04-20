@@ -33,6 +33,9 @@ const Product = () => {
           <Styles.Price>{formatCurrency(data?.fetchItem?.price)}</Styles.Price>
           <Styles.Created>
             {formatTimeSince(data?.fetchItem?.createdAt)}
+            <Styles.User>
+              Posted by {data?.fetchItem?.user?.username}
+            </Styles.User>
           </Styles.Created>
         </Styles.DetailsContainer>
       </Styles.ProductContainer>
