@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 
 import { Upload } from 'components/dropzone/types'
 import { CreateItemVariables } from 'resolvers/mutations/types'
@@ -16,7 +17,12 @@ const Sell = () => {
   const { user } = useUserContext()
 
   if (!user) {
-    return <p>You must be logged in to view this page!</p>
+    return (
+      <Error
+        statusCode={401}
+        title="You need to be logged in to see this page"
+      />
+    )
   }
 
   const router = useRouter()
@@ -35,7 +41,7 @@ const Sell = () => {
     description: yup
       .string()
       .min(4, 'Enter at least 4 characters')
-      .max(256, 'Maximum of 128 characters!')
+      .max(256, 'Maximum of 256 characters!')
       .required('Enter a description of your item'),
     price: yup
       .number()

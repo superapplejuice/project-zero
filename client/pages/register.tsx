@@ -17,7 +17,9 @@ const Register = () => {
   const router = useRouter()
 
   if (user) {
-    return <Error statusCode={404} />
+    return (
+      <Error statusCode={403} title="You're not allowed to view this page" />
+    )
   }
 
   const [registerUser, { loading, error }] = useRegisterUser()
