@@ -2,6 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 
 import { useUserContext } from 'context/user-context'
 import { useLogin } from 'resolvers/mutations'
@@ -15,12 +16,11 @@ const Login = () => {
   const router = useRouter()
 
   if (user) {
-    return router.push('/')
+    return <Error statusCode={404} />
   }
 
   const [login, { loading, error }] = useLogin({
     refetchQueries: ['FetchUser'],
-    awaitRefetchQueries: true,
   })
 
   const validationSchema = yup.object<LoginUserVariables>({
