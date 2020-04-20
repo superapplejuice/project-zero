@@ -27,7 +27,7 @@ export const ImageContainer = styled.div`
   img {
     height: 200px;
     width: 200px;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};
@@ -60,15 +60,21 @@ export const DetailsContainer = styled.div`
 export const Name = styled.h1`
   font-size: 2rem;
   word-wrap: normal;
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export const Description = styled.p`
   font-size: 1rem;
   white-space: pre-wrap;
+  max-height: 100px;
+  overflow: scroll;
 `
 
 export const Price = styled.p`
   font-size: 1rem;
+  font-weight: bold;
 `
 
 export const Created = styled.p`

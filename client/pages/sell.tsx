@@ -41,7 +41,6 @@ const Sell = () => {
     description: yup
       .string()
       .min(4, 'Enter at least 4 characters')
-      .max(256, 'Maximum of 256 characters!')
       .required('Enter a description of your item'),
     price: yup
       .number()
