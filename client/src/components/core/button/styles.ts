@@ -8,6 +8,7 @@ const _BaseStyles = css`
   border-radius: ${p => p.theme.styles.borderRadius};
   font-size: 1rem;
   padding: 12px 32px;
+  background: white;
   transition: ${p => p.theme.styles.transition};
 
   :hover {
@@ -33,6 +34,15 @@ export const Container = styled.button<ButtonProps>`
       :hover {
         border: 1px solid ${p => p.theme.colors.blue};
         color: ${p => p.theme.colors.blue};
+      }
+    `}
+
+  ${p =>
+    p.color === 'yellow' &&
+    css`
+      :hover {
+        border: 1px solid ${p => p.theme.colors.yellow};
+        color: ${p => p.theme.colors.yellow};
       }
     `}
 `
