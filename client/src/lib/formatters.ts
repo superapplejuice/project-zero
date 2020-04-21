@@ -8,15 +8,8 @@ export const formatCurrency = (value: number) =>
     localeMatcher: 'lookup',
   }).format(value)
 
-export const formatTimeSince = (postTs: string) => {
-  const timeSince = moment(new Date(postTs)).fromNow()
-
-  if (timeSince[0] === 'a') {
-    return timeSince[0].toUpperCase()
-  }
-
-  return timeSince
-}
+export const formatTimeSince = (postTs: string) =>
+  moment(new Date(postTs)).fromNow()
 
 export const formatError = (error: ApolloError) =>
   error.message.replace('GraphQL error: ', '')
