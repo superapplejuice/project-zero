@@ -43,15 +43,20 @@ type Alert {
 
 # queries
 type Query {
+  # items
   fetchItems(data: fetchItemsInput): [Item]!
   fetchItem(id: ID!): Item!
+  # users
   fetchUser: User
 }
 
 # mutations
 type Mutation {
+  # items
   createItem(data: createItemInput): Item!
   updateItem(data: updateItemInput): Item!
+  deleteItem(id: ID!): Item
+  # users
   registerUser(data: registerUserInput): User!
   loginUser(data: loginUserInput): User!
   logoutUser: Alert

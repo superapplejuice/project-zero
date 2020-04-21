@@ -493,7 +493,7 @@ export type MutationCreateUserArgs = {
 }
 
 export type MutationDeleteItemArgs = {
-  where: ItemWhereUniqueInput
+  id: Scalars['ID']
 }
 
 export type MutationDeleteManyItemsArgs = {
@@ -1215,7 +1215,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes['Item']>,
     ParentType,
     ContextType,
-    RequireFields<MutationDeleteItemArgs, 'where'>
+    RequireFields<MutationDeleteItemArgs, 'id'>
   >
   deleteManyItems?: Resolver<
     ResolversTypes['BatchPayload'],

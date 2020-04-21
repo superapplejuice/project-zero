@@ -5,7 +5,12 @@ import { CookieOptions } from 'express'
 
 import { MutationResolvers } from './types'
 import { usernameRegex, passwordRegex } from '../utils/regex'
-import { requireAuth, wrongCredentials } from '../utils/messages'
+import {
+  requireAuth,
+  wrongCredentials,
+  noItem,
+  notOwner,
+} from '../utils/messages'
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
@@ -13,6 +18,7 @@ const cookieOptions: CookieOptions = {
 }
 
 const Mutation: MutationResolvers = {
+  /* item mutations */
   createItem: {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
@@ -49,7 +55,7 @@ const Mutation: MutationResolvers = {
       const itemToUpdate = await context.db.query.item({ where: { id } })
 
       if (!itemToUpdate) {
-        throw new Error('That item does not exist!')
+        throw new Error(noItem)
       }
 
       if (!context.request.userId) {
@@ -57,7 +63,7 @@ const Mutation: MutationResolvers = {
       }
 
       if (itemToUpdate.user.id !== context.request.userId) {
-        throw new Error('This item does not belong to you!')
+        throw new Error(notOwner)
       }
 
       return await context.db.mutation.updateItem(
@@ -76,6 +82,27 @@ const Mutation: MutationResolvers = {
       )
     },
   },
+  deleteItem: {
+    fragment: '',
+    resolve: async (_parent, { id }, context, _info) => {
+      const itemToDelete = await context.db.query.item({ where: { id } })
+
+      if (!itemToDelete) {
+        throw new Error(noItem)
+      }
+
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      if (itemToDelete.user.id !== context.request.userId) {
+        throw new Error(notOwner)
+      }
+
+      return await context.db.mutation.deleteItem({ where: { id } })
+    },
+  },
+  /* user mutations */
   registerUser: {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
