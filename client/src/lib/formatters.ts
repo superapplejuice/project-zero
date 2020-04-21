@@ -5,7 +5,7 @@ export const formatCurrency = (value: number) =>
   new Intl.NumberFormat('en-SG', {
     style: 'currency',
     currency: 'SGD',
-    localeMatcher: 'lookup',
+    currencyDisplay: 'code',
   }).format(value)
 
 export const formatTimeSince = (postTs: string) =>
