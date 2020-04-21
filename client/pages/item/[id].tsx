@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useRouter } from 'next/router'
 
 import { useFetchItem } from 'resolvers/queries'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
+import { useUserContext } from 'context/user-context'
 
-import { Loader } from 'components/core'
+import { Loader, Button } from 'components/core'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
@@ -16,6 +17,9 @@ const Product = () => {
   })
 
   if (loading) return <Loader size="large" />
+
+  const { user } = useUserContext()
+  const isOwner = user?.username === data?.fetchItem?.user?.username
 
   return (
     <Styles.Container>
@@ -37,6 +41,23 @@ const Product = () => {
               Posted by {data?.fetchItem?.user?.username}
             </Styles.User>
           </Styles.Created>
+          <Styles.ButtonsContainer>
+            {user &&
+              (isOwner ? (
+                <Fragment>
+                  <Button onClick={() => {}} type="button" color="yellow">
+                    Edit
+                  </Button>
+                  <Button onClick={() => {}} type="button" color="yellow">
+                    Delete
+                  </Button>
+                </Fragment>
+              ) : (
+                <Button onClick={() => {}} type="button">
+                  Buy
+                </Button>
+              ))}
+          </Styles.ButtonsContainer>
         </Styles.DetailsContainer>
       </Styles.ProductContainer>
     </Styles.Container>

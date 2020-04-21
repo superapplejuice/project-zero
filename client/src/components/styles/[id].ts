@@ -52,7 +52,7 @@ export const DetailsContainer = styled.div`
 
   h1,
   p {
-    margin: 0;
+    margin: 0 0 24px;
     padding: 0;
   }
 `
@@ -61,8 +61,7 @@ export const Name = styled.h1`
   font-size: 2rem;
   word-wrap: normal;
   max-height: 100px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: scroll;
 `
 
 export const Description = styled.p`
@@ -84,4 +83,10 @@ export const Created = styled.p`
 export const User = styled.p`
   font-size: 0.8rem;
   font-weight: bold;
+  margin: 0 !important;
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `
