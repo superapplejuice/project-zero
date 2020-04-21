@@ -56,3 +56,7 @@ export const PageContainer = styled.div`
   max-width: 1000px;
   margin: 0 auto;
 `
+
+export const Portal = styled.div`
+  position: absolute;
+`

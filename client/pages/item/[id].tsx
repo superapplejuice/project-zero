@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useFetchItem } from 'resolvers/queries'
@@ -6,6 +6,7 @@ import { formatCurrency, formatTimeSince } from 'lib/formatters'
 import { useUserContext } from 'context/user-context'
 
 import { Loader, Button } from 'components/core'
+import Modal from 'components/modal'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
@@ -15,13 +16,24 @@ const Product = () => {
   const { data, loading } = useFetchItem({
     variables: { id: String(id) },
   })
+  const [showModal, setShowModal] = useState(false)
 
   if (loading) return <Loader size="large" />
 
   const { user } = useUserContext()
   const isOwner = user?.username === data?.fetchItem?.user?.username
 
-  return (
+  return showModal ? (
+    <Modal
+      header="Delete Item"
+      content={`Are you sure you want to delete ${data?.fetchItem?.name}?`}
+      buttonMain="Yes"
+      mainClick={() => alert('Deleted item!')}
+      buttonSecondary="No"
+      secondaryClick={() => setShowModal(false)}
+      clickOutside={() => setShowModal(false)}
+    />
+  ) : (
     <Styles.Container>
       <Styles.ProductContainer>
         <Styles.ImageContainer>
@@ -36,10 +48,8 @@ const Product = () => {
           </Styles.Description>
           <Styles.Price>{formatCurrency(data?.fetchItem?.price)}</Styles.Price>
           <Styles.Created>
-            {formatTimeSince(data?.fetchItem?.createdAt)}
-            <Styles.User>
-              Posted by {data?.fetchItem?.user?.username}
-            </Styles.User>
+            Posted {formatTimeSince(data?.fetchItem?.createdAt)}
+            <Styles.User>By {data?.fetchItem?.user?.username}</Styles.User>
           </Styles.Created>
           <Styles.ButtonsContainer>
             {user &&
@@ -48,7 +58,11 @@ const Product = () => {
                   <Button onClick={() => {}} type="button" color="yellow">
                     Edit
                   </Button>
-                  <Button onClick={() => {}} type="button" color="yellow">
+                  <Button
+                    onClick={() => setShowModal(true)}
+                    type="button"
+                    color="yellow"
+                  >
                     Delete
                   </Button>
                 </Fragment>

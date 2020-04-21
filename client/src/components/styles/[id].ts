@@ -76,7 +76,7 @@ export const Price = styled.p`
   font-weight: bold;
 `
 
-export const Created = styled.p`
+export const Created = styled.div`
   font-size: 1rem;
 `
 

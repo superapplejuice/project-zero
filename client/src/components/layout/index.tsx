@@ -6,7 +6,13 @@ import { UserProvider } from 'context/user-context'
 
 import NavigationBar from 'components/navigation-bar'
 import Meta from './meta'
-import { theme, GlobalStyle, GlobalContainer, PageContainer } from './styles'
+import {
+  theme,
+  GlobalStyle,
+  GlobalContainer,
+  PageContainer,
+  Portal,
+} from './styles'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { data } = useFetchUser()
@@ -14,6 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <Portal id="modal" />
       <GlobalContainer>
         <UserProvider value={{ user: data?.fetchUser }}>
           <Meta />
