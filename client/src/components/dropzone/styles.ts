@@ -60,7 +60,7 @@ export const ImagesContainer = styled.div`
     border-radius: ${p => p.theme.styles.borderRadius};
     width: 200px;
     height: 200px;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     margin: 16px;
     transition: ${p => p.theme.styles.transition};
