@@ -6,7 +6,7 @@ import { DeleteItem, DeleteItemVariables } from './types'
 const DELETE_ITEM = gql`
   mutation DeleteItem($id: ID!) {
     deleteItem(id: $id) {
-      id
+      error
     }
   }
 `

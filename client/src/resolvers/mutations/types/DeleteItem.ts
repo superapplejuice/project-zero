@@ -7,8 +7,8 @@
 // ====================================================
 
 export interface DeleteItem_deleteItem {
-  __typename: 'Item'
-  id: string
+  __typename: 'Alert'
+  error: boolean
 }
 
 export interface DeleteItem {

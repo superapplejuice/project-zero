@@ -99,7 +99,9 @@ const Mutation: MutationResolvers = {
         throw new Error(notOwner)
       }
 
-      return await context.db.mutation.deleteItem({ where: { id } })
+      await context.db.mutation.deleteItem({ where: { id } })
+
+      return { message: 'Deleted successfully!', error: false }
     },
   },
   /* user mutations */
