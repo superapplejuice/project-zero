@@ -23,6 +23,8 @@ export const ImageContainer = styled.div`
   flex-wrap: wrap;
   box-sizing: border-box;
   width: 60%;
+  align-items: center;
+  justify-content: space-evenly;
 
   img {
     height: 200px;
@@ -31,7 +33,6 @@ export const ImageContainer = styled.div`
     object-position: center;
     border: 1px solid ${p => p.theme.colors.gray};
     border-radius: ${p => p.theme.styles.borderRadius};
-    margin: 16px;
     transition: ${p => p.theme.styles.transition};
 
     :hover {
