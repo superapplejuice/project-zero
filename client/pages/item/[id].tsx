@@ -2,35 +2,64 @@ import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { useFetchItem } from 'resolvers/queries'
+import { useDeleteItem } from 'resolvers/mutations'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
 import { useUserContext } from 'context/user-context'
 
-import { Loader, Button } from 'components/core'
+import { Loader, Button, ErrorMessage } from 'components/core'
 import Modal from 'components/modal'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
   const router = useRouter()
   const { id } = router.query
+  const { user } = useUserContext()
 
-  const { data, loading } = useFetchItem({
-    variables: { id: String(id) },
-  })
   const [showModal, setShowModal] = useState(false)
 
-  if (loading) return <Loader size="large" />
+  const { data, loading: fetchLoading } = useFetchItem({
+    variables: { id: String(id) },
+  })
+  const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
+    refetchQueries: ['FetchItems'],
+    awaitRefetchQueries: true,
+  })
 
-  const { user } = useUserContext()
+  if (fetchLoading) return <Loader size="large" />
+
   const isOwner = user?.username === data?.fetchItem?.user?.username
+
+  const handleDelete = async () => {
+    const { data } = await deleteItem({
+      variables: { id: String(id) },
+    })
+
+    if (!data?.deleteItem?.error && !error) {
+      return router.push('/')
+    }
+
+    return null
+  }
+
+  const renderActions = () => (
+    <Fragment>
+      {error && <ErrorMessage error={error} />}
+      <Styles.ActionsContainer>
+        <Button onClick={() => setShowModal(false)} type="button">
+          No
+        </Button>
+        <Button onClick={handleDelete} type="button" disabled={deleteLoading}>
+          {deleteLoading ? 'Deleting...' : 'Yes'}
+        </Button>
+      </Styles.ActionsContainer>
+    </Fragment>
+  )
 
   return showModal ? (
     <Modal
-      header="Delete Item"
+      header="Confirm delete item?"
       content={`Are you sure you want to delete ${data?.fetchItem?.name}?`}
-      buttonMain="Yes"
-      mainClick={() => alert('Deleted item!')}
-      buttonSecondary="No"
-      secondaryClick={() => setShowModal(false)}
+      actions={renderActions()}
       clickOutside={() => setShowModal(false)}
     />
   ) : (
