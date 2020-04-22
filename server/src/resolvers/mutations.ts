@@ -4,6 +4,7 @@ import { sign } from 'jsonwebtoken'
 import { CookieOptions } from 'express'
 
 import { MutationResolvers } from './types'
+import { itemConnect } from './connect'
 import { usernameRegex, passwordRegex } from '../utils/regex'
 import {
   requireAuth,
@@ -84,8 +85,11 @@ const Mutation: MutationResolvers = {
   },
   deleteItem: {
     fragment: '',
-    resolve: async (_parent, { id }, context, _info) => {
-      const itemToDelete = await context.db.query.item({ where: { id } })
+    resolve: async (_parent, { id }, context, info) => {
+      const itemToDelete = await context.db.query.item(
+        { where: { id } },
+        itemConnect
+      )
 
       if (!itemToDelete) {
         throw new Error(noItem)
@@ -99,7 +103,7 @@ const Mutation: MutationResolvers = {
         throw new Error(notOwner)
       }
 
-      await context.db.mutation.deleteItem({ where: { id } })
+      await context.db.mutation.deleteItem({ where: { id } }, info)
 
       return { message: 'Deleted successfully!', error: false }
     },
