@@ -1,9 +1,6 @@
 export type Props = {
   header: string
   content: string
-  buttonMain: string
-  mainClick: () => void
-  buttonSecondary: string
-  secondaryClick: () => void
+  actions: React.ReactNode
   clickOutside: () => void
 }
