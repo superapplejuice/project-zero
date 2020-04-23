@@ -28,6 +28,7 @@ export const ImageContainer = styled.div`
 
   img {
     cursor: pointer;
+    margin: 8px 0;
     height: 200px;
     width: 200px;
     object-fit: cover;
