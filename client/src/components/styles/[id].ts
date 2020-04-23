@@ -95,4 +95,5 @@ export const ButtonsContainer = styled.div`
 export const ActionsContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  transform: translateY(calc(100% - 32px));
 `

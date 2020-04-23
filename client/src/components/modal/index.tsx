@@ -1,24 +1,32 @@
-import React from 'react'
-import { createPortal } from 'react-dom'
+import React, { Fragment } from 'react'
+import { UniversalPortal } from '@jesstelford/react-portal-universal'
 
 import { Props } from './types'
 
 import * as Styles from './styles'
 
-const Modal = ({ header, content, actions, clickOutside }: Props) => {
-  const modalSelector = document.querySelector('#modal')
-
+const Modal = ({
+  header,
+  content,
+  actions,
+  displayModal,
+  clickOutside,
+}: Props) => {
   const renderChildren = () => (
-    <Styles.Container onClick={clickOutside}>
-      <Styles.ModalContainer onClick={event => event.stopPropagation()}>
-        <Styles.Header>{header}</Styles.Header>
-        <Styles.Content className="content">{content}</Styles.Content>
-        {actions}
-      </Styles.ModalContainer>
-    </Styles.Container>
+    <Fragment>
+      <UniversalPortal selector="#modal">
+        <Styles.Container onClick={clickOutside}>
+          <Styles.ModalContainer onClick={event => event.stopPropagation()}>
+            <Styles.Header>{header}</Styles.Header>
+            <Styles.Content className="content">{content}</Styles.Content>
+            {actions}
+          </Styles.ModalContainer>
+        </Styles.Container>
+      </UniversalPortal>
+    </Fragment>
   )
 
-  return createPortal(renderChildren(), modalSelector)
+  return displayModal ? renderChildren() : null
 }
 
 export default Modal

@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const ModalContainer = styled.div`
   background: white;
-  height: 200px;
+  min-height: 200px;
   width: 400px;
   border: 1px solid ${p => p.theme.colors.black};
   border-radius: ${p => p.theme.styles.borderRadius};
@@ -32,9 +32,4 @@ export const Header = styled.h1`
 
 export const Content = styled.p`
   font-size: 1rem;
-`
-
-export const ButtonsContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
 `
