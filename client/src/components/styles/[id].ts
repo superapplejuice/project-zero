@@ -27,6 +27,7 @@ export const ImageContainer = styled.div`
   justify-content: space-evenly;
 
   img {
+    cursor: pointer;
     height: 200px;
     width: 200px;
     object-fit: cover;

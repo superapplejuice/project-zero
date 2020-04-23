@@ -8,6 +8,7 @@ import { useUserContext } from 'context/user-context'
 
 import { Loader, Button, ErrorMessage } from 'components/core'
 import Modal from 'components/modal'
+import ImageViewer from 'components/image-viewer'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
@@ -16,10 +17,14 @@ const Product = () => {
   const { user } = useUserContext()
 
   const [showModal, setShowModal] = useState(false)
+  const [showViewer, setShowViewer] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<string>(null)
 
   const { data, loading: fetchLoading } = useFetchItem({
     variables: { id: String(id) },
   })
+  const item = data?.fetchItem
+
   const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
     refetchQueries: ['FetchItems'],
     awaitRefetchQueries: true,
@@ -27,7 +32,7 @@ const Product = () => {
 
   if (fetchLoading) return <Loader size="large" />
 
-  const isOwner = user?.username === data?.fetchItem?.user?.username
+  const isOwner = user?.username === item?.user?.username
 
   const handleDelete = async () => {
     const { data } = await deleteItem({
@@ -59,29 +64,39 @@ const Product = () => {
     <Fragment>
       <Modal
         header="Confirm delete item?"
-        content={`Are you sure you want to delete ${data?.fetchItem?.name}?`}
+        content={`Are you sure you want to delete ${item?.name}?`}
         actions={renderActions()}
         displayModal={showModal}
         clickOutside={() => setShowModal(false)}
       />
+      <ImageViewer
+        images={item?.images}
+        displayViewer={showViewer}
+        closeViewer={() => setShowViewer(false)}
+        selectedImage={selectedImage}
+      />
       <Styles.Container>
         <Styles.ProductContainer>
           <Styles.ImageContainer>
-            {data?.fetchItem?.images.map(image => (
-              <img src={image} alt="image" key={image} />
+            {item?.images.map(image => (
+              <img
+                src={image}
+                alt="image"
+                key={image}
+                onClick={() => {
+                  setSelectedImage(image)
+                  setShowViewer(true)
+                }}
+              />
             ))}
           </Styles.ImageContainer>
           <Styles.DetailsContainer>
-            <Styles.Name>{data?.fetchItem?.name}</Styles.Name>
-            <Styles.Description>
-              {data?.fetchItem?.description}
-            </Styles.Description>
-            <Styles.Price>
-              {formatCurrency(data?.fetchItem?.price)}
-            </Styles.Price>
+            <Styles.Name>{item?.name}</Styles.Name>
+            <Styles.Description>{item?.description}</Styles.Description>
+            <Styles.Price>{formatCurrency(item?.price)}</Styles.Price>
             <Styles.Created>
-              Posted {formatTimeSince(data?.fetchItem?.createdAt)}
-              <Styles.User>By {data?.fetchItem?.user?.username}</Styles.User>
+              Posted {formatTimeSince(item?.createdAt)}
+              <Styles.User>By {item?.user?.username}</Styles.User>
             </Styles.Created>
             <Styles.ButtonsContainer>
               {user &&
