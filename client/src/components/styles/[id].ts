@@ -51,10 +51,15 @@ export const DetailsContainer = styled.div`
   padding: 16px 0;
   color: ${p => p.theme.colors.black};
 
-  h1,
-  p {
+  > h1,
+  p,
+  div {
     margin: 0 0 24px;
     padding: 0;
+
+    :last-child {
+      margin: 0;
+    }
   }
 `
 
