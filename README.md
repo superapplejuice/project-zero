@@ -1,6 +1,6 @@
 # Project: ZERO
 
-This project was created with one goal in mine: to have ZERO `any` types.
+This project was created with one goal in mind: to have ZERO `any` types.
 
 In the **server**:
 
