@@ -7,6 +7,7 @@ type Props = {
   href?: string
   onClick?: (event: React.MouseEvent) => void
   title: string
+  disabled?: boolean
 }
 
 const LinkItem = ({ href, title }: Props) => (
@@ -17,9 +18,11 @@ const LinkItem = ({ href, title }: Props) => (
   </Styles.Container>
 )
 
-const ButtonItem = ({ onClick, title }: Props) => (
+const ButtonItem = ({ onClick, title, disabled }: Props) => (
   <Styles.Container>
-    <button onClick={onClick}>{title}</button>
+    <button onClick={onClick} disabled={disabled}>
+      {title}
+    </button>
   </Styles.Container>
 )
 
