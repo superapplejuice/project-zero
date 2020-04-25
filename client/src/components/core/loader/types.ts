@@ -1,3 +1,3 @@
 export type LoaderProps = {
-  size: 'small' | 'medium' | 'large'
+  size: 'x-small' | 'small' | 'medium' | 'large'
 }

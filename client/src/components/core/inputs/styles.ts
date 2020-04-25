@@ -62,6 +62,12 @@ export const TextArea = styled.textarea<InputProps>`
   height: 200px;
 `
 
+export const LoadingContainer = styled.div`
+  position: absolute;
+  right: 8px;
+  top: 10px;
+`
+
 export const Label = styled.label`
   margin-left: 8px;
   font-size: 0.8rem;

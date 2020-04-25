@@ -2,6 +2,7 @@ import React from 'react'
 
 import { InputProps } from './types'
 
+import { Loader } from 'components/core'
 import * as Styles from './styles'
 
 const TextInput = ({
@@ -15,6 +16,7 @@ const TextInput = ({
   onChange,
   onBlur,
   children,
+  loading,
 }: InputProps) => (
   <Styles.Container highlight={highlight}>
     <Styles.Label>{label}</Styles.Label>
@@ -28,6 +30,11 @@ const TextInput = ({
       onBlur={onBlur}
       name={name}
     />
+    {loading && (
+      <Styles.LoadingContainer>
+        <Loader size="x-small" />
+      </Styles.LoadingContainer>
+    )}
     {children}
   </Styles.Container>
 )

@@ -15,4 +15,5 @@ export type InputProps = {
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   children?: React.ReactNode
+  loading?: boolean
 }
