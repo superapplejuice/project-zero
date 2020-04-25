@@ -21,6 +21,16 @@ const UPDATE_ITEM = gql`
       }
     ) {
       id
+      name
+      description
+      price
+      images
+      createdAt
+      updatedAt
+      user {
+        id
+        username
+      }
     }
   }
 `

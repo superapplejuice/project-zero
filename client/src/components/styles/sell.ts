@@ -5,9 +5,7 @@ const _BaseHeader = css`
   padding: 0;
 `
 
-export const Container = styled.div`
-  margin-bottom: 32px;
-`
+export const Container = styled.div``
 
 export const Header = styled.h1`
   ${_BaseHeader};
@@ -43,6 +41,11 @@ export const FieldGroup = styled.div`
 export const FieldHeader = styled.h1`
   ${_BaseHeader};
   font-size: 1rem;
+`
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `
 
 export const Warning = styled.p`

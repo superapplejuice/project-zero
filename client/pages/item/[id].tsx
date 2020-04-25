@@ -102,7 +102,16 @@ const Product = () => {
               {user &&
                 (isOwner ? (
                   <Fragment>
-                    <Button onClick={() => {}} type="button" color="yellow">
+                    <Button
+                      onClick={() =>
+                        router.push({
+                          pathname: '/item/edit',
+                          query: `id=${item?.id}`,
+                        })
+                      }
+                      type="button"
+                      color="yellow"
+                    >
                       Edit
                     </Button>
                     <Button

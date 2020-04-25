@@ -53,7 +53,10 @@ const Mutation: MutationResolvers = {
     fragment: '',
     resolve: async (_parent, { data }, context, info) => {
       const { id, name, description, price, images } = data
-      const itemToUpdate = await context.db.query.item({ where: { id } })
+      const itemToUpdate = await context.db.query.item(
+        { where: { id } },
+        itemConnect
+      )
 
       if (!itemToUpdate) {
         throw new Error(noItem)

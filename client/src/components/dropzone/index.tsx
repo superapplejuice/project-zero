@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone, DropzoneOptions } from 'react-dropzone'
 
-import { Upload } from './types'
+import { Upload, Props } from './types'
 import { accept, maxSize } from './constants'
 
 import * as Styles from './styles'
 
-const Dropzone = ({ setUploads }: { setUploads: React.Dispatch<any> }) => {
+const Dropzone = ({ setUploads, currentImages }: Props) => {
   const [images, setImages] = useState<Upload[]>([])
   const [errors, setErrors] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -51,6 +51,13 @@ const Dropzone = ({ setUploads }: { setUploads: React.Dispatch<any> }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone(options)
 
+  const displayUploadImages = images?.map(image => (
+    <img key={image.preview} src={image.preview} />
+  ))
+  const displayCurrentImages = currentImages.map(image => (
+    <img key={image} src={image} />
+  ))
+
   return (
     <Styles.Container>
       <Styles.UploadContainer {...getRootProps()} isActive={isDragActive}>
@@ -68,9 +75,7 @@ const Dropzone = ({ setUploads }: { setUploads: React.Dispatch<any> }) => {
         <Styles.Message errors={errors}>{errorMessage}</Styles.Message>
       )}
       <Styles.ImagesContainer>
-        {images?.map(image => (
-          <img key={image.preview} src={image.preview} />
-        ))}
+        {images.length > 0 ? displayUploadImages : displayCurrentImages}
       </Styles.ImagesContainer>
     </Styles.Container>
   )
