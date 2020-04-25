@@ -3,9 +3,10 @@ import { useQuery, QueryHookOptions } from '@apollo/react-hooks'
 
 import { FetchUser } from './types'
 
-const FETCH_USER = gql`
+export const FETCH_USER = gql`
   query FetchUser {
     fetchUser {
+      id
       email
       username
       createdAt
@@ -13,7 +14,5 @@ const FETCH_USER = gql`
   }
 `
 
-const useFetchUser = (options?: QueryHookOptions<FetchUser>) =>
+export const useFetchUser = (options?: QueryHookOptions<FetchUser>) =>
   useQuery<FetchUser>(FETCH_USER, options)
-
-export default useFetchUser

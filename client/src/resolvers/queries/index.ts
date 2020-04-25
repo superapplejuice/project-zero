@@ -1,8 +1,6 @@
 // item queries
-import useFetchItems from './fetch-items'
-import useFetchItem from './fetch-item'
+export * from './fetch-items'
+export * from './fetch-item'
 
 // user queries
-import useFetchUser from './fetch-user'
-
-export { useFetchItems, useFetchItem, useFetchUser }
+export * from './fetch-user'

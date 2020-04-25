@@ -8,6 +8,7 @@
 
 export interface FetchUser_fetchUser {
   __typename: 'User'
+  id: string
   email: string
   username: string
   createdAt: any

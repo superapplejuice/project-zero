@@ -8,6 +8,7 @@
 
 export interface FetchItem_fetchItem_user {
   __typename: 'User'
+  id: string
   username: string
 }
 

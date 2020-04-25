@@ -3,7 +3,7 @@ import { useQuery, QueryHookOptions } from '@apollo/react-hooks'
 
 import { FetchItem, FetchItemVariables } from './types'
 
-const FETCH_ITEM = gql`
+export const FETCH_ITEM = gql`
   query FetchItem($id: ID!) {
     fetchItem(id: $id) {
       id
@@ -13,14 +13,13 @@ const FETCH_ITEM = gql`
       createdAt
       images
       user {
+        id
         username
       }
     }
   }
 `
 
-const useFetchItem = (
+export const useFetchItem = (
   options: QueryHookOptions<FetchItem, FetchItemVariables>
 ) => useQuery<FetchItem, FetchItemVariables>(FETCH_ITEM, options)
-
-export default useFetchItem
