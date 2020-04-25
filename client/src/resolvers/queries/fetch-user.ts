@@ -10,6 +10,9 @@ export const FETCH_USER = gql`
       email
       username
       createdAt
+      items {
+        id
+      }
     }
   }
 `

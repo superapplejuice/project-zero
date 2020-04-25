@@ -6,12 +6,18 @@
 // GraphQL query operation: FetchUser
 // ====================================================
 
+export interface FetchUser_fetchUser_items {
+  __typename: 'Item'
+  id: string
+}
+
 export interface FetchUser_fetchUser {
   __typename: 'User'
   id: string
   email: string
   username: string
   createdAt: any
+  items: FetchUser_fetchUser_items[] | null
 }
 
 export interface FetchUser {
