@@ -29,4 +29,5 @@ export interface FetchItems {
 export interface FetchItemsVariables {
   id?: string | null
   name?: string | null
+  userId?: string | null
 }
