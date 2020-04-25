@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { useFetchItem } from 'resolvers/queries'
+import { FetchItems } from 'resolvers/queries/types'
+
+import { useUserContext } from 'context/user-context'
+import { useFetchItem, FETCH_ITEMS } from 'resolvers/queries'
 import { useDeleteItem } from 'resolvers/mutations'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
-import { useUserContext } from 'context/user-context'
 
 import { Loader, Button, ErrorMessage } from 'components/core'
 import Modal from 'components/modal'
@@ -25,10 +27,7 @@ const Product = () => {
   })
   const item = data?.fetchItem
 
-  const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
-    refetchQueries: ['FetchItems'],
-    awaitRefetchQueries: true,
-  })
+  const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem()
 
   if (fetchLoading) return <Loader size="large" />
 
@@ -37,9 +36,26 @@ const Product = () => {
   const handleDelete = async () => {
     const { data } = await deleteItem({
       variables: { id: String(id) },
+      update: (cache, { data }) => {
+        const { fetchItems } = cache.readQuery<FetchItems>({
+          query: FETCH_ITEMS,
+        })
+
+        const deletedItem = data?.deleteItem
+        const updatedList = fetchItems?.filter(
+          item => item?.id !== deletedItem?.id
+        )
+
+        return cache.writeQuery<FetchItems>({
+          query: FETCH_ITEMS,
+          data: {
+            fetchItems: updatedList,
+          },
+        })
+      },
     })
 
-    if (!data?.deleteItem?.error && !error) {
+    if (data?.deleteItem && !error) {
       return router.push('/')
     }
 
@@ -50,7 +66,11 @@ const Product = () => {
     <Fragment>
       {error && <ErrorMessage error={error} />}
       <Styles.ActionsContainer>
-        <Button onClick={() => setShowModal(false)} type="button">
+        <Button
+          onClick={() => setShowModal(false)}
+          type="button"
+          disabled={deleteLoading}
+        >
           No
         </Button>
         <Button onClick={handleDelete} type="button" disabled={deleteLoading}>

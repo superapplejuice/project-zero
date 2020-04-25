@@ -4,10 +4,13 @@ import * as yup from 'yup'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
-import { Upload } from 'components/dropzone/types'
 import { CreateItemVariables } from 'resolvers/mutations/types'
-import { useCreateItem } from 'resolvers/mutations'
+import { FetchItems } from 'resolvers/queries/types'
+import { Upload } from 'components/dropzone/types'
+
 import { useUserContext } from 'context/user-context'
+import { useCreateItem } from 'resolvers/mutations'
+import { FETCH_ITEMS } from 'resolvers/queries'
 
 import Dropzone from 'components/dropzone'
 import { Button, Inputs, ErrorMessage } from 'components/core'
@@ -27,10 +30,7 @@ const Sell = () => {
 
   const router = useRouter()
   const [uploads, setUploads] = useState<Upload[]>(null)
-  const [createItem, { loading, error }] = useCreateItem({
-    refetchQueries: ['FetchItems'],
-    awaitRefetchQueries: true,
-  })
+  const [createItem, { loading, error }] = useCreateItem()
 
   const validationSchema = yup.object<CreateItemVariables>({
     name: yup
@@ -72,6 +72,21 @@ const Sell = () => {
 
     const { data } = await createItem({
       variables: { ...values, images: uploadData },
+      update: (cache, { data }) => {
+        const { fetchItems } = cache.readQuery<FetchItems>({
+          query: FETCH_ITEMS,
+        })
+
+        const newItem = data?.createItem
+        const updatedList = [...fetchItems, newItem]
+
+        return cache.writeQuery<FetchItems>({
+          query: FETCH_ITEMS,
+          data: {
+            fetchItems: updatedList,
+          },
+        })
+      },
     })
     const href = '/item/[id]'
     const id = data?.createItem?.id
