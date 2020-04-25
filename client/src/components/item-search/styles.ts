@@ -17,6 +17,7 @@ export const ResultsContainer = styled.ul`
 `
 
 export const Result = styled.li`
+  cursor: pointer;
   font-size: 0.8rem;
   margin-bottom: 8px;
   padding-bottom: 8px;

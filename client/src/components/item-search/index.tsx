@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 import { FetchItems_fetchItems } from 'resolvers/queries/types'
 
@@ -8,8 +9,10 @@ import { Inputs } from 'components/core'
 import * as Styles from './styles'
 
 const ItemSearch = () => {
+  const router = useRouter()
+
   const [lazyFetchItems, { data, loading }] = useLazyFetchItems({
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
   })
 
   const [value, setValue] = useState('')
@@ -29,6 +32,13 @@ const ItemSearch = () => {
     }
   }
 
+  const handleRedirect = (id: string) => {
+    const href = '/item/[id]'
+    setValue('')
+
+    return router.push(href, href.replace('[id]', `${id}`))
+  }
+
   return (
     <Styles.Container>
       <Inputs.TextInput
@@ -42,7 +52,10 @@ const ItemSearch = () => {
       {value.length > 0 && results?.length > 0 && (
         <Styles.ResultsContainer>
           {results?.map(item => (
-            <Styles.Result key={item?.id}>
+            <Styles.Result
+              key={item?.id}
+              onClick={() => handleRedirect(item?.id)}
+            >
               <Styles.ResultImage src={item?.images[0]} alt={item?.id} />
               <Styles.ResultName>{item?.name}</Styles.ResultName>
             </Styles.Result>
