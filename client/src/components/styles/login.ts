@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
-  margin-bottom: 32px;
-`
+export const Container = styled.div``
 
 export const FormGroup = styled.div`
   border: 1px solid ${p => p.theme.colors.gray};
