@@ -1,28 +1,21 @@
-import React, { useState, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { useRouter } from 'next/router'
 
 import { useUserContext } from 'context/user-context'
 import { useLogout } from 'resolvers/mutations'
 
-import { MenuItem, Inputs } from 'components/core'
+import ItemSearch from 'components/item-search'
+import { MenuItem } from 'components/core'
 import * as Styles from './styles'
 
 const NavigationBar = () => {
   const { user } = useUserContext()
   const router = useRouter()
-  const [value, setValue] = useState('')
-  const [logout] = useLogout({
+
+  const [logout, { loading }] = useLogout({
     refetchQueries: ['FetchUser'],
     awaitRefetchQueries: true,
   })
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setValue(event.currentTarget.value)
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setValue('')
-  }
 
   const handleLogout = () => {
     logout()
@@ -33,15 +26,7 @@ const NavigationBar = () => {
     <Styles.Container>
       <Styles.Menu>
         <MenuItem.LinkItem href="/" title="ZERO" />
-        <Styles.Search onSubmit={handleSubmit}>
-          <Inputs.TextInput
-            onChange={handleChange}
-            variant="navigation"
-            value={value}
-            type="text"
-            placeholder="Search"
-          />
-        </Styles.Search>
+        <ItemSearch />
       </Styles.Menu>
       <Styles.Menu>
         {user ? (
@@ -49,7 +34,11 @@ const NavigationBar = () => {
             <MenuItem.LinkItem href="/profile" title="Profile" />
             <MenuItem.LinkItem href="/likes" title="Likes" />
             <MenuItem.LinkItem href="/sell" title="Sell" />
-            <MenuItem.ButtonItem onClick={handleLogout} title="Logout" />
+            <MenuItem.ButtonItem
+              onClick={handleLogout}
+              title="Logout"
+              disabled={loading}
+            />
           </Fragment>
         ) : (
           <Fragment>
