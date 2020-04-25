@@ -10,7 +10,7 @@ import { Upload } from 'components/dropzone/types'
 
 import { useUserContext } from 'context/user-context'
 import { useCreateItem } from 'resolvers/mutations'
-import { FETCH_ITEMS } from 'resolvers/queries'
+import { FETCH_ITEMS, FETCH_USER } from 'resolvers/queries'
 
 import Dropzone from 'components/dropzone'
 import { Button, Inputs, ErrorMessage } from 'components/core'
@@ -30,7 +30,9 @@ const Sell = () => {
 
   const router = useRouter()
   const [uploads, setUploads] = useState<Upload[]>(null)
-  const [createItem, { loading, error }] = useCreateItem()
+  const [createItem, { loading, error }] = useCreateItem({
+    refetchQueries: [{ query: FETCH_USER }],
+  })
 
   const validationSchema = yup.object<CreateItemVariables>({
     name: yup

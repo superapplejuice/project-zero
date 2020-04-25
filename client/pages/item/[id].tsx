@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { FetchItems } from 'resolvers/queries/types'
 
 import { useUserContext } from 'context/user-context'
-import { useFetchItem, FETCH_ITEMS } from 'resolvers/queries'
+import { useFetchItem, FETCH_ITEMS, FETCH_USER } from 'resolvers/queries'
 import { useDeleteItem } from 'resolvers/mutations'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
 
@@ -27,7 +27,9 @@ const Product = () => {
   })
   const item = data?.fetchItem
 
-  const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem()
+  const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
+    refetchQueries: [{ query: FETCH_USER }],
+  })
 
   if (fetchLoading) return <Loader size="large" />
 

@@ -10,7 +10,7 @@ import { FetchItems } from 'resolvers/queries/types'
 import { Upload } from 'components/dropzone/types'
 
 import { useUserContext } from 'context/user-context'
-import { useFetchItem, FETCH_ITEMS } from 'resolvers/queries'
+import { useFetchItem, FETCH_ITEMS, FETCH_USER } from 'resolvers/queries'
 import { useUpdateItem } from 'resolvers/mutations'
 import { formatCurrency } from 'lib/formatters'
 
@@ -49,7 +49,9 @@ const Edit = () => {
     return <Error statusCode={401} title="That item does not belong to you" />
   }
 
-  const [updateItem, { loading: updateLoading, error }] = useUpdateItem()
+  const [updateItem, { loading: updateLoading, error }] = useUpdateItem({
+    refetchQueries: [{ query: FETCH_USER }],
+  })
 
   const validationSchema = yup.object<UpdateItemVariables>({
     id: yup.string(),
