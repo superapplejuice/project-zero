@@ -108,7 +108,7 @@ const Mutation: MutationResolvers = {
 
       await context.db.mutation.deleteItem({ where: { id } }, info)
 
-      return { message: 'Deleted successfully!', error: false }
+      return itemToDelete
     },
   },
   /* user mutations */

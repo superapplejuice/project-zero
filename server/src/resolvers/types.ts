@@ -469,7 +469,7 @@ export type LoginUserInput = {
 export type Mutation = {
   createItem: Item
   createUser: User
-  deleteItem?: Maybe<Alert>
+  deleteItem?: Maybe<Item>
   deleteManyItems: BatchPayload
   deleteManyUsers: BatchPayload
   deleteUser?: Maybe<User>
@@ -1031,10 +1031,10 @@ export type ResolversTypes = {
   ItemCreateManyWithoutUserInput: ItemCreateManyWithoutUserInput
   ItemCreateWithoutUserInput: ItemCreateWithoutUserInput
   ItemCreateimagesInput: ItemCreateimagesInput
-  Alert: ResolverTypeWrapper<Alert>
   BatchPayload: ResolverTypeWrapper<BatchPayload>
   Long: ResolverTypeWrapper<Scalars['Long']>
   loginUserInput: LoginUserInput
+  Alert: ResolverTypeWrapper<Alert>
   registerUserInput: RegisterUserInput
   updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -1088,10 +1088,10 @@ export type ResolversParentTypes = {
   ItemCreateManyWithoutUserInput: ItemCreateManyWithoutUserInput
   ItemCreateWithoutUserInput: ItemCreateWithoutUserInput
   ItemCreateimagesInput: ItemCreateimagesInput
-  Alert: Alert
   BatchPayload: BatchPayload
   Long: Scalars['Long']
   loginUserInput: LoginUserInput
+  Alert: Alert
   registerUserInput: RegisterUserInput
   updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -1212,7 +1212,7 @@ export type MutationResolvers<
     RequireFields<MutationCreateUserArgs, 'data'>
   >
   deleteItem?: Resolver<
-    Maybe<ResolversTypes['Alert']>,
+    Maybe<ResolversTypes['Item']>,
     ParentType,
     ContextType,
     RequireFields<MutationDeleteItemArgs, 'id'>

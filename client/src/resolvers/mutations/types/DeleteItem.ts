@@ -6,9 +6,15 @@
 // GraphQL mutation operation: DeleteItem
 // ====================================================
 
+export interface DeleteItem_deleteItem_user {
+  __typename: 'User'
+  id: string
+}
+
 export interface DeleteItem_deleteItem {
-  __typename: 'Alert'
-  error: boolean
+  __typename: 'Item'
+  id: string
+  user: DeleteItem_deleteItem_user
 }
 
 export interface DeleteItem {
