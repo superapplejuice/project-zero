@@ -54,7 +54,7 @@ const Dropzone = ({ setUploads, currentImages }: Props) => {
   const displayUploadImages = images?.map(image => (
     <img key={image.preview} src={image.preview} />
   ))
-  const displayCurrentImages = currentImages.map(image => (
+  const displayCurrentImages = currentImages?.map(image => (
     <img key={image} src={image} />
   ))
 
