@@ -4,9 +4,11 @@ import * as yup from 'yup'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 
+import { LoginUserVariables } from 'resolvers/mutations/types'
+
 import { useUserContext } from 'context/user-context'
 import { useLogin } from 'resolvers/mutations'
-import { LoginUserVariables } from 'resolvers/mutations/types'
+import { FETCH_CURRENT_USER } from 'resolvers/queries'
 
 import { Inputs, Button, ErrorMessage } from 'components/core'
 import * as Styles from 'components/styles/login'
@@ -22,7 +24,8 @@ const Login = () => {
   }
 
   const [login, { loading, error }] = useLogin({
-    refetchQueries: ['FetchUser'],
+    refetchQueries: [{ query: FETCH_CURRENT_USER }],
+    awaitRefetchQueries: true,
   })
 
   const validationSchema = yup.object<LoginUserVariables>({

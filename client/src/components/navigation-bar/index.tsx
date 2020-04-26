@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { useUserContext } from 'context/user-context'
 import { useLogout } from 'resolvers/mutations'
+import { FETCH_CURRENT_USER } from 'resolvers/queries'
 
 import ItemSearch from 'components/item-search'
 import { MenuItem } from 'components/core'
@@ -13,7 +14,7 @@ const NavigationBar = () => {
   const router = useRouter()
 
   const [logout, { loading }] = useLogout({
-    refetchQueries: ['FetchUser'],
+    refetchQueries: [{ query: FETCH_CURRENT_USER }],
     awaitRefetchQueries: true,
   })
 
