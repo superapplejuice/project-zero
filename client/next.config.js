@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.env' })
 const TsconfigPathsWebpackPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
@@ -9,6 +10,10 @@ module.exports = {
     }
 
     return config
+  },
+  env: {
+    STRIPE_PKEY: process.env.STRIPE_PKEY,
+    STRIPE_SKEY: process.env.STRIPE_SKEY,
   },
   target: 'serverless'
 }

@@ -8,9 +8,10 @@ import { useFetchItem, FETCH_ITEMS, FETCH_USER } from 'resolvers/queries'
 import { useDeleteItem } from 'resolvers/mutations'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
 
-import { Loader, Button, ErrorMessage } from 'components/core'
 import Modal from 'components/modal'
 import ImageViewer from 'components/image-viewer'
+import Checkout from 'components/checkout'
+import { Loader, Button, ErrorMessage } from 'components/core'
 import * as Styles from 'components/styles/[id]'
 
 const Product = () => {
@@ -20,6 +21,8 @@ const Product = () => {
 
   const [showModal, setShowModal] = useState(false)
   const [showViewer, setShowViewer] = useState(false)
+  const [showCheckout, setShowCheckout] = useState(false)
+
   const [selectedImage, setSelectedImage] = useState<string>(null)
 
   const { data, loading: fetchLoading } = useFetchItem({
@@ -88,6 +91,26 @@ const Product = () => {
     </Fragment>
   )
 
+  const renderOwnerButtons = () => (
+    <Fragment>
+      <Button
+        onClick={() =>
+          router.push({
+            pathname: '/item/edit',
+            query: `id=${item?.id}`,
+          })
+        }
+        type="button"
+        color="yellow"
+      >
+        Edit
+      </Button>
+      <Button onClick={() => setShowModal(true)} type="button" color="yellow">
+        Delete
+      </Button>
+    </Fragment>
+  )
+
   return (
     <Fragment>
       <Modal
@@ -102,6 +125,11 @@ const Product = () => {
         displayViewer={showViewer}
         closeViewer={() => setShowViewer(false)}
         selectedImage={selectedImage}
+      />
+      <Checkout
+        displayCheckout={showCheckout}
+        closeCheckout={() => setShowCheckout(false)}
+        item={item}
       />
       <Styles.Container>
         <Styles.ProductContainer>
@@ -131,29 +159,9 @@ const Product = () => {
             <Styles.ButtonsContainer>
               {user &&
                 (isOwner ? (
-                  <Fragment>
-                    <Button
-                      onClick={() =>
-                        router.push({
-                          pathname: '/item/edit',
-                          query: `id=${item?.id}`,
-                        })
-                      }
-                      type="button"
-                      color="yellow"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      onClick={() => setShowModal(true)}
-                      type="button"
-                      color="yellow"
-                    >
-                      Delete
-                    </Button>
-                  </Fragment>
+                  renderOwnerButtons()
                 ) : (
-                  <Button onClick={() => {}} type="button">
+                  <Button onClick={() => setShowCheckout(true)} type="button">
                     Buy
                   </Button>
                 ))}
