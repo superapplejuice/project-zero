@@ -2,7 +2,7 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { prepareClientPortals } from '@jesstelford/react-portal-universal'
 
-import { useFetchUser } from 'resolvers/queries'
+import { useFetchCurrentUser } from 'resolvers/queries'
 import { UserProvider } from 'context/user-context'
 
 import NavigationBar from 'components/navigation-bar'
@@ -14,13 +14,13 @@ if (typeof window !== 'undefined') {
 }
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { data } = useFetchUser()
+  const { data } = useFetchCurrentUser()
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <GlobalContainer>
-        <UserProvider value={{ user: data?.fetchUser }}>
+        <UserProvider value={{ user: data?.fetchCurrentUser }}>
           <Meta />
           <div id="modal" />
           <NavigationBar />

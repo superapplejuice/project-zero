@@ -3,27 +3,23 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: FetchUser
+// GraphQL query operation: FetchCurrentUser
 // ====================================================
 
-export interface FetchUser_fetchUser_items {
+export interface FetchCurrentUser_fetchCurrentUser_items {
   __typename: 'Item'
   id: string
 }
 
-export interface FetchUser_fetchUser {
+export interface FetchCurrentUser_fetchCurrentUser {
   __typename: 'User'
   id: string
   email: string
   username: string
   createdAt: any
-  items: FetchUser_fetchUser_items[] | null
+  items: FetchCurrentUser_fetchCurrentUser_items[] | null
 }
 
-export interface FetchUser {
-  fetchUser: FetchUser_fetchUser | null
-}
-
-export interface FetchUserVariables {
-  id: string
+export interface FetchCurrentUser {
+  fetchCurrentUser: FetchCurrentUser_fetchCurrentUser | null
 }

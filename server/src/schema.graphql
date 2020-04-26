@@ -47,7 +47,8 @@ type Query {
   fetchItems(data: fetchItemsInput): [Item]!
   fetchItem(id: ID!): Item!
   # users
-  fetchUser: User
+  fetchCurrentUser: User
+  fetchUser(id: ID!): User
 }
 
 # mutations

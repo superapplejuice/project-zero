@@ -566,6 +566,7 @@ export type PageInfo = {
 }
 
 export type Query = {
+  fetchCurrentUser?: Maybe<User>
   fetchItem: Item
   fetchItems: Array<Maybe<Item>>
   fetchUser?: Maybe<User>
@@ -585,6 +586,10 @@ export type QueryFetchItemArgs = {
 
 export type QueryFetchItemsArgs = {
   data?: Maybe<FetchItemsInput>
+}
+
+export type QueryFetchUserArgs = {
+  id: Scalars['ID']
 }
 
 export type QueryItemArgs = {
@@ -1003,16 +1008,16 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
-  ID: ResolverTypeWrapper<Scalars['ID']>
-  Item: ResolverTypeWrapper<Item>
-  Node: ResolversTypes['Item'] | ResolversTypes['User']
-  String: ResolverTypeWrapper<Scalars['String']>
-  Int: ResolverTypeWrapper<Scalars['Int']>
   User: ResolverTypeWrapper<User>
+  Node: ResolversTypes['User'] | ResolversTypes['Item']
+  ID: ResolverTypeWrapper<Scalars['ID']>
+  String: ResolverTypeWrapper<Scalars['String']>
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>
   ItemWhereInput: ItemWhereInput
+  Int: ResolverTypeWrapper<Scalars['Int']>
   UserWhereInput: UserWhereInput
   ItemOrderByInput: ItemOrderByInput
+  Item: ResolverTypeWrapper<Item>
   fetchItemsInput: FetchItemsInput
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ResolverTypeWrapper<ItemConnection>
@@ -1060,16 +1065,16 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {}
-  ID: Scalars['ID']
-  Item: Item
-  Node: ResolversParentTypes['Item'] | ResolversParentTypes['User']
-  String: Scalars['String']
-  Int: Scalars['Int']
   User: User
+  Node: ResolversParentTypes['User'] | ResolversParentTypes['Item']
+  ID: Scalars['ID']
+  String: Scalars['String']
   DateTime: Scalars['DateTime']
   ItemWhereInput: ItemWhereInput
+  Int: Scalars['Int']
   UserWhereInput: UserWhereInput
   ItemOrderByInput: ItemOrderByInput
+  Item: Item
   fetchItemsInput: FetchItemsInput
   ItemWhereUniqueInput: ItemWhereUniqueInput
   ItemConnection: ItemConnection
@@ -1290,7 +1295,7 @@ export type NodeResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']
 > = {
-  __resolveType: TypeResolveFn<'Item' | 'User', ParentType, ContextType>
+  __resolveType: TypeResolveFn<'User' | 'Item', ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
 }
 
@@ -1313,6 +1318,11 @@ export type QueryResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
+  fetchCurrentUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType
+  >
   fetchItem?: Resolver<
     ResolversTypes['Item'],
     ParentType,
@@ -1325,7 +1335,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryFetchItemsArgs, never>
   >
-  fetchUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  fetchUser?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryFetchUserArgs, 'id'>
+  >
   item?: Resolver<
     Maybe<ResolversTypes['Item']>,
     ParentType,
