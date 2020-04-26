@@ -64,6 +64,12 @@ const Product = () => {
     return null
   }
 
+  const handleUserRedirect = (id: string) => {
+    const href = '/user/[id]'
+
+    return router.push(href, href.replace('[id]', `${id}`))
+  }
+
   const renderActions = () => (
     <Fragment>
       {error && <ErrorMessage error={error} />}
@@ -118,7 +124,9 @@ const Product = () => {
             <Styles.Price>{formatCurrency(item?.price)}</Styles.Price>
             <Styles.Created>
               Posted {formatTimeSince(item?.createdAt)}
-              <Styles.User>By {item?.user?.username}</Styles.User>
+              <Styles.User onClick={() => handleUserRedirect(item?.user?.id)}>
+                By {item?.user?.username}
+              </Styles.User>
             </Styles.Created>
             <Styles.ButtonsContainer>
               {user &&

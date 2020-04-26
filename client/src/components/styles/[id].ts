@@ -89,6 +89,7 @@ export const Created = styled.div`
 `
 
 export const User = styled.p`
+  cursor: pointer;
   font-size: 0.8rem;
   font-weight: bold;
   margin: 0 !important;
