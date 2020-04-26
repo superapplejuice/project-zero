@@ -21,13 +21,16 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    margin: 0;
-    padding: 0;
-
     font-family: 'Fira Sans', sans-serif;
     font-weight: normal;
     font-style: normal;
     line-height: 1.4;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   a {
