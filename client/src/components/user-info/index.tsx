@@ -25,7 +25,7 @@ const UserInfo = ({ user }: Props) => {
     userItems?.length > 0 ? (
       userItems?.map(item => <ProductCard item={item} key={item?.id} />)
     ) : (
-      <p>You have no items yet!</p>
+      <p>This user has no items yet!</p>
     )
 
   return (

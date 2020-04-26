@@ -20,6 +20,7 @@ export const FETCH_ITEMS = gql`
       images
       createdAt
       user {
+        id
         username
       }
     }
