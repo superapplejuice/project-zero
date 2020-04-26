@@ -7,7 +7,7 @@ export const Container = styled.a`
   width: 200px;
   border: 1px solid ${p => p.theme.colors.gray};
   border-radius: ${p => p.theme.styles.borderRadius};
-  margin: 0 24px 32px;
+  margin: 0;
   padding: 16px;
   display: flex;
   flex-direction: column;
