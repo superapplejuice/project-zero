@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import {
-  FetchItems_fetchItems,
-  FetchUser_fetchUser,
-} from 'resolvers/queries/types'
+import { FetchItems_fetchItems } from 'resolvers/queries/types'
+import { Props } from './types'
 
 import { useFetchItems } from 'resolvers/queries'
 import { formatTimeSince } from 'lib/formatters'
@@ -12,7 +10,7 @@ import ProductCard from 'components/product-card'
 import { Loader } from 'components/core'
 import * as Styles from './styles'
 
-const UserInfo = ({ user }: { user: FetchUser_fetchUser }) => {
+const UserInfo = ({ user }: Props) => {
   const { data, loading } = useFetchItems({
     variables: { userId: user?.id },
   })
