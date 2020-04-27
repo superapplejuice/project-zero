@@ -13,7 +13,6 @@ module.exports = {
   },
   env: {
     STRIPE_PKEY: process.env.STRIPE_PKEY,
-    STRIPE_SKEY: process.env.STRIPE_SKEY,
   },
   target: 'serverless'
 }
