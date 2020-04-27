@@ -44,11 +44,16 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
           <Styles.Price>{formatCurrency(item?.price)}</Styles.Price>
           <CardElement options={options} />
           <Styles.ButtonsContainer>
-            <Button type="button" onClick={closeCheckout}>
+            <Button type="button" onClick={closeCheckout} color="yellow">
               Cancel
             </Button>
-            <Button type="submit" onClick={handleSubmit}>
-              Purchase
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={!stripe}
+              color="blue"
+            >
+              Pay
             </Button>
           </Styles.ButtonsContainer>
         </Styles.CheckoutForm>

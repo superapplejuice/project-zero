@@ -23,12 +23,12 @@ export const CheckoutForm = styled.form`
 
 export const Header = styled.h1`
   font-size: 1.2rem;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 `
 
 export const Price = styled.p`
   font-size: 1rem;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 `
 
 export const ButtonsContainer = styled.div`
