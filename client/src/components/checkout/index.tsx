@@ -64,7 +64,7 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
       return confirmPayment.error
     }
 
-    return closeCheckout
+    return closeCheckout()
   }
 
   const options: StripeCardElementOptions = {
@@ -84,7 +84,12 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
 
           {submitError && <ErrorMessage error={submitError} />}
           <Styles.ButtonsContainer>
-            <Button type="button" onClick={closeCheckout} color="yellow">
+            <Button
+              type="button"
+              onClick={closeCheckout}
+              color="yellow"
+              disabled={submitting}
+            >
               Cancel
             </Button>
             <Button
