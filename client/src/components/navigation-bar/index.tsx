@@ -33,7 +33,6 @@ const NavigationBar = () => {
         {user ? (
           <Fragment>
             <MenuItem.LinkItem href="/profile" title="Profile" />
-            <MenuItem.LinkItem href="/likes" title="Likes" />
             <MenuItem.LinkItem href="/sell" title="Sell" />
             <MenuItem.ButtonItem
               onClick={handleLogout}
