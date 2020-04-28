@@ -1,5 +1,7 @@
 import moment from 'moment'
+
 import { ApolloError } from 'apollo-boost'
+import { StripeError } from '@stripe/stripe-js'
 
 export const formatCurrency = (value: number) =>
   new Intl.NumberFormat('en-SG', {
@@ -11,5 +13,10 @@ export const formatCurrency = (value: number) =>
 export const formatTimeSince = (postTs: string) =>
   moment(new Date(postTs)).fromNow()
 
-export const formatError = (error: ApolloError) =>
-  error.message.replace('GraphQL error: ', '')
+export const formatError = (error: ApolloError | StripeError) => {
+  if (error.message.includes('GraphQL')) {
+    return error.message.replace('GraphQL error: ', '')
+  }
+
+  return error.message
+}

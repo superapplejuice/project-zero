@@ -35,6 +35,12 @@ input loginUserInput {
   password: String!
 }
 
+# payment input
+input paymentInput {
+  amount: Int!
+  paymentMethodId: String!
+}
+
 # custom types
 type Alert {
   message: String!
@@ -61,4 +67,6 @@ type Mutation {
   registerUser(data: registerUserInput): User!
   loginUser(data: loginUserInput): User!
   logoutUser: Alert
+  # payment
+  makePayment(data: paymentInput): Alert
 }

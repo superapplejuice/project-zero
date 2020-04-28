@@ -1,5 +1,6 @@
 import { hash, compare } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
+import Stripe from 'stripe'
 
 import { CookieOptions } from 'express'
 
@@ -17,6 +18,11 @@ const cookieOptions: CookieOptions = {
   httpOnly: true,
   maxAge: 1000 * 60 * 60 * 24 * 7,
 }
+
+const stripe = new Stripe(process.env.STRIPE_SKEY, {
+  apiVersion: '2020-03-02',
+  typescript: true,
+})
 
 const Mutation: MutationResolvers = {
   /* item mutations */
@@ -191,6 +197,25 @@ const Mutation: MutationResolvers = {
       context.response.clearCookie('token')
 
       return { message: 'Logged out successfully!', error: false }
+    },
+  },
+  /* payment mutations */
+  makePayment: {
+    fragment: '',
+    resolve: async (_parent, { data }, _context, _info) => {
+      const { amount, paymentMethodId } = data
+
+      const intent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'sgd',
+        payment_method: paymentMethodId,
+      })
+
+      if (!intent || !intent.client_secret) {
+        throw new Error('Payment failed!')
+      }
+
+      return { message: intent.client_secret, error: false }
     },
   },
 }

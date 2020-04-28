@@ -475,6 +475,7 @@ export type Mutation = {
   deleteUser?: Maybe<User>
   loginUser: User
   logoutUser?: Maybe<Alert>
+  makePayment?: Maybe<Alert>
   registerUser: User
   updateItem: Item
   updateManyItems: BatchPayload
@@ -510,6 +511,10 @@ export type MutationDeleteUserArgs = {
 
 export type MutationLoginUserArgs = {
   data?: Maybe<LoginUserInput>
+}
+
+export type MutationMakePaymentArgs = {
+  data?: Maybe<PaymentInput>
 }
 
 export type MutationRegisterUserArgs = {
@@ -563,6 +568,11 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>
   /** When paginating forwards, the cursor to continue. */
   endCursor?: Maybe<Scalars['String']>
+}
+
+export type PaymentInput = {
+  amount: Scalars['Int']
+  paymentMethodId: Scalars['String']
 }
 
 export type Query = {
@@ -1040,6 +1050,7 @@ export type ResolversTypes = {
   Long: ResolverTypeWrapper<Scalars['Long']>
   loginUserInput: LoginUserInput
   Alert: ResolverTypeWrapper<Alert>
+  paymentInput: PaymentInput
   registerUserInput: RegisterUserInput
   updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -1097,6 +1108,7 @@ export type ResolversParentTypes = {
   Long: Scalars['Long']
   loginUserInput: LoginUserInput
   Alert: Alert
+  paymentInput: PaymentInput
   registerUserInput: RegisterUserInput
   updateItemInput: UpdateItemInput
   ItemUpdateManyMutationInput: ItemUpdateManyMutationInput
@@ -1247,6 +1259,12 @@ export type MutationResolvers<
     RequireFields<MutationLoginUserArgs, never>
   >
   logoutUser?: Resolver<Maybe<ResolversTypes['Alert']>, ParentType, ContextType>
+  makePayment?: Resolver<
+    Maybe<ResolversTypes['Alert']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationMakePaymentArgs, never>
+  >
   registerUser?: Resolver<
     ResolversTypes['User'],
     ParentType,

@@ -8,6 +8,9 @@ import useRegisterUser from './register-user'
 import useLogin from './login-user'
 import useLogout from './logout-user'
 
+// payment mutations
+import useMakePayment from './make-payment'
+
 export {
   useCreateItem,
   useUpdateItem,
@@ -15,4 +18,5 @@ export {
   useRegisterUser,
   useLogin,
   useLogout,
+  useMakePayment,
 }

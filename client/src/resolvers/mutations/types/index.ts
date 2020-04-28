@@ -7,3 +7,6 @@ export * from './DeleteItem'
 export * from './RegisterUser'
 export * from './LoginUser'
 export * from './LogoutUser'
+
+// payment mutation types
+export * from './MakePayment'

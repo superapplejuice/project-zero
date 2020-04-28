@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { UniversalPortal } from '@jesstelford/react-portal-universal'
 
-import { StripeCardElementOptions } from '@stripe/stripe-js'
+import { StripeCardElementOptions, StripeError } from '@stripe/stripe-js'
+import { ApolloError } from 'apollo-boost'
 import { Props } from './types'
 
 import { useUserContext } from 'context/user-context'
+import { useMakePayment } from 'resolvers/mutations'
 import { formatCurrency } from 'lib/formatters'
 
-import { Button } from 'components/core'
+import { Button, ErrorMessage } from 'components/core'
 import * as Styles from './styles'
 
 const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
@@ -16,21 +18,57 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
   const elements = useElements()
 
   const { user } = useUserContext()
+  const [makePayment, { error }] = useMakePayment()
 
-  const options: StripeCardElementOptions = {
-    hidePostalCode: true,
-  }
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<StripeError | ApolloError>(
+    null
+  )
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setSubmitting(true)
 
-    const { paymentMethod, error } = await stripe.createPaymentMethod({
+    const parsedAmount = item?.price * 100
+    const paymentMethod = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
-      billing_details: { email: user?.email },
+      billing_details: {
+        email: user?.email,
+        address: {
+          country: 'SG',
+        },
+      },
     })
 
-    return error ? console.log(error) : console.log(paymentMethod)
+    if (paymentMethod.error) {
+      return setSubmitError(paymentMethod.error)
+    }
+
+    const paymentMethodId = paymentMethod.paymentMethod.id
+    const { data } = await makePayment({
+      variables: {
+        amount: parsedAmount,
+        paymentMethodId,
+      },
+    })
+
+    if (error) {
+      return setSubmitError(error)
+    }
+
+    const clientSecret = data?.makePayment?.message
+    const confirmPayment = await stripe.confirmCardPayment(clientSecret)
+
+    if (confirmPayment.error) {
+      return confirmPayment.error
+    }
+
+    return closeCheckout
+  }
+
+  const options: StripeCardElementOptions = {
+    hidePostalCode: true,
   }
 
   const renderCheckout = () => (
@@ -43,6 +81,8 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
           <Styles.Header>{item?.name}</Styles.Header>
           <Styles.Price>{formatCurrency(item?.price)}</Styles.Price>
           <CardElement options={options} />
+
+          {submitError && <ErrorMessage error={submitError} />}
           <Styles.ButtonsContainer>
             <Button type="button" onClick={closeCheckout} color="yellow">
               Cancel
@@ -50,7 +90,7 @@ const Checkout = ({ closeCheckout, displayCheckout, item }: Props) => {
             <Button
               type="submit"
               onClick={handleSubmit}
-              disabled={!stripe}
+              disabled={!stripe || submitting}
               color="blue"
             >
               Pay
