@@ -8,7 +8,6 @@ This project was created with one goal in mind: to have ZERO `any` types.
 
 - 🧘‍♀️ [GraphQL Yoga](https://github.com/prisma-labs/graphql-yoga)
 - 💎 [Prisma](https://github.com/prisma/prisma)
-- ⚜️ [GraphQL Code Generator](https://github.com/dotansimha/graphql-code-generator)
 
 2. Client
 
