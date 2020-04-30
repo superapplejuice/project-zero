@@ -6,4 +6,5 @@ export type ButtonProps = {
   onClick: (event: React.FormEvent<HTMLFormElement> | React.MouseEvent) => void
   disabled?: boolean
   type: 'submit' | 'button' | 'reset'
+  size?: 'small'
 }

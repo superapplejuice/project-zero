@@ -6,6 +6,7 @@ import { useLogout } from 'resolvers/mutations'
 import { FETCH_CURRENT_USER } from 'resolvers/queries'
 
 import ItemSearch from 'components/item-search'
+import CartMenu from 'components/cart-menu'
 import { MenuItem } from 'components/core'
 import * as Styles from './styles'
 
@@ -33,6 +34,7 @@ const NavigationBar = () => {
         {user ? (
           <Fragment>
             <MenuItem.LinkItem href="/profile" title="Profile" />
+            <CartMenu />
             <MenuItem.LinkItem href="/sell" title="Sell" />
             <MenuItem.ButtonItem
               onClick={handleLogout}

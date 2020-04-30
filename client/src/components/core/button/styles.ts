@@ -2,12 +2,12 @@ import styled, { css } from 'styled-components'
 
 import { ButtonProps } from './types'
 
-const _BaseStyles = css`
+const _BaseStyles = css<ButtonProps>`
   cursor: pointer;
   border: 1px solid ${p => p.theme.colors.black};
   border-radius: ${p => p.theme.styles.borderRadius};
-  font-size: 1rem;
-  padding: 12px 32px;
+  font-size: ${p => (p.size === 'small' ? '0.8rem' : '1rem')};
+  padding: ${p => (p.size === 'small' ? '6px 12px' : '12px 32px')};
   background: white;
   transition: ${p => p.theme.styles.transition};
 
