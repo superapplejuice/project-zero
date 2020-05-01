@@ -1,16 +1,20 @@
 import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { FetchItems } from 'resolvers/queries/types'
+import { FetchItems, FetchCart } from 'resolvers/queries/types'
 
 import { useUserContext } from 'context/user-context'
-import { useFetchItem, FETCH_ITEMS, FETCH_USER } from 'resolvers/queries'
-import { useDeleteItem } from 'resolvers/mutations'
+import {
+  useFetchItem,
+  FETCH_ITEMS,
+  FETCH_USER,
+  FETCH_CART,
+} from 'resolvers/queries'
+import { useDeleteItem, useAddToCart } from 'resolvers/mutations'
 import { formatCurrency, formatTimeSince } from 'lib/formatters'
 
 import Modal from 'components/modal'
 import ImageViewer from 'components/image-viewer'
-import Checkout from 'components/checkout'
 import { Loader, Button, ErrorMessage } from 'components/core'
 import * as Styles from 'components/styles/[id]'
 
@@ -21,7 +25,6 @@ const Product = () => {
 
   const [showModal, setShowModal] = useState(false)
   const [showViewer, setShowViewer] = useState(false)
-  const [showCheckout, setShowCheckout] = useState(false)
 
   const [selectedImage, setSelectedImage] = useState<string>(null)
 
@@ -32,6 +35,27 @@ const Product = () => {
 
   const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
     refetchQueries: [{ query: FETCH_USER }],
+  })
+
+  const [addToCart, { loading: addCartLoading }] = useAddToCart({
+    update: (cache, { data }) => {
+      const { fetchCart } = cache.readQuery<FetchCart>({
+        query: FETCH_CART,
+      })
+
+      const addedItem = data?.addToCart?.items[0]
+      const updatedCart = [...fetchCart?.items, addedItem]
+
+      return cache.writeQuery<FetchCart>({
+        query: FETCH_CART,
+        data: {
+          fetchCart: {
+            __typename: 'Cart',
+            items: updatedCart,
+          },
+        },
+      })
+    },
   })
 
   if (fetchLoading) return <Loader size="large" />
@@ -66,6 +90,13 @@ const Product = () => {
 
     return null
   }
+
+  const handleAddToCart = async () =>
+    await addToCart({
+      variables: {
+        id: item?.id,
+      },
+    })
 
   const handleUserRedirect = (id: string) => {
     const href = '/user/[id]'
@@ -126,11 +157,6 @@ const Product = () => {
         closeViewer={() => setShowViewer(false)}
         selectedImage={selectedImage}
       />
-      <Checkout
-        displayCheckout={showCheckout}
-        closeCheckout={() => setShowCheckout(false)}
-        item={item}
-      />
       <Styles.Container>
         <Styles.ProductContainer>
           <Styles.ImageContainer>
@@ -161,8 +187,12 @@ const Product = () => {
                 (isOwner ? (
                   renderOwnerButtons()
                 ) : (
-                  <Button onClick={() => setShowCheckout(true)} type="button">
-                    Buy
+                  <Button
+                    onClick={handleAddToCart}
+                    type="button"
+                    disabled={addCartLoading}
+                  >
+                    Add to Cart
                   </Button>
                 ))}
             </Styles.ButtonsContainer>

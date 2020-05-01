@@ -6,11 +6,10 @@ import { FetchCart, FetchCartVariables } from './types'
 export const FETCH_CART = gql`
   query FetchCart($id: ID!) {
     fetchCart(id: $id) {
-      user {
-        id
-      }
       items {
         id
+        name
+        images
       }
     }
   }

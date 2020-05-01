@@ -11,6 +11,11 @@ export interface FetchUser_fetchUser_items {
   id: string
 }
 
+export interface FetchUser_fetchUser_cart {
+  __typename: 'Cart'
+  id: string
+}
+
 export interface FetchUser_fetchUser {
   __typename: 'User'
   id: string
@@ -18,6 +23,7 @@ export interface FetchUser_fetchUser {
   username: string
   createdAt: any
   items: FetchUser_fetchUser_items[] | null
+  cart: FetchUser_fetchUser_cart
 }
 
 export interface FetchUser {

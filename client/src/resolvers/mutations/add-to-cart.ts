@@ -11,6 +11,8 @@ const ADD_TO_CART = gql`
       }
       items {
         id
+        name
+        images
       }
     }
   }

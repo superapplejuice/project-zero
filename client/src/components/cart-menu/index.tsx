@@ -1,15 +1,21 @@
 import React, { Fragment, useState } from 'react'
 
-import { useFetchItems } from 'resolvers/queries'
+import { useUserContext } from 'context/user-context'
+import { useFetchCart } from 'resolvers/queries'
 
 import { MenuItem, Button } from 'components/core'
 import * as Styles from './styles'
 
 const CartMenu = () => {
+  const { user } = useUserContext()
   const [displayCart, setDisplayCart] = useState(false)
 
-  const { data } = useFetchItems()
-  const items = data?.fetchItems
+  const { data } = useFetchCart({
+    variables: {
+      id: user?.cart?.id,
+    },
+  })
+  const items = data?.fetchCart?.items
 
   const renderCartItems = () => (
     <Fragment>

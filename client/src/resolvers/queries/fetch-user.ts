@@ -13,6 +13,9 @@ export const FETCH_USER = gql`
       items {
         id
       }
+      cart {
+        id
+      }
     }
   }
 `

@@ -14,6 +14,8 @@ export interface AddToCart_addToCart_user {
 export interface AddToCart_addToCart_items {
   __typename: 'Item'
   id: string
+  name: string
+  images: string[]
 }
 
 export interface AddToCart_addToCart {

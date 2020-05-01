@@ -11,6 +11,11 @@ export interface FetchCurrentUser_fetchCurrentUser_items {
   id: string
 }
 
+export interface FetchCurrentUser_fetchCurrentUser_cart {
+  __typename: 'Cart'
+  id: string
+}
+
 export interface FetchCurrentUser_fetchCurrentUser {
   __typename: 'User'
   id: string
@@ -18,6 +23,7 @@ export interface FetchCurrentUser_fetchCurrentUser {
   username: string
   createdAt: any
   items: FetchCurrentUser_fetchCurrentUser_items[] | null
+  cart: FetchCurrentUser_fetchCurrentUser_cart
 }
 
 export interface FetchCurrentUser {
