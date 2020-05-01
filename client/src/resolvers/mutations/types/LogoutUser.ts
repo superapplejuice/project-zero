@@ -9,7 +9,6 @@
 export interface LogoutUser_logoutUser {
   __typename: 'Alert'
   message: string
-  error: boolean
 }
 
 export interface LogoutUser {

@@ -7,7 +7,6 @@ const LOGOUT_USER = gql`
   mutation LogoutUser {
     logoutUser {
       message
-      error
     }
   }
 `

@@ -5,3 +5,6 @@ export * from './fetch-item'
 // user queries
 export * from './fetch-current-user'
 export * from './fetch-user'
+
+// cart queries
+export * from './fetch-cart'

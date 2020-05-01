@@ -11,6 +11,10 @@ import useLogout from './logout-user'
 // payment mutations
 import useMakePayment from './make-payment'
 
+// cart mutations
+import useAddToCart from './add-to-cart'
+import useRemoveFromCart from './remove-from-cart'
+
 export {
   useCreateItem,
   useUpdateItem,
@@ -19,4 +23,6 @@ export {
   useLogin,
   useLogout,
   useMakePayment,
+  useAddToCart,
+  useRemoveFromCart,
 }
