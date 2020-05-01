@@ -5,6 +5,7 @@ type User {
   password: String!
   createdAt: DateTime! @createdAt
   items: [Item]!
+  cart: Cart! @relation(link: INLINE)
 }
 
 type Item {
@@ -16,4 +17,10 @@ type Item {
   user: User!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+}
+
+type Cart {
+  id: ID! @id
+  user: User
+  items: [Item]!
 }

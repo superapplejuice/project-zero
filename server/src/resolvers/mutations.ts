@@ -3,15 +3,17 @@ import { sign } from 'jsonwebtoken'
 import Stripe from 'stripe'
 
 import { CookieOptions } from 'express'
-
 import { MutationResolvers } from './types'
-import { itemConnect } from './connect'
+
+import { itemConnect, cartConnect } from './connect'
 import { usernameRegex, passwordRegex } from '../utils/regex'
 import {
   requireAuth,
   wrongCredentials,
   noItem,
   notOwner,
+  invalidUsername,
+  invalidPassword,
 } from '../utils/messages'
 
 const cookieOptions: CookieOptions = {
@@ -124,15 +126,11 @@ const Mutation: MutationResolvers = {
       const { username, email, password } = data
 
       if (!username.match(usernameRegex)) {
-        throw new Error(
-          'Your username needs to be between 4 to 15 characters long, and cannot contain special characters!'
-        )
+        throw new Error(invalidUsername)
       }
 
       if (!password.match(passwordRegex)) {
-        throw new Error(
-          'Your password needs to be at least 8 characters long, and contains at least one capital letter, one special character, and one number!'
-        )
+        throw new Error(invalidPassword)
       }
 
       const parsedUsername = `@${username.toLowerCase()}`
@@ -159,6 +157,9 @@ const Mutation: MutationResolvers = {
             username: parsedUsername,
             email: parsedEmail,
             password: hashedPassword,
+            cart: {
+              create: {},
+            },
           },
         },
         info
@@ -183,9 +184,7 @@ const Mutation: MutationResolvers = {
         throw new Error(wrongCredentials)
       }
 
-      // generate JWT token
       const token = sign({ userId: existingUser.id }, process.env.APP_SECRET)
-      // set token into req.cookies
       context.response.cookie('token', token, cookieOptions)
 
       return existingUser
@@ -196,7 +195,7 @@ const Mutation: MutationResolvers = {
     resolve: (_parent, _args, context, _info) => {
       context.response.clearCookie('token')
 
-      return { message: 'Logged out successfully!', error: false }
+      return { message: 'Logged out successfully!' }
     },
   },
   /* payment mutations */
@@ -215,7 +214,72 @@ const Mutation: MutationResolvers = {
         throw new Error('Payment failed!')
       }
 
-      return { message: intent.client_secret, error: false }
+      return { message: intent.client_secret }
+    },
+  },
+  /* cart mutations */
+  addToCart: {
+    fragment: '',
+    resolve: async (_parent, { id }, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      const itemToAdd = await context.db.query.item({ where: { id } })
+      if (!itemToAdd) {
+        throw new Error(noItem)
+      }
+
+      const userCart = await context.db.query.cart(
+        {
+          where: { id: context.request.user.cart.id },
+        },
+        cartConnect
+      )
+
+      return await context.db.mutation.updateCart(
+        {
+          data: {
+            items: { set: [...userCart.items, itemToAdd] },
+          },
+          where: { id: userCart.id },
+        },
+        info
+      )
+    },
+  },
+  removeFromCart: {
+    fragment: '',
+    resolve: async (_parent, { id }, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      const itemToRemove = await context.db.query.item({ where: { id } })
+      if (!itemToRemove) {
+        throw new Error(noItem)
+      }
+
+      const userCart = await context.db.query.cart(
+        {
+          where: { id: context.request.user.cart.id },
+        },
+        cartConnect
+      )
+      if (!userCart.items.includes(itemToRemove)) {
+        throw new Error('That item does not exist in the cart!')
+      }
+
+      const updatedCart = userCart.items.filter(
+        item => item.id !== itemToRemove.id
+      )
+      return await context.db.mutation.updateCart(
+        {
+          data: { items: { set: updatedCart } },
+          where: { id: userCart.id },
+        },
+        info
+      )
     },
   },
 }

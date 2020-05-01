@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/jan-mathew-calaunan-22ea6d/zero/dev
-# timestamp: Sun Apr 19 2020 19:16:29 GMT+0800 (Singapore Standard Time)
+# timestamp: Fri May 01 2020 11:01:25 GMT+0800 (Singapore Standard Time)
+
+type AggregateCart {
+  count: Int!
+}
 
 type AggregateItem {
   count: Int!
@@ -12,6 +16,173 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type Cart implements Node {
+  id: ID!
+  user: User
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+}
+
+"""A connection to a list of items."""
+type CartConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CartEdge]!
+  aggregate: AggregateCart!
+}
+
+input CartCreateInput {
+  id: ID
+  user: UserCreateOneWithoutCartInput
+  items: ItemCreateManyInput
+}
+
+input CartCreateOneWithoutUserInput {
+  create: CartCreateWithoutUserInput
+  connect: CartWhereUniqueInput
+}
+
+input CartCreateWithoutUserInput {
+  id: ID
+  items: ItemCreateManyInput
+}
+
+"""An edge in a connection."""
+type CartEdge {
+  """The item at the end of the edge."""
+  node: Cart!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CartOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type CartPreviousValues {
+  id: ID!
+}
+
+type CartSubscriptionPayload {
+  mutation: MutationType!
+  node: Cart
+  updatedFields: [String!]
+  previousValues: CartPreviousValues
+}
+
+input CartSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartSubscriptionWhereInput!]
+
+  """The subscription event gets dispatched when it's listed in mutation_in"""
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CartWhereInput
+}
+
+input CartUpdateInput {
+  user: UserUpdateOneWithoutCartInput
+  items: ItemUpdateManyInput
+}
+
+input CartUpdateOneRequiredWithoutUserInput {
+  create: CartCreateWithoutUserInput
+  connect: CartWhereUniqueInput
+  update: CartUpdateWithoutUserDataInput
+  upsert: CartUpsertWithoutUserInput
+}
+
+input CartUpdateWithoutUserDataInput {
+  items: ItemUpdateManyInput
+}
+
+input CartUpsertWithoutUserInput {
+  update: CartUpdateWithoutUserDataInput!
+  create: CartCreateWithoutUserInput!
+}
+
+input CartWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  user: UserWhereInput
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
+}
+
+input CartWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -48,6 +219,11 @@ input ItemCreateInput {
   price: Int!
   images: ItemCreateimagesInput
   user: UserCreateOneWithoutItemsInput!
+}
+
+input ItemCreateManyInput {
+  create: [ItemCreateInput!]
+  connect: [ItemWhereUniqueInput!]
 }
 
 input ItemCreateManyWithoutUserInput {
@@ -331,6 +507,14 @@ input ItemSubscriptionWhereInput {
   node: ItemWhereInput
 }
 
+input ItemUpdateDataInput {
+  name: String
+  description: String
+  price: Int
+  images: ItemUpdateimagesInput
+  user: UserUpdateOneRequiredWithoutItemsInput
+}
+
 input ItemUpdateimagesInput {
   set: [String!]
 }
@@ -348,6 +532,18 @@ input ItemUpdateManyDataInput {
   description: String
   price: Int
   images: ItemUpdateimagesInput
+}
+
+input ItemUpdateManyInput {
+  create: [ItemCreateInput!]
+  connect: [ItemWhereUniqueInput!]
+  set: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  delete: [ItemWhereUniqueInput!]
+  update: [ItemUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [ItemScalarWhereInput!]
+  upsert: [ItemUpsertWithWhereUniqueNestedInput!]
 }
 
 input ItemUpdateManyMutationInput {
@@ -381,9 +577,20 @@ input ItemUpdateWithoutUserDataInput {
   images: ItemUpdateimagesInput
 }
 
+input ItemUpdateWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateDataInput!
+}
+
 input ItemUpdateWithWhereUniqueWithoutUserInput {
   where: ItemWhereUniqueInput!
   data: ItemUpdateWithoutUserDataInput!
+}
+
+input ItemUpsertWithWhereUniqueNestedInput {
+  where: ItemWhereUniqueInput!
+  update: ItemUpdateDataInput!
+  create: ItemCreateInput!
 }
 
 input ItemUpsertWithWhereUniqueWithoutUserInput {
@@ -602,16 +809,21 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createCart(data: CartCreateInput!): Cart!
   createItem(data: ItemCreateInput!): Item!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteCart(where: CartWhereUniqueInput!): Cart
   deleteItem(where: ItemWhereUniqueInput!): Item
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertCart(where: CartWhereUniqueInput!, create: CartCreateInput!, update: CartUpdateInput!): Cart!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyCarts(where: CartWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
 }
 
@@ -644,10 +856,13 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  carts(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cart]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   user(where: UserWhereUniqueInput!): User
+  cart(where: CartWhereUniqueInput!): Cart
   item(where: ItemWhereUniqueInput!): Item
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  cartsConnection(where: CartWhereInput, orderBy: CartOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
 
   """Fetches an object given its ID"""
@@ -659,6 +874,7 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  cart(where: CartSubscriptionWhereInput): CartSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
 
@@ -669,6 +885,7 @@ type User implements Node {
   password: String!
   createdAt: DateTime!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
+  cart: Cart!
 }
 
 """A connection to a list of items."""
@@ -687,6 +904,12 @@ input UserCreateInput {
   email: String!
   password: String!
   items: ItemCreateManyWithoutUserInput
+  cart: CartCreateOneWithoutUserInput!
+}
+
+input UserCreateOneWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutItemsInput {
@@ -694,11 +917,20 @@ input UserCreateOneWithoutItemsInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutCartInput {
+  id: ID
+  username: String!
+  email: String!
+  password: String!
+  items: ItemCreateManyWithoutUserInput
+}
+
 input UserCreateWithoutItemsInput {
   id: ID
   username: String!
   email: String!
   password: String!
+  cart: CartCreateOneWithoutUserInput!
 }
 
 """An edge in a connection."""
@@ -773,6 +1005,7 @@ input UserUpdateInput {
   email: String
   password: String
   items: ItemUpdateManyWithoutUserInput
+  cart: CartUpdateOneRequiredWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -788,10 +1021,32 @@ input UserUpdateOneRequiredWithoutItemsInput {
   upsert: UserUpsertWithoutItemsInput
 }
 
+input UserUpdateOneWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateWithoutCartDataInput
+  upsert: UserUpsertWithoutCartInput
+}
+
+input UserUpdateWithoutCartDataInput {
+  username: String
+  email: String
+  password: String
+  items: ItemUpdateManyWithoutUserInput
+}
+
 input UserUpdateWithoutItemsDataInput {
   username: String
   email: String
   password: String
+  cart: CartUpdateOneRequiredWithoutUserInput
+}
+
+input UserUpsertWithoutCartInput {
+  update: UserUpdateWithoutCartDataInput!
+  create: UserCreateWithoutCartInput!
 }
 
 input UserUpsertWithoutItemsInput {
@@ -993,6 +1248,7 @@ input UserWhereInput {
   items_every: ItemWhereInput
   items_some: ItemWhereInput
   items_none: ItemWhereInput
+  cart: CartWhereInput
 }
 
 input UserWhereUniqueInput {

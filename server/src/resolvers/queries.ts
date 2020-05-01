@@ -1,6 +1,9 @@
 import { QueryResolvers } from './types'
 
+import { requireAuth } from '../utils/messages'
+
 const Query: QueryResolvers = {
+  /* item queries */
   fetchItems: {
     fragment: '',
     resolve: async (parent, { data }, context, info) =>
@@ -23,6 +26,7 @@ const Query: QueryResolvers = {
       return fetchedItem
     },
   },
+  /* user queries */
   fetchCurrentUser: {
     fragment: '',
     resolve: async (parent, args, context, info) => {
@@ -50,6 +54,22 @@ const Query: QueryResolvers = {
       }
 
       return fetchedUser
+    },
+  },
+  /* cart queries */
+  fetchCart: {
+    fragment: '',
+    resolve: async (parent, { id }, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      return await context.db.query.cart(
+        {
+          where: { id },
+        },
+        info
+      )
     },
   },
 }

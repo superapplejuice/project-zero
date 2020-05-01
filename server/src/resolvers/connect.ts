@@ -24,3 +24,15 @@ export const userConnect = `
     }
   }
 `
+
+export const cartConnect = `
+  {
+    id
+    user {
+      id
+    }
+    items {
+      id
+    }
+  }
+`

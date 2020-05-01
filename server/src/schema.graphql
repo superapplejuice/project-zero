@@ -44,7 +44,6 @@ input paymentInput {
 # custom types
 type Alert {
   message: String!
-  error: Boolean!
 }
 
 # queries
@@ -55,18 +54,23 @@ type Query {
   # users
   fetchCurrentUser: User
   fetchUser(id: ID!): User
+  # cart
+  fetchCart(id: ID!): Cart
 }
 
 # mutations
 type Mutation {
   # items
-  createItem(data: createItemInput): Item!
-  updateItem(data: updateItemInput): Item!
+  createItem(data: createItemInput!): Item!
+  updateItem(data: updateItemInput!): Item!
   deleteItem(id: ID!): Item
   # users
-  registerUser(data: registerUserInput): User!
-  loginUser(data: loginUserInput): User!
+  registerUser(data: registerUserInput!): User!
+  loginUser(data: loginUserInput!): User!
   logoutUser: Alert
   # payment
-  makePayment(data: paymentInput): Alert
+  makePayment(data: paymentInput!): Alert
+  # cart
+  addToCart(id: ID!): Cart
+  removeFromCart(id: ID!): Cart
 }
