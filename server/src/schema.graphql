@@ -73,4 +73,5 @@ type Mutation {
   # cart
   addToCart(id: ID!): CartItem!
   removeFromCart(id: ID!): CartItem
+  clearCart: [CartItem]!
 }

@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react'
 import { FetchCart } from 'resolvers/queries/types'
 
 import { useFetchCart, FETCH_CART } from 'resolvers/queries'
-import { useRemoveFromCart } from 'resolvers/mutations'
+import { useRemoveFromCart, useClearCart } from 'resolvers/mutations'
 
 import { MenuItem, Button } from 'components/core'
 import * as Styles from './styles'
@@ -14,7 +14,7 @@ const CartMenu = () => {
   const { data } = useFetchCart()
   const cart = data?.fetchCart
 
-  const [removeFromCart, { loading }] = useRemoveFromCart()
+  const [removeFromCart, { loading: removeLoading }] = useRemoveFromCart()
   const handleRemoveFromCart = async (id: string) =>
     await removeFromCart({
       variables: {
@@ -39,6 +39,18 @@ const CartMenu = () => {
       },
     })
 
+  const [clearCart, { loading: clearLoading }] = useClearCart()
+  const handleClearCart = async () =>
+    await clearCart({
+      update: (cache, _result) =>
+        cache.writeQuery<FetchCart>({
+          query: FETCH_CART,
+          data: {
+            fetchCart: [],
+          },
+        }),
+    })
+
   const renderCartItems = () => (
     <Fragment>
       {cart?.map(cartItem => (
@@ -49,7 +61,7 @@ const CartMenu = () => {
           />
           <Styles.ItemName>{cartItem?.item?.name}</Styles.ItemName>
           <Button
-            disabled={loading}
+            disabled={removeLoading || clearLoading}
             onClick={() => handleRemoveFromCart(cartItem?.id)}
             type="button"
             size="small"
@@ -59,7 +71,12 @@ const CartMenu = () => {
         </Styles.CartItem>
       ))}
       <Styles.ButtonsContainer>
-        <Button onClick={() => {}} type="button" size="small">
+        <Button
+          disabled={removeLoading || clearLoading}
+          onClick={handleClearCart}
+          type="button"
+          size="small"
+        >
           Clear Cart
         </Button>
         <Button onClick={() => {}} type="button" size="small">

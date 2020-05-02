@@ -649,6 +649,7 @@ export type LoginUserInput = {
 
 export type Mutation = {
   addToCart: CartItem
+  clearCart: Array<Maybe<CartItem>>
   createCartItem: CartItem
   createItem: Item
   createUser: User
@@ -1618,6 +1619,11 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationAddToCartArgs, 'id'>
+  >
+  clearCart?: Resolver<
+    Array<Maybe<ResolversTypes['CartItem']>>,
+    ParentType,
+    ContextType
   >
   createCartItem?: Resolver<
     ResolversTypes['CartItem'],

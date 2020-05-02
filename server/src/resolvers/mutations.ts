@@ -286,6 +286,26 @@ const Mutation: MutationResolvers = {
       )
     },
   },
+  clearCart: {
+    fragment: '',
+    resolve: async (parent, args, context, info) => {
+      if (!context.request.userId) {
+        throw new Error(requireAuth)
+      }
+
+      await context.db.mutation.deleteManyCartItems(
+        {
+          where: { user: { id: context.request.userId } },
+        },
+        info
+      )
+
+      return await context.db.query.cartItems(
+        { where: { user: { id: context.request.userId } } },
+        cartItemConnect
+      )
+    },
+  },
 }
 
 export default Mutation

@@ -14,3 +14,4 @@ export * from './MakePayment'
 // cart mutation types
 export * from './AddToCart'
 export * from './RemoveFromCart'
+export * from './ClearCart'

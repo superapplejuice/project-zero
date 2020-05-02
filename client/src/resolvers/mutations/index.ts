@@ -14,6 +14,7 @@ import useMakePayment from './make-payment'
 // cart mutations
 import useAddToCart from './add-to-cart'
 import useRemoveFromCart from './remove-from-cart'
+import useClearCart from './clear-cart'
 
 export {
   useCreateItem,
@@ -25,4 +26,5 @@ export {
   useMakePayment,
   useAddToCart,
   useRemoveFromCart,
+  useClearCart,
 }
