@@ -12,5 +12,5 @@ export interface LogoutUser_logoutUser {
 }
 
 export interface LogoutUser {
-  logoutUser: LogoutUser_logoutUser | null
+  logoutUser: LogoutUser_logoutUser
 }

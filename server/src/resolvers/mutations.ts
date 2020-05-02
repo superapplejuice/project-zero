@@ -5,7 +5,7 @@ import Stripe from 'stripe'
 import { CookieOptions } from 'express'
 import { MutationResolvers } from './types'
 
-import { itemConnect, cartConnect } from './connect'
+import { itemConnect, cartItemConnect } from './connect'
 import { usernameRegex, passwordRegex } from '../utils/regex'
 import {
   requireAuth,
@@ -157,9 +157,6 @@ const Mutation: MutationResolvers = {
             username: parsedUsername,
             email: parsedEmail,
             password: hashedPassword,
-            cart: {
-              create: {},
-            },
           },
         },
         info
@@ -225,24 +222,31 @@ const Mutation: MutationResolvers = {
         throw new Error(requireAuth)
       }
 
-      const itemToAdd = await context.db.query.item({ where: { id } })
-      if (!itemToAdd) {
-        throw new Error(noItem)
+      const userCart = await context.db.query.cartItems(
+        {
+          where: {
+            user: { id: context.request.userId },
+            item: { id },
+          },
+        },
+        cartItemConnect
+      )
+      const existingItem = userCart.find(cartItem => cartItem.item.id === id)
+
+      if (existingItem) {
+        return existingItem
       }
 
-      const userCart = await context.db.query.cart(
-        {
-          where: { id: context.request.user.cart.id },
-        },
-        cartConnect
-      )
-
-      return await context.db.mutation.updateCart(
+      return await context.db.mutation.createCartItem(
         {
           data: {
-            items: { set: [...userCart.items, itemToAdd] },
+            user: {
+              connect: { id: context.request.userId },
+            },
+            item: {
+              connect: { id },
+            },
           },
-          where: { id: userCart.id },
         },
         info
       )
@@ -255,28 +259,28 @@ const Mutation: MutationResolvers = {
         throw new Error(requireAuth)
       }
 
-      const itemToRemove = await context.db.query.item({ where: { id } })
-      if (!itemToRemove) {
-        throw new Error(noItem)
+      const itemToRemove = await context.db.query.cartItem(
+        { where: { id } },
+        cartItemConnect
+      )
+
+      if (itemToRemove.user.id !== context.request.userId) {
+        throw new Error('That cart item does not belong to you!')
       }
 
-      const userCart = await context.db.query.cart(
-        {
-          where: { id: context.request.user.cart.id },
-        },
-        cartConnect
+      const userCart = await context.db.query.cartItems(
+        { where: { user: { id: context.request.userId } } },
+        cartItemConnect
       )
-      if (!userCart.items.includes(itemToRemove)) {
-        throw new Error('That item does not exist in the cart!')
+      const itemInCart = userCart.filter(item => item.id === itemToRemove.id)
+
+      if (!itemInCart) {
+        throw new Error('That item does not exist in your cart!')
       }
 
-      const updatedCart = userCart.items.filter(
-        item => item.id !== itemToRemove.id
-      )
-      return await context.db.mutation.updateCart(
+      return await context.db.mutation.deleteCartItem(
         {
-          data: { items: { set: updatedCart } },
-          where: { id: userCart.id },
+          where: { id: itemToRemove.id },
         },
         info
       )

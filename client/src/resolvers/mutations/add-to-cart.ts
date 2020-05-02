@@ -6,13 +6,12 @@ import { AddToCart, AddToCartVariables } from './types'
 const ADD_TO_CART = gql`
   mutation AddToCart($id: ID!) {
     addToCart(id: $id) {
-      user {
-        id
-      }
-      items {
+      id
+      item {
         id
         name
         images
+        price
       }
     }
   }

@@ -32,36 +32,11 @@ const Product = () => {
     variables: { id: String(id) },
   })
   const item = data?.fetchItem
+  const isOwner = user?.username === item?.user?.username
 
   const [deleteItem, { loading: deleteLoading, error }] = useDeleteItem({
     refetchQueries: [{ query: FETCH_USER }],
   })
-
-  const [addToCart, { loading: addCartLoading }] = useAddToCart({
-    update: (cache, { data }) => {
-      const { fetchCart } = cache.readQuery<FetchCart>({
-        query: FETCH_CART,
-      })
-
-      const addedItem = data?.addToCart?.items[0]
-      const updatedCart = [...fetchCart?.items, addedItem]
-
-      return cache.writeQuery<FetchCart>({
-        query: FETCH_CART,
-        data: {
-          fetchCart: {
-            __typename: 'Cart',
-            items: updatedCart,
-          },
-        },
-      })
-    },
-  })
-
-  if (fetchLoading) return <Loader size="large" />
-
-  const isOwner = user?.username === item?.user?.username
-
   const handleDelete = async () => {
     const { data } = await deleteItem({
       variables: { id: String(id) },
@@ -91,16 +66,32 @@ const Product = () => {
     return null
   }
 
+  const [addToCart, { loading: addCartLoading }] = useAddToCart()
   const handleAddToCart = async () =>
     await addToCart({
       variables: {
         id: item?.id,
       },
+      update: (cache, { data }) => {
+        const { fetchCart } = cache.readQuery<FetchCart>({
+          query: FETCH_CART,
+        })
+
+        const addedItem = data?.addToCart
+
+        return cache.writeQuery<FetchCart>({
+          query: FETCH_CART,
+          data: {
+            fetchCart: [...fetchCart, addedItem],
+          },
+        })
+      },
     })
+
+  if (fetchLoading) return <Loader size="large" />
 
   const handleUserRedirect = (id: string) => {
     const href = '/user/[id]'
-
     return router.push(href, href.replace('[id]', `${id}`))
   }
 

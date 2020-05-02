@@ -6,26 +6,22 @@
 // GraphQL mutation operation: AddToCart
 // ====================================================
 
-export interface AddToCart_addToCart_user {
-  __typename: 'User'
-  id: string
-}
-
-export interface AddToCart_addToCart_items {
+export interface AddToCart_addToCart_item {
   __typename: 'Item'
   id: string
   name: string
   images: string[]
+  price: number
 }
 
 export interface AddToCart_addToCart {
-  __typename: 'Cart'
-  user: AddToCart_addToCart_user | null
-  items: AddToCart_addToCart_items[] | null
+  __typename: 'CartItem'
+  id: string
+  item: AddToCart_addToCart_item
 }
 
 export interface AddToCart {
-  addToCart: AddToCart_addToCart | null
+  addToCart: AddToCart_addToCart
 }
 
 export interface AddToCartVariables {

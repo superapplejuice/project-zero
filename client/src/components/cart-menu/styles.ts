@@ -41,6 +41,7 @@ export const ItemName = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 200px;
 `
 
 export const ButtonsContainer = styled.div`

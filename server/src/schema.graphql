@@ -55,7 +55,7 @@ type Query {
   fetchCurrentUser: User
   fetchUser(id: ID!): User
   # cart
-  fetchCart(id: ID!): Cart
+  fetchCart: [CartItem]!
 }
 
 # mutations
@@ -67,10 +67,10 @@ type Mutation {
   # users
   registerUser(data: registerUserInput!): User!
   loginUser(data: loginUserInput!): User!
-  logoutUser: Alert
+  logoutUser: Alert!
   # payment
-  makePayment(data: paymentInput!): Alert
+  makePayment(data: paymentInput!): Alert!
   # cart
-  addToCart(id: ID!): Cart
-  removeFromCart(id: ID!): Cart
+  addToCart(id: ID!): CartItem!
+  removeFromCart(id: ID!): CartItem
 }

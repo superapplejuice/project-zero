@@ -1,20 +1,21 @@
 import { gql } from 'apollo-boost'
 import { useQuery, QueryHookOptions } from '@apollo/react-hooks'
 
-import { FetchCart, FetchCartVariables } from './types'
+import { FetchCart } from './types'
 
 export const FETCH_CART = gql`
-  query FetchCart($id: ID!) {
-    fetchCart(id: $id) {
-      items {
+  query FetchCart {
+    fetchCart {
+      id
+      item {
         id
         name
         images
+        price
       }
     }
   }
 `
 
-export const useFetchCart = (
-  options?: QueryHookOptions<FetchCart, FetchCartVariables>
-) => useQuery<FetchCart, FetchCartVariables>(FETCH_CART, options)
+export const useFetchCart = (options?: QueryHookOptions<FetchCart>) =>
+  useQuery<FetchCart>(FETCH_CART, options)

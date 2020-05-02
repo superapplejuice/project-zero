@@ -6,22 +6,20 @@
 // GraphQL query operation: FetchCart
 // ====================================================
 
-export interface FetchCart_fetchCart_items {
+export interface FetchCart_fetchCart_item {
   __typename: 'Item'
   id: string
   name: string
   images: string[]
+  price: number
 }
 
 export interface FetchCart_fetchCart {
-  __typename: 'Cart'
-  items: FetchCart_fetchCart_items[] | null
+  __typename: 'CartItem'
+  id: string
+  item: FetchCart_fetchCart_item
 }
 
 export interface FetchCart {
-  fetchCart: FetchCart_fetchCart | null
-}
-
-export interface FetchCartVariables {
-  id: string
+  fetchCart: (FetchCart_fetchCart | null)[]
 }

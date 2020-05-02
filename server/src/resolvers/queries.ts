@@ -6,12 +6,12 @@ const Query: QueryResolvers = {
   /* item queries */
   fetchItems: {
     fragment: '',
-    resolve: async (parent, { data }, context, info) =>
+    resolve: async (_parent, { data }, context, info) =>
       await context.db.query.items({ ...data }, info),
   },
   fetchItem: {
     fragment: '',
-    resolve: async (parent, { id }, context, info) => {
+    resolve: async (_parent, { id }, context, info) => {
       const fetchedItem = await context.db.query.item(
         {
           where: { id },
@@ -29,7 +29,7 @@ const Query: QueryResolvers = {
   /* user queries */
   fetchCurrentUser: {
     fragment: '',
-    resolve: async (parent, args, context, info) => {
+    resolve: async (_parent, _args, context, info) => {
       if (!context.request.userId) {
         return null
       }
@@ -46,7 +46,7 @@ const Query: QueryResolvers = {
   },
   fetchUser: {
     fragment: '',
-    resolve: async (parent, { id }, context, info) => {
+    resolve: async (_parent, { id }, context, info) => {
       const fetchedUser = await context.db.query.user({ where: { id } }, info)
 
       if (!fetchedUser) {
@@ -59,14 +59,14 @@ const Query: QueryResolvers = {
   /* cart queries */
   fetchCart: {
     fragment: '',
-    resolve: async (parent, { id }, context, info) => {
+    resolve: async (_parent, _args, context, info) => {
       if (!context.request.userId) {
         throw new Error(requireAuth)
       }
 
-      return await context.db.query.cart(
+      return await context.db.query.cartItems(
         {
-          where: { id },
+          where: { user: { id: context.request.userId } },
         },
         info
       )

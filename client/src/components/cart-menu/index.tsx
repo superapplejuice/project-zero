@@ -1,28 +1,61 @@
 import React, { Fragment, useState } from 'react'
 
-import { useUserContext } from 'context/user-context'
-import { useFetchCart } from 'resolvers/queries'
+import { FetchCart } from 'resolvers/queries/types'
+
+import { useFetchCart, FETCH_CART } from 'resolvers/queries'
+import { useRemoveFromCart } from 'resolvers/mutations'
 
 import { MenuItem, Button } from 'components/core'
 import * as Styles from './styles'
 
 const CartMenu = () => {
-  const { user } = useUserContext()
   const [displayCart, setDisplayCart] = useState(false)
 
-  const { data } = useFetchCart({
-    variables: {
-      id: user?.cart?.id,
-    },
-  })
-  const items = data?.fetchCart?.items
+  const { data } = useFetchCart()
+  const cart = data?.fetchCart
+
+  const [removeFromCart, { loading }] = useRemoveFromCart()
+  const handleRemoveFromCart = async (id: string) =>
+    await removeFromCart({
+      variables: {
+        id,
+      },
+      update: (cache, { data }) => {
+        const { fetchCart } = cache.readQuery<FetchCart>({
+          query: FETCH_CART,
+        })
+
+        const removedItem = data?.removeFromCart
+        const updatedList = fetchCart?.filter(
+          cartItem => cartItem?.id !== removedItem?.id
+        )
+
+        return cache.writeQuery<FetchCart>({
+          query: FETCH_CART,
+          data: {
+            fetchCart: updatedList,
+          },
+        })
+      },
+    })
 
   const renderCartItems = () => (
     <Fragment>
-      {items?.map(item => (
-        <Styles.CartItem key={item?.id}>
-          <Styles.CartImage src={item?.images[0]} alt={item?.id} />
-          <Styles.ItemName>{item?.name}</Styles.ItemName>
+      {cart?.map(cartItem => (
+        <Styles.CartItem key={cartItem?.id}>
+          <Styles.CartImage
+            src={cartItem?.item?.images[0]}
+            alt={cartItem?.item?.id}
+          />
+          <Styles.ItemName>{cartItem?.item?.name}</Styles.ItemName>
+          <Button
+            disabled={loading}
+            onClick={() => handleRemoveFromCart(cartItem?.id)}
+            type="button"
+            size="small"
+          >
+            X
+          </Button>
         </Styles.CartItem>
       ))}
       <Styles.ButtonsContainer>
@@ -43,9 +76,9 @@ const CartMenu = () => {
         onMouseLeave={() => setDisplayCart(false)}
       >
         <MenuItem.LinkItem href="/cart" title="Cart" />
-        {displayCart && items && (
+        {displayCart && cart && (
           <Styles.CartContainer>
-            {items?.length > 0 ? (
+            {cart?.length > 0 ? (
               renderCartItems()
             ) : (
               <Styles.EmptyPlaceholder>

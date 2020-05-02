@@ -6,11 +6,12 @@ import { RemoveFromCart, RemoveFromCartVariables } from './types'
 const REMOVE_FROM_CART = gql`
   mutation RemoveFromCart($id: ID!) {
     removeFromCart(id: $id) {
-      user {
+      id
+      item {
         id
-      }
-      items {
-        id
+        name
+        images
+        price
       }
     }
   }

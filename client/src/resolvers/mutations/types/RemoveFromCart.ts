@@ -6,20 +6,18 @@
 // GraphQL mutation operation: RemoveFromCart
 // ====================================================
 
-export interface RemoveFromCart_removeFromCart_user {
-  __typename: 'User'
-  id: string
-}
-
-export interface RemoveFromCart_removeFromCart_items {
+export interface RemoveFromCart_removeFromCart_item {
   __typename: 'Item'
   id: string
+  name: string
+  images: string[]
+  price: number
 }
 
 export interface RemoveFromCart_removeFromCart {
-  __typename: 'Cart'
-  user: RemoveFromCart_removeFromCart_user | null
-  items: RemoveFromCart_removeFromCart_items[] | null
+  __typename: 'CartItem'
+  id: string
+  item: RemoveFromCart_removeFromCart_item
 }
 
 export interface RemoveFromCart {

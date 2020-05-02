@@ -12,7 +12,7 @@ export interface MakePayment_makePayment {
 }
 
 export interface MakePayment {
-  makePayment: MakePayment_makePayment | null
+  makePayment: MakePayment_makePayment
 }
 
 export interface MakePaymentVariables {

@@ -22,16 +22,19 @@ export const userConnect = `
     items {
       id
     }
+    cart {
+      id
+    }
   }
 `
 
-export const cartConnect = `
+export const cartItemConnect = `
   {
     id
-    user {
+    item {
       id
     }
-    items {
+    user {
       id
     }
   }
